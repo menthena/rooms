@@ -1,0 +1,12 @@
+@import '../_variables';
+
+header {
+  border-bottom: 1px #e9f1f2 solid;
+  background: #FFF;
+
+  a.logo {
+    color: $primary-color;
+    font-size: 24px;
+    font-weight: 600;
+  }
+}
