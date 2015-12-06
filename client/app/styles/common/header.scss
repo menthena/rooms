@@ -1,0 +1,38 @@
+@import '../_variables';
+
+header {
+  border-bottom: 1px #e9f1f2 solid;
+  background: #FFF;
+  line-height: 40px;
+  padding-top: 5px;
+  padding-bottom: 9px;
+
+  a.logo {
+    color: $primary-color;
+    font-size: 24px;
+    font-weight: 600;
+    padding-left: 30px;
+    &:before {
+      content: '';
+      width: 22px;
+      height: 35px;
+      position: absolute;
+      left: 15px;
+      top: 3px;
+    }
+  }
+
+  ul {
+    margin-bottom: 0;
+  }
+
+  li {
+    padding-right: 25px;
+  }
+
+  span {
+    opacity: 0.6;
+    font-weight: bold;
+    padding-right: 10px;
+  }
+}

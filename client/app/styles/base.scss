@@ -1,0 +1,20 @@
+@import 'mixins.scss';
+@import '_variables.scss';
+
+body {
+  background: #f9fbfc;
+  font-family: 'fira-sans',sans-serif;
+  color: $text-color;
+}
+
+a {
+  cursor: pointer;
+  transition: color 0.3s ease;
+  color: $primary-color;
+  &:hover {
+    color: darken($primary-color, 10%);
+    text-decoration: none;
+  }
+}
+
+@include sprite('header a.logo:before');

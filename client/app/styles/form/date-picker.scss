@@ -1,0 +1,64 @@
+@import '../_variables';
+@import '../mixins';
+
+.ui-widget {
+  font-family: inherit;
+}
+
+.ui-widget-header {
+  border: none;
+  background: none;
+  color: $text-color;
+}
+
+.ui-datepicker {
+  @include baseInput();
+}
+
+.ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+  background: $input-color;
+  border-radius: 2px;
+  border-color: $input-color;
+  color: $primary-color;
+}
+
+.ui-widget-header .ui-state-hover {
+  color: $text-color;
+  border: none;
+  background: none;
+}
+
+.ui-state-hover, .ui-widget-content .ui-state-hover {
+  border-color: $text-color;
+  color: $text-color;
+}
+
+.ui-widget-header .ui-icon {
+  background-image: none;
+}
+
+.ui-datepicker-next-hover, .ui-datepicker-prev-hover {
+  right: 2px!important;
+  top: 2px!important;
+}
+
+.ui-datepicker-prev-hover {
+  left: 2px!important;
+}
+
+.ui-datepicker-next, .ui-datepicker-prev {
+  cursor: pointer;
+  &:before {
+    font: normal normal normal 14px/1 FontAwesome;
+    content: '\f054';
+    color: $text-color;
+    left: 30%;
+    position: absolute;
+    top: 7px;
+    display: block;
+  }
+}
+
+.ui-datepicker-prev:before {
+  content: '\f053';
+}

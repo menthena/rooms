@@ -1,0 +1,70 @@
+@import '_variables';
+@import 'mixins';
+
+.input-group {
+  margin: 15px 0 5px;
+  width: 100%;
+}
+
+.filter {
+  h1 {
+    color: $primary-color;
+    font-weight: 400;
+    font-size: 20px;
+    padding-top: 10px;
+  }
+  .fa {
+    position: absolute;
+    left: 10px;
+    margin-top: 9px;
+  }
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  cursor: pointer;
+  margin-bottom: 2px;
+}
+
+.features label {
+  display: inline-block;
+  padding: 0 5px 5px 0;
+  font-weight: normal;
+}
+
+.fa.fa-chevron-down {
+  position: absolute;
+  right: 10px;
+  left: auto;
+  margin-top: 9px;
+}
+
+.with-icon {
+  input[type=text] {
+    padding-left: 30px;
+    width: 100%;
+  }
+  &.time {
+    .ui-selectmenu-button {
+      display: inline-block;
+    }
+  }
+}
+
+.ui-widget-content {
+  color: $text-color;
+}
+
+input {
+  @include baseInput();
+  padding: 5px 7px;
+}
+
+.input-group {
+  max-width: 150px;
+}
+
+select[name=duration] {
+  width: 165px;
+}

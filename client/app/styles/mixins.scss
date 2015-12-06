@@ -1,0 +1,54 @@
+@mixin sprite($selectors) {
+  #{$selectors} {
+    background-image: url(/images/sprites.png);
+    background-size: 22px 35px;
+  }
+	@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5),only screen and (min-resolution: 240dpi) {
+    #{$selectors} {
+      background-image: url(/images/sprites@2x.png);
+    }
+  }
+}
+
+@mixin boxShadow() {
+  box-shadow: (0 1px 2px rgba(187, 214, 216, 0.4), 0 1px 1px rgba(187, 214, 216, 0.9));
+}
+
+@mixin baseInput() {
+  @include boxShadow();
+  border-radius: 2px;
+  border: 1px $input-border solid;
+  background: $input-color;
+  color: $primary-color;
+  font-weight: bold;
+  outline: none;
+  cursor: pointer;
+}
+
+@mixin gradient() {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#feffff+0,efefef+100 */
+  background: #FFF; /* Old browsers */
+  background: -moz-linear-gradient(top,  #FFF 20%, #f4f8f8 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  #FFF 20%,#f4f8f8 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  #FFF 20%,#f4f8f8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFF', endColorstr='#f4f8f8',GradientType=0 ); /* IE6-9 */
+}
+
+@mixin transition($type) {
+  transition: $type 0.15s;
+}
+
+@mixin pulse() {
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}

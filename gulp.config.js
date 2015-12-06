@@ -1,10 +1,12 @@
 module.exports = function() {
 	var config = {
-		allTs: './app/**/*.ts',
-		typings: './typings/**/*.d.ts',
-    tsOutputPath: './dist/',
-		scss: './app/**/*.scss',
-		html: './app/**/*.html'
+		allTs: './client/**/*.ts',
+		allTests: './test/**/*.ts',
+		// typings: './typings/tsd.d.ts',
+    tsOutputPath: './dist',
+		tsTestOutputPath: './dist',
+		scss: './client/**/*.scss',
+		html: './client/**/*.html'
 	};
 
 	return config;

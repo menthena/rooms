@@ -1,0 +1,58 @@
+@import '../_variables';
+@import '../mixins';
+
+.ui-selectmenu-button {
+  position: initial;
+  span.ui-selectmenu-text {
+    padding: 5px 7px;
+  }
+  &:before {
+    font: normal normal normal 14px/1 FontAwesome;
+    content: '\f078';
+    display: block;
+    position: absolute;
+    right: 10px;
+    margin-top: 9px;
+    color: $text-color;
+  }
+}
+
+.ui-selectmenu-button {
+  display: block;
+}
+
+.ui-selectmenu-button, .ui-widget-content .ui-state-focus, .ui-selectmenu-menu {
+  @include baseInput();
+  .ui-icon {
+    display: none;
+  }
+  .ui-state-focus, .ui-widget-content {
+    background: none;
+    border: none;
+    box-shadow: none;
+  }
+}
+
+.with-icon {
+  .fa {
+    z-index: 1;
+  }
+  .ui-selectmenu-button, .ui-widget-content .ui-state-focus {
+    .ui-selectmenu-text {
+      margin-left: 25px;
+      margin-right: 5px;
+      display: block;
+    }
+    &:before {
+      display: none;
+    }
+  }
+}
+
+.max-selectbox {
+  height: 200px;
+}
+
+.ui-widget-content .ui-state-focus {
+
+}

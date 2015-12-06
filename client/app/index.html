@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <title>Rooms</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="vendor/jquery-ui.css">
+  </head>
+  <body>
+    <script src="node_modules/underscore/underscore-min.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    <script src="https://use.typekit.net/vly1fpc.js"></script>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="vendor/jquery-ui.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script>
+    try{Typekit.load({ async: true });}catch(e){}
+    System.config({
+      defaultJSExtensions: true
+    });
+    </script>
+    <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
+    <script src="node_modules/angular2/bundles/http.dev.js"></script>
+    <script src="node_modules/angular2/bundles/router.dev.js"></script>
+    <rooms></rooms>
+    <script>
+    System.import('rooms');
+    </script>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+@import '../_variables';
+@import '../mixins';
+
+input[type="checkbox"] {
+  display:none;
+  + label i {
+    @include baseInput();
+    position: absolute;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin: 2px 7px 0 0;
+  }
+
+  + label span {
+    padding-left: 22px;
+  }
+
+  &:checked + label i:before {
+    font: normal normal normal 14px/1 FontAwesome;
+    content: '\f00c';
+    display: block;
+    font-size: 11px;
+    padding: 1px 0 0 1px;
+    position: absolute;
+    color: $primary-color;
+  }
+}

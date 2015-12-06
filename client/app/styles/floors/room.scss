@@ -1,0 +1,31 @@
+@import '../_variables';
+@import '../mixins';
+
+.room-wrapper {
+  position: absolute;
+  display: inline-block;
+}
+
+.room {
+  @include boxShadow();
+  @include transition(background-color);
+  padding: 8px 10px;
+  border-radius: 2px;
+  background-color: $primary-color;
+  height: 55px;
+  position: absolute;
+  color: #FFF;
+  display: inline-block;
+  cursor: pointer;
+  &:hover {
+    background-color: darken($primary-color, 5);
+  }
+}
+
+.book i {
+  padding: 2px 0 0 2px;
+}
+
+span, i {
+  color: #FFF;
+}

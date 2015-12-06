@@ -1,0 +1,28 @@
+@import '../_variables';
+@import '../mixins';
+
+.floor {
+  @include boxShadow();
+  background-color: #FFF;
+  width: 100%;
+  padding: 8px;
+}
+
+h1 {
+  @include gradient();
+  @include boxShadow();
+  border-radius: 4px 4px 0 0;
+  color: $text-color;
+  font-weight: 600;
+  display: inline-block;
+  padding: 7px 10px;
+  margin-bottom: 0;
+  font-size: 20px;
+}
+
+.inner {
+  background: url(/images/bg.png);
+  position: relative;
+  height: 387px;
+  display: block;
+}
