@@ -42,6 +42,7 @@ module.exports = function(app) {
     app.use(express.static(path.join(config.root, '.tmp')));
     app.use(express.static(path.join(config.root, 'dist/app')));
     app.use('/node_modules', express.static(__dirname + '/../../node_modules/'));
+    app.use('/jspm_packages', express.static(__dirname + '/../../jspm_packages/'));
     app.set('appPath', 'dist/app');
     app.use(morgan('dev'));
     app.use(errorHandler()); // Error handler - has to be last

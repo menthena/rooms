@@ -11,6 +11,7 @@ module.exports = function(config) {
       {pattern: 'node_modules/angular2/bundles/angular2.js', included: true, watched: true},
       {pattern: 'node_modules/angular2/bundles/http.js', included: true, watched: true},
       {pattern: 'node_modules/angular2/bundles/testing.js', included: true, watched: true},
+      {pattern: 'node_modules/lodash/index.js', included: true, watched: true},
       {pattern: 'karma-test-shim.js', included: true, watched: true},
 
       // paths loaded via module imports

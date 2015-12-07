@@ -1,4 +1,5 @@
 @import '../_variables';
+@import '../mixins';
 
 header {
   border-bottom: 1px #e9f1f2 solid;
@@ -20,6 +21,14 @@ header {
       left: 15px;
       top: 3px;
     }
+  }
+
+  a {
+    @include transition(color);
+  }
+
+  .router-link-active {
+    color: $light-text-color;
   }
 
   ul {

@@ -6,6 +6,7 @@
   "elementPositionX": 5,
   "elementPositionY": 5,
   "elementWidth": 10,
+  "elementHeight": 0,
   "capacity": 5
 }, {
   "elementID": "2",
@@ -14,6 +15,7 @@
   "elementType": "room",
   "elementPositionX": 25,
   "elementPositionY": 25,
+  "elementHeight": 0,
   "elementWidth": 10,
   "hasTV": true,
   "capacity": 12
@@ -22,9 +24,10 @@
   "floorID": "1",
   "elementName": "Sandals",
   "elementType": "placeholder",
-  "elementPositionX": 45,
+  "elementPositionX": 85,
   "elementPositionY": 5,
   "elementWidth": 15,
+  "elementHeight": 0,
   "hasTV": false,
   "capacity": 5
 }, {
@@ -35,6 +38,7 @@
   "elementPositionX": 10,
   "elementPositionY": 10,
   "elementWidth": 10,
+  "elementHeight": 0,
   "capacity": 5
 }, {
   "elementID": "5",
@@ -44,6 +48,7 @@
   "elementPositionX": 30,
   "elementPositionY": 30,
   "elementWidth": 10,
+  "elementHeight": 100,
   "hasTV": true,
   "capacity": 12
 }]

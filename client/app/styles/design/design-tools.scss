@@ -1,0 +1,49 @@
+@import '../_variables';
+@import '../mixins';
+
+.design-tools {
+  h1 {
+    color: $primary-color;
+    font-weight: 400;
+    font-size: 20px;
+    padding-top: 10px;
+  }
+  .fa {
+    position: absolute;
+    left: 10px;
+    margin-top: 9px;
+  }
+}
+
+// .ui-draggable-handle {
+.room, .placeholder {
+  margin: 20px 0;
+  a {
+    text-align: center;
+    padding: 10px;
+    display: block;
+    border-radius: 2px;
+    cursor: -webkit-grab;
+    width: 164px;
+    z-index: 3;
+    &:active, &:focus {
+      cursor: -webkit-grabbing;
+      @include dragShadow();
+    }
+  }
+}
+
+.ui-draggable-dragging {
+  @include dragShadow();
+}
+
+.room a {
+  background: $primary-color;
+  color: #FFF;
+}
+
+.placeholder a {
+  background-color: lighten($light-text-color, 30);
+  color: $light-text-color;
+  border: 1px lighten($light-text-color, 20) solid;
+}

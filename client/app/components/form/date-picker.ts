@@ -20,7 +20,7 @@ export class DatePicker implements OnInit {
       this.elementRef = elementRef;
   }
 
-  onInit() {
+  ngOnInit() {
     let nativeElement = jQuery(this.elementRef.nativeElement);
     let dateInput = nativeElement.find('input');
     dateInput.datepicker();

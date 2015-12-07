@@ -98,7 +98,7 @@ gulp.task('build', ['clean'], function(done) {
 
 gulp.task('serve', function() {
 
-	gulp.watch([config.html, config.scss, config.allTs], ['build']);
+	gulp.watch([config.html, config.scss, config.allTs, 'client/**/*.json'], ['build']);
   gulp.watch([config.allTests], ['test']);
 
 	runSequence(['server'], ['build'], function() {

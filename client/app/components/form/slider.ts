@@ -12,7 +12,7 @@ declare var jQuery:any;
 export class Slider implements OnInit {
   constructor(private elementRef: ElementRef) {}
 
-  onInit() {
+  ngOnInit() {
     let sliderElement = jQuery(this.elementRef.nativeElement);
     sliderElement.slider({
       value: 50

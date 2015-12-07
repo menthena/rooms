@@ -1,0 +1,37 @@
+@import '../_variables';
+@import '../mixins';
+
+.design-mode {
+  .ui-resizable:before {
+    @include fontAwesome();
+    content: '\f0b2';
+    display: block;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    color: #FFF;
+    font-size: 10px;
+    z-index: 1;
+  }
+}
+
+room, placeholder {
+  .ui-draggable-handle {
+    cursor: -webkit-grab;
+    .placeholder, .room {
+      @include transition(box-shadow);
+    }
+    &:active {
+      cursor: -webkit-grabbing;
+      .placeholder, .room {
+        @include dragShadow();
+      }
+    }
+  }
+}
+
+placeholder {
+  .ui-resizable:before {
+    color: $light-text-color;
+  }
+}

@@ -49,7 +49,7 @@
 .ui-datepicker-next, .ui-datepicker-prev {
   cursor: pointer;
   &:before {
-    font: normal normal normal 14px/1 FontAwesome;
+    @include fontAwesome();
     content: '\f054';
     color: $text-color;
     left: 30%;

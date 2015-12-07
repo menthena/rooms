@@ -12,7 +12,7 @@ declare var jQuery:any;
 export class Button implements OnInit {
   constructor(private elementRef: ElementRef) {}
 
-  onInit() {
+  ngOnInit() {
     let buttonElement = jQuery(this.elementRef.nativeElement);
     buttonElement.button({
       text: false

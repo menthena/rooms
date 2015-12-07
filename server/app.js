@@ -1,19 +1,28 @@
 'use strict';
 
 // Set default node environment to development
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-
-if (process.env.NODE_ENV !== 'development') {
-  require('newrelic');
-}
+process.env.NODE_ENV = process.env.NODE_ENV || 'local';
 
 var express = require('express');
 var config = require('./config/environment');
 // Setup server
 var app = express();
 var server = require('http').createServer(app);
+
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
+
 require('./config/express')(app);
 require('./routes')(app);
+
+var mongoose = require('mongoose');
+mongoose.connect(config.db.mongodb);
+require('./seed.js');
+require('./migrate.js');
 
 server.listen(config.port, config.ip, function() {
   console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));

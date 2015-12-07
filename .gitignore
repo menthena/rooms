@@ -1,5 +1,7 @@
 node_modules
-design
+!*/design/
+/design
 dist
 .DS_Store
 test/**/*.js
+jspm_packages

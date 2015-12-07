@@ -1,6 +1,10 @@
 @import '_variables';
 @import 'mixins';
 
+.wrapper {
+  position: absolute;
+}
+
 .booking {
   @include boxShadow();
   @include transition(all);
@@ -63,5 +67,16 @@
       width: 20px;
       height: 20px;
     }
+  }
+}
+
+@media (max-width: 600px) {
+  .booking {
+    margin: auto;
+    position: relative;
+  }
+  .wrapper {
+    width: 100% !important;
+    left: 0 !important;
   }
 }

@@ -11,21 +11,25 @@
   "author": "Ahmet Atasoy <menthena@gmail.com> (http://www.menthena.com/)",
   "license": "ISC",
   "dependencies": {
-    "angular2": "2.0.0-alpha.46",
+    "angular2": "2.0.0-alpha.48",
     "bootstrap": "^3.3.6",
     "jquery": "^2.1.4",
     "lodash": "^3.10.1",
     "lodash-node": "^3.10.1",
+    "rxjs": "^5.0.0-alpha.11",
     "systemjs": "^0.19.2",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
+    "basic-auth": "^1.0.3",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.0.0",
     "browser-sync": "^2.10.0",
     "chai": "^3.4.1",
     "compression": "^1.4.4",
     "connect-livereload": "^0.4.0",
     "cookie-parser": "~1.3.4",
+    "cookie-session": "^1.2.0",
     "debug": "~0.7.4",
     "del": "^2.1.0",
     "ejs": "^2.3.1",
@@ -34,6 +38,7 @@
     "express": "~4.11.2",
     "express-session": "~1.6.5",
     "express-sslify": "^0.1.2",
+    "fs-extra": "^0.26.2",
     "gulp": "^3.9.0",
     "gulp-clean": "^0.3.1",
     "gulp-nodemon": "^2.0.4",
@@ -57,10 +62,14 @@
     "live-server": "^0.8.2",
     "method-override": "~2.1.1",
     "mocha": "^2.3.4",
+    "mongoose": "^4.2.9",
     "morgan": "~1.0.0",
+    "oauth2-server": "^2.4.1",
     "phantomjs": "^1.9.19",
     "phantomjs-polyfill": "0.0.1",
+    "postmark": "^1.2.1",
     "prismic.io": "1.1.7",
+    "request": "^2.67.0",
     "requirejs": "^2.1.22",
     "run-sequence": "^1.1.4",
     "scssify": "^0.3.6",
@@ -68,5 +77,14 @@
     "superstatic": "^3.0.0",
     "traceur": "0.0.92",
     "typescript": "^1.6.2"
+  },
+  "jspm": {
+    "dependencies": {
+      "lodash": "npm:lodash@^3.10.1",
+      "rxjs": "npm:rxjs@^5.0.0-alpha.12"
+    },
+    "devDependencies": {
+      "typescript": "npm:typescript@^1.6.2"
+    }
   }
 }

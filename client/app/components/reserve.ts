@@ -1,10 +1,11 @@
-import {Component} from 'angular2/angular2';
+import {Component, OnInit} from 'angular2/angular2';
 import {Filter} from './filter';
 import {Floors} from './floors/floors';
+import {DesignService} from '../services/DesignService';
 
 @Component({
   directives: [Filter, Floors],
-  selector: 'find-a-room',
+  selector: 'reserve',
   template: `
     <div class="container">
       <div class="row">
@@ -17,7 +18,11 @@ import {Floors} from './floors/floors';
       </div>
     </div>
   `,
-  styleUrls: ['styles/find-a-room.css']
+  styleUrls: ['styles/reserve.css']
 })
 
-export class FindARoom {}
+export class Reserve {
+  constructor(private DesignService: DesignService) {
+    this.DesignService.designModeState = false;
+  }
+}

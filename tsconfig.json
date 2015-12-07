@@ -11,5 +11,8 @@
     "sourceMap": true,
     "listFiles": true,
     "defaultJSExtensions": true
-  }
+  },
+  "files": [
+    "./typings/lodash/lodash.d.ts"
+  ]
 }

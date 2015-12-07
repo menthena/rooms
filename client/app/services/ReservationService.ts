@@ -1,7 +1,12 @@
-import {Injectable, Observable} from 'angular2/angular2';
+import {Injectable} from 'angular2/angular2';
+import {Observable} from 'rxjs';
+
+interface IReservationService {
+  getObservable() : Observable<string>;
+}
 
 @Injectable()
-export class ReservationService {
+export class ReservationService implements IReservationService {
   reservationObserver: Observable<string>;
 
   constructor() {

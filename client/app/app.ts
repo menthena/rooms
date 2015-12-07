@@ -1,3 +1,4 @@
+/// <reference path="../../typings/tsd.d.ts" />
 import {Component, ViewEncapsulation, View, bootstrap, provide} from 'angular2/angular2';
 import {HTTP_BINDINGS} from 'angular2/http';
 import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2/router';
@@ -5,6 +6,7 @@ import {ROUTER_DIRECTIVES, RouterOutlet, RouteConfig, Router, Location, Route} f
 import {APP_ROUTES} from './routes';
 import {Header} from './components/common/header';
 import {FloorService} from './services/FloorService';
+import {DesignService} from './services/DesignService';
 
 @Component({
   selector: 'rooms'
@@ -24,4 +26,5 @@ import {FloorService} from './services/FloorService';
 
 class Room {}
 
-bootstrap(Room, [FloorService, HTTP_BINDINGS, ROUTER_PROVIDERS, provide(LocationStrategy, {useClass: HashLocationStrategy})]);
+bootstrap(Room, [FloorService, DesignService, HTTP_BINDINGS, ROUTER_PROVIDERS,
+  provide(LocationStrategy, {useClass: HashLocationStrategy})]);

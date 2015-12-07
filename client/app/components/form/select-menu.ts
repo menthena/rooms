@@ -12,7 +12,7 @@ declare var jQuery:any;
 export class SelectMenu implements OnInit {
   constructor(private elementRef: ElementRef) {}
 
-  onInit() {
+  ngOnInit() {
     let selectBox = jQuery(this.elementRef.nativeElement);
     selectBox
       .selectmenu({ width : 'auto' })

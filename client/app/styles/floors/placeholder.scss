@@ -1,0 +1,23 @@
+@import '../_variables';
+@import '../mixins';
+
+.wrapper {
+  position: absolute;
+  display: inline-block;
+}
+
+.placeholder {
+  // @include boxShadow();
+  padding: 8px 10px;
+  border-radius: 2px;
+  background-color: lighten($light-text-color, 30);
+  color: $light-text-color;
+  border: 1px lighten($light-text-color, 20) solid;
+  min-height: 35px;
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+  position: absolute;
+  display: inline-block;
+  line-height: 17px;
+}

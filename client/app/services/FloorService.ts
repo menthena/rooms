@@ -19,9 +19,6 @@ export class FloorService implements IFloorService<IFloor> {
   }
 
   fetchAll() {
-    return this.http.get('/mock/Floors.json')
-      .map( (responseData: Response) => {
-        return responseData.json();
-      });
+    return this.http.get('/api/floor');
   }
 }
