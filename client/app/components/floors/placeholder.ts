@@ -10,7 +10,8 @@ declare var jQuery:any;
   inputs: ['data'],
   styleUrls: ['styles/floors/placeholder.css'],
   template: `
-    <div class="wrapper" resizable-element draggable-element [attr.element-id]="data.elementID">
+    <div class="wrapper" resizable-element draggable-element
+      [containment]="'#floor' + data.floorID" [attr.element-id]="data.elementID">
       <div class="placeholder">
         <div><span>{{ data.elementName }}</span></div>
       </div>

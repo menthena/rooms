@@ -13,7 +13,8 @@ declare var jQuery:any;
   inputs: ['data', 'designMode'],
   styleUrls: ['styles/floors/room.css'],
   template: `
-    <div class="wrapper" resizable-element draggable-element [attr.element-id]="data.elementID">
+    <div class="wrapper" resizable-element draggable-element
+    [containment]="'#floor' + data.floorID" [attr.element-id]="data.elementID">
       <div class="room" (click)="startReservation()">
         <div><span>{{ data.elementName }}</span></div>
         <div class="features pull-left" *ng-if="!designMode">

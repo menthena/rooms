@@ -10,6 +10,7 @@ import {PlaceElement} from '../../directives/place-element';
 import {Droppable} from '../../directives/droppable';
 import {DesignService} from '../../services/DesignService';
 import * as _ from 'lodash';
+import * as io from 'socket.io-client';
 
 @Component({
   selector: 'floor',
@@ -27,7 +28,8 @@ import * as _ from 'lodash';
         <loading-indicator *ng-if="isLoading" mini="true"></loading-indicator>
       </li>
     </ul>
-    <div class="floor" droppable-element [attr.data-id]="floor.floorID" [ng-class]="{loading: isLoading}">
+    <div [attr.id]="'floor' + floor.floorID" class="floor" droppable-element
+      [attr.data-id]="floor.floorID" [ng-class]="{loading: isLoading}">
       <div class="inner">
         <div *ng-for="#element of floorElements" [ng-switch]="element.elementType">
           <Reservation *ng-if="!designMode" [data]="element" place-element type="modal"></Reservation>
@@ -47,7 +49,9 @@ export class Floor {
   @Input() isLoading: boolean;
   designMode: boolean;
 
-  constructor(private floorElementsService: FloorElementsService, private changeRef: ChangeDetectorRef, DesignService: DesignService) {
+  constructor(private floorElementsService: FloorElementsService,
+    private changeRef: ChangeDetectorRef, private DesignService: DesignService
+  ) {
     this.floorElements = [];
     this.floorElementsObservable = this.floorElementsService.getObservable();
     this.floorElementsObservable.connect();
@@ -55,7 +59,36 @@ export class Floor {
     this.isLoading = false;
   }
 
+  fetch(floorID) {
+    this.isLoading = true;
+    this.floorElementsService.fetchElementsByFloorID(floorID)
+      .delay(200)
+      .subscribe(
+        (res: any) => {
+          let arr = res.json().data;
+          this.floorElements = arr;
+            this.isLoading = false;
+          this.changeRef.markForCheck();
+        }
+      );
+  }
+
   ngOnInit() {
+    let socket = io.connect('http://localhost:5555');
+
+    socket.on('elements', (res) => {
+      if (!this.DesignService.designModeState) {
+        let index = _.findIndex(this.floorElements, { elementID: res.elementID });
+        if (res.floorID === this.floor.floorID) {
+          if (index === -1) {
+            this.floorElements.push(res);
+          } else {
+            this.floorElements[index] = res;
+          }
+        }
+      }
+    });
+
     this.floorElementsObservable
       .subscribe((res: any) => {
         if (res.type === 'data') {
@@ -66,14 +99,8 @@ export class Floor {
         }
         this.changeRef.detectChanges();
       });
-    this.floorElementsService.fetchElementsByFloorID(this.floor.floorID)
-      .subscribe(
-        (res: any) => {
-          let arr = res.json().data;
-          this.floorElements = arr;
-          this.changeRef.markForCheck();
-        }
-      );
+
+    this.fetch(this.floor.floorID);
   }
 
 }

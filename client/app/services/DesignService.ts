@@ -24,7 +24,7 @@ export class DesignService implements IDesignService {
   }
 
   getPercentage(value, total) {
-    let percentage = (value / total) * 100);
+    let percentage = (value / total) * 100;
     if (percentage < 0) {
       return 0;
     }
@@ -36,9 +36,17 @@ export class DesignService implements IDesignService {
     let elementWidth = element.width();
     let elementHeight = element.height();
     let elementOffset = element.offset();
+    let x = this.getPercentage(draggable.offset.left - 8 - elementOffset.left, elementWidth);
+    let y = this.getPercentage(draggable.offset.top - 8 - elementOffset.top, elementHeight);
+    if (x > 85) {
+      x = 85;
+    }
+    if (y > 83) {
+      y = 83;
+    }
     return {
-      x: this.getPercentage(draggable.offset.left - 8 - elementOffset.left, elementWidth),
-      y: this.getPercentage(draggable.offset.top - 8 - elementOffset.top, elementHeight)
+      x: x,
+      y: y
     };
   }
 

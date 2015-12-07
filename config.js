@@ -10,6 +10,7 @@ System.config({
   map: {
     "lodash": "npm:lodash@3.10.1",
     "rxjs": "npm:rxjs@5.0.0-alpha.12",
+    "socket.io-client": "github:socketio/socket.io-client@1.3.7",
     "typescript": "npm:typescript@1.7.3",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"

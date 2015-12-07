@@ -23,6 +23,7 @@ var mongoose = require('mongoose');
 mongoose.connect(config.db.mongodb);
 require('./seed.js');
 require('./migrate.js');
+require('./socket.js');
 
 server.listen(config.port, config.ip, function() {
   console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));

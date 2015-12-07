@@ -42,7 +42,7 @@ export class Droppable implements OnInit {
             floorID: floorID,
             elementPositionX: position.x,
             elementPositionY: position.y
-          })
+          });
         } else {
           let type = dropped.helper.data('type');
           this.addNew({

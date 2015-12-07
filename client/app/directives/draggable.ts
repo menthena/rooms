@@ -5,12 +5,13 @@ declare var jQuery: any;
 
 @Directive({
   selector: '[draggable-element]',
-  properties: ['clone']
+  properties: ['clone', 'containment']
 })
 
 @Injectable()
 export class Draggable implements OnInit {
   @Input() clone: boolean;
+  @Input() containment: string;
   designMode;
 
   constructor(private elementRef: ElementRef, private DesignService: DesignService) {}
@@ -24,6 +25,11 @@ export class Draggable implements OnInit {
         options = {
           opacity: 0.8,
           helper: 'clone'
+        };
+      } else if (this.containment) {
+        options = {
+          containment: this.containment,
+          stack: 'div'
         };
       }
       jQuery(nativeElement).draggable(options);

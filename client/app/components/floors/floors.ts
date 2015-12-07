@@ -1,13 +1,11 @@
 import {Component, OnInit, NgClass, NgFor, NgIf, Observable} from 'angular2/angular2';
 import {FloorService, IFloor} from '../../services/FloorService';
 import {ReservationService} from '../../services/ReservationService';
-import {DesignService} from '../../services/DesignService';
 import {Floor} from './floor';
 import {LoadingIndicator} from '../../directives/loading-indicator';
 
 @Component({
   selector: 'floors',
-  inputs: ['designMode'],
   providers: [FloorService, ReservationService],
   directives: [NgFor, NgClass, NgIf, Floor, LoadingIndicator],
   template: `
@@ -27,7 +25,7 @@ export class Floors {
   constructor(private floorService: FloorService) {
   }
 
-  ngOnInit() {
+  fetchAll() {
     this.isLoading = true;
     this.floorService.fetchAll()
       .delay(500)
@@ -37,5 +35,9 @@ export class Floors {
           this.floors = res.json().data;
         }
       );
+  }
+
+  ngOnInit() {
+    this.fetchAll();
   }
 }

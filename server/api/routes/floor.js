@@ -6,6 +6,7 @@ var router = express.Router();
 var models = require('../models');
 var floor = models.floor;
 var floorElement = models.floorElement;
+var io = require('../../socket');
 
 router.get('/', function(req, res) {
   var sendResponse = function(err, floors) {
@@ -39,6 +40,7 @@ router.post('/:id/elements', function(req, res) {
           res.send({ message: 'Bad request'});
         }
         else {
+          io.sockets.emit('elements', floorElement);
           res.status(201).send({ data: floorElement });
         }
       });
@@ -60,6 +62,7 @@ router.patch('/:id/elements/:elementID', function(req, res) {
           res.status(422);
           res.send({ message: 'Bad request'});
         } else {
+          io.sockets.emit('elements', element);
           res.send({ data: element });
         }
       });
