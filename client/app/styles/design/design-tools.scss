@@ -1,24 +1,37 @@
 @import '../_variables';
 @import '../mixins';
 
+.wrapper {
+  min-height: 100px;
+}
+
 .design-tools {
   h1 {
     color: $primary-color;
     font-weight: 400;
     font-size: 20px;
     padding-top: 10px;
+    margin-bottom: 25px;
   }
   .fa {
     position: absolute;
     left: 10px;
     margin-top: 9px;
   }
+  &.fixed {
+    position: fixed;
+    max-width: 200px;
+    top: 0;
+    z-index: 99;
+    background: $background-color;
+  }
 }
 
 // .ui-draggable-handle {
 .room, .placeholder {
-  margin: 20px 0;
+  margin: 0 0 10px;
   a {
+    @include transition(box-shadow);
     text-align: center;
     padding: 10px;
     display: block;
@@ -46,4 +59,24 @@
   background-color: lighten($light-text-color, 30);
   color: $light-text-color;
   border: 1px lighten($light-text-color, 20) solid;
+}
+
+@media (max-width: 768px) {
+  .design-tools {
+    li:first-child {
+      width: 100%;
+    }
+    h1 {
+      font-size: 14px;
+      padding-top: 5px;
+      margin-bottom: 5px;
+    }
+    &.fixed {
+      @include boxShadow();
+      left: 0;
+      padding-left: 15px;
+      max-width: none;
+      width: 100%;
+    }
+  }
 }

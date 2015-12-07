@@ -2,7 +2,7 @@
 @import '_variables.scss';
 
 body {
-  background: #f9fbfc;
+  background: $background-color;
   font-family: 'fira-sans',sans-serif;
   color: $text-color;
 }

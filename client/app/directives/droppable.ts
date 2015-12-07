@@ -13,15 +13,17 @@ export class Droppable implements OnInit {
   designObservable;
   floorElementsObservable;
 
-  constructor(private elementRef: ElementRef, DesignService: DesignService, FloorElementsService: FloorElementsService) {
+  constructor(private elementRef: ElementRef, private DesignService: DesignService, private FloorElementsService: FloorElementsService) {
     this.designObservable = DesignService.getObservable();
     this.floorElementsObservable = FloorElementsService.getObservable();
   }
 
+  edit(elementID, data) {
+    this.FloorElementsService.editElement(elementID, data);
+  }
+
   addNew(data) {
-    this.floorElementsObservable
-      .subscription
-      .next(data);
+    this.FloorElementsService.addElement(data);
   }
 
   ngOnInit() {
@@ -33,20 +35,24 @@ export class Droppable implements OnInit {
       hoverClass: 'active-dropping',
       drop: (e, dropped) => {
         let elementID = dropped.draggable.attr('element-id');
+        let position = this.DesignService.getPosition(e, dropped);
+        let floorID = jQuery(e.target).data('id');
         if (elementID) {
-          console.log(elementID);
+          this.edit(elementID, {
+            floorID: floorID,
+            elementPositionX: position.x,
+            elementPositionY: position.y
+          })
         } else {
+          let type = dropped.helper.data('type');
           this.addNew({
-            'elementID': '9',
-            'floorID': '1',
-            'elementName': 'Click to edit',
-            'elementType': 'room',
-            'elementPositionX': 40,
-            'elementPositionY': 25,
-            'elementHeight': 0,
-            'elementWidth': 10,
-            'hasTV': true,
-            'capacity': 12
+            floorID: floorID,
+            elementName: 'Click to edit',
+            elementType: type,
+            elementPositionX: position.x,
+            elementPositionY: position.y,
+            elementHeight: 0,
+            elementWidth: 19
           });
         }
       }

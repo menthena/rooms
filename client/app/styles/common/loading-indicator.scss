@@ -2,9 +2,17 @@
 @import '../mixins';
 
 .spinner {
-  margin: 100px auto 0;
+  margin: 22% 44%;
   width: 70px;
   text-align: center;
+  &.mini {
+    margin: 0;
+    width: 42px;
+    > div {
+      width: 10px;
+      height: 10px;
+    }
+  }
 }
 
 .spinner > div {

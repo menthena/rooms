@@ -1,9 +1,10 @@
-import {Component} from 'angular2/angular2';
+import {Component, Input} from 'angular2/angular2';
 
 @Component({
   selector: 'loading-indicator',
+  inputs: ['mini'],
   template: `
-  <div class="spinner">
+  <div class="spinner" [class.mini]="mini">
     <div class="bounce1"></div>
     <div class="bounce2"></div>
     <div class="bounce3"></div>
@@ -12,4 +13,6 @@ import {Component} from 'angular2/angular2';
   styleUrls: ['styles/common/loading-indicator.css']
 })
 
-export class LoadingIndicator {}
+export class LoadingIndicator {
+  @Input() mini: boolean;
+}

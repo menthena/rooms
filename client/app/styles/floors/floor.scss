@@ -1,8 +1,13 @@
 @import '../_variables';
 @import '../mixins';
 
+.list-inline {
+  margin-bottom: 0;
+}
+
 .floor {
   @include boxShadow();
+  @include transition(opacity);
   background-color: #FFF;
   width: 100%;
   padding: 8px;
@@ -11,6 +16,9 @@
   }
   &.active-dropping {
     background: lighten($light-text-color, 10);
+  }
+  &.loading {
+    @include pulse();
   }
 }
 

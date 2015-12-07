@@ -1,24 +1,31 @@
 import {Component, OnInit, ElementRef, ViewEncapsulation} from 'angular2/angular2';
 import {Draggable} from '../../directives/draggable';
+import {Scrollable} from '../../directives/scrollable';
 
 
 @Component({
-  directives: [Draggable],
+  directives: [Draggable, Scrollable],
   selector: 'design-tools',
   template: `
-  <div class="design-tools">
-    <h1>Design Tools</h1>
+  <div class="wrapper">
+    <div class="design-tools" scrollable-element>
 
-    <div class="room">
-      <a draggable-element clone="true">
-        Drag a room
-      </a>
-    </div>
+      <ul class="list-inline">
+        <li>
+          <h1>Design Tools</h1>
+        </li>
+        <li class="room">
+          <a draggable-element clone="true" data-type="room">
+            Drag a room
+          </a>
+        </li>
 
-    <div class="placeholder">
-      <a draggable-element clone="true">
-        Drag a placeholder
-      </a>
+        <li class="placeholder">
+          <a draggable-element clone="true" data-type="placeholder">
+            Drag a placeholder
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
   `,

@@ -3,7 +3,7 @@ import {FloorService, IFloor} from '../../services/FloorService';
 import {ReservationService} from '../../services/ReservationService';
 import {DesignService} from '../../services/DesignService';
 import {Floor} from './floor';
-import {LoadingIndicator} from '../common/loading-indicator';
+import {LoadingIndicator} from '../../directives/loading-indicator';
 
 @Component({
   selector: 'floors',
@@ -34,7 +34,7 @@ export class Floors {
       .subscribe(
         (res: any) => {
           this.isLoading = false;
-          this.floors = res.json();
+          this.floors = res.json().data;
         }
       );
   }
