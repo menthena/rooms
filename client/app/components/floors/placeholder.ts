@@ -11,7 +11,7 @@ declare var jQuery:any;
   styleUrls: ['styles/floors/placeholder.css'],
   template: `
     <div class="wrapper" resizable-element draggable-element
-      [containment]="'#floor' + data.floorID" [attr.element-id]="data.elementID">
+      [containment]="'#floor' + data.floorID" [attr.element-id]="data.elementID" [attr.data-id]="data.floorID">
       <div class="placeholder">
         <div><span>{{ data.elementName }}</span></div>
       </div>

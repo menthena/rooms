@@ -5,8 +5,11 @@ import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2
 import {ROUTER_DIRECTIVES, RouterOutlet, RouteConfig, Router, Location, Route} from 'angular2/router';
 import {APP_ROUTES} from './routes';
 import {Header} from './components/common/header';
+import {Overlay} from './components/common/overlay';
 import {FloorService} from './services/FloorService';
 import {DesignService} from './services/DesignService';
+import {FloorElementsService} from './services/FloorElementsService';
+import {ReservationService} from './services/ReservationService';
 
 @Component({
   selector: 'rooms'
@@ -24,7 +27,13 @@ import {DesignService} from './services/DesignService';
 
 @RouteConfig(APP_ROUTES)
 
-class Room {}
+class Room {
+  constructor(private ReservationService: ReservationService) {}
 
-bootstrap(Room, [FloorService, DesignService, HTTP_BINDINGS, ROUTER_PROVIDERS,
+  ngOnInit() {
+    this.ReservationService.fetchReservations();
+  }
+}
+
+bootstrap(Room, [FloorService, DesignService, FloorElementsService, ReservationService, HTTP_BINDINGS, ROUTER_PROVIDERS,
   provide(LocationStrategy, {useClass: HashLocationStrategy})]);

@@ -6,7 +6,7 @@ import {LoadingIndicator} from '../../directives/loading-indicator';
 
 @Component({
   selector: 'floors',
-  providers: [FloorService, ReservationService],
+  providers: [FloorService],
   directives: [NgFor, NgClass, NgIf, Floor, LoadingIndicator],
   template: `
     <loading-indicator *ng-if="isLoading"></loading-indicator>

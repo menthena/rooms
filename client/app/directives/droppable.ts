@@ -47,7 +47,7 @@ export class Droppable implements OnInit {
           let type = dropped.helper.data('type');
           this.addNew({
             floorID: floorID,
-            elementName: 'Click to edit',
+            elementName: 'Untitled',
             elementType: type,
             elementPositionX: position.x,
             elementPositionY: position.y,

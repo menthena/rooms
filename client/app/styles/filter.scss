@@ -18,6 +18,16 @@
     left: 10px;
     margin-top: 9px;
   }
+
+  input {
+    @include baseInput();
+    padding: 5px 7px;
+  }
+  .slider-content {
+    opacity: 0.7;
+    font-weight: normal;
+    margin-left: 5px;
+  }
 }
 
 label {
@@ -56,10 +66,6 @@ label {
   color: $text-color;
 }
 
-input {
-  @include baseInput();
-  padding: 5px 7px;
-}
 
 .input-group {
   max-width: 150px;

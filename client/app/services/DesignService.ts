@@ -54,7 +54,7 @@ export class DesignService implements IDesignService {
     let element = jQuery(event.target);
     let elementWidth = element.width();
     return {
-      width: this.getPercentage(draggable.helper.width(), elementWidth),
+      width: this.getPercentage(elementWidth, jQuery('.ui-droppable').width()),
       height: draggable.helper.height()
     };
   }

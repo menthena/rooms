@@ -6,7 +6,7 @@
 }
 
 .booking {
-  @include boxShadow();
+  @include modalBoxShadow();
   @include transition(all);
   position: absolute;
   top: 0;

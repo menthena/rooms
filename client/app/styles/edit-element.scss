@@ -1,0 +1,107 @@
+@import '_variables';
+@import 'mixins';
+
+.wrapper {
+  position: absolute;
+}
+
+.edit-element {
+  @include modalBoxShadow();
+  @include transition(all);
+  pointer-events: all;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 55px;
+  background: $primary-color;
+  color: #FFF;
+  z-index: 99;
+  padding: 8px 10px;
+  border-radius: 2px;
+  overflow: hidden;
+  > * {
+    @include transition(opacity);
+    opacity: 0;
+  }
+  &.active {
+    width: 236px;
+    height: 255px;
+    > * {
+      opacity: 1;
+    }
+  }
+  &.submitting {
+    .buttons {
+      @include pulse();
+    }
+  }
+  .time {
+    margin-top: 5px;
+    background: darken($primary-color, 7);
+    color: #FFF;
+    padding: 5px 8px;
+    border-radius: 2px;
+  }
+  .form {
+    margin-top: 10px;
+  }
+  .input-group {
+    margin-bottom: 10px;
+  }
+  input[type=text] {
+    border-radius: 2px;
+    border: none;
+    display: block;
+    padding: 4px;
+    outline: none;
+    width: 100%;
+    resize: none;
+    background: #FFF;
+    color: $text-color;
+  }
+  .buttons {
+    margin-top: 10px;
+    text-align: right;
+    a {
+      margin-left: 4px;
+      text-align: center;
+      padding-top: 3px;
+      background: #FFF;
+      border-radius: 99px;
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+    }
+  }
+  slider {
+    width: 150px;
+    @include noShadow();
+    background-color: #FFF;
+  }
+  .ui-slider-handle.ui-state-default {
+    @include noShadow();
+    background: #FFF;
+    border-color: $light-text-color;
+  }
+  input[type="checkbox"] + label i {
+    @include noShadow();
+    background-color: #FFF;
+  }
+  input[type="checkbox"] + label span {
+    font-weight: normal;
+  }
+}
+
+@media (max-width: 600px) {
+  edit-element {
+    .booking {
+      margin: auto;
+      position: relative;
+    }
+    .wrapper {
+      width: 100% !important;
+      left: 0 !important;
+    }
+  }
+}

@@ -12,7 +12,6 @@ declare var jQuery: any;
 export class Draggable implements OnInit {
   @Input() clone: boolean;
   @Input() containment: string;
-  designMode;
 
   constructor(private elementRef: ElementRef, private DesignService: DesignService) {}
 
@@ -28,13 +27,12 @@ export class Draggable implements OnInit {
         };
       } else if (this.containment) {
         options = {
-          containment: this.containment,
-          stack: 'div'
+          containment: this.containment
         };
       }
       jQuery(nativeElement).draggable(options);
     } else {
-      if (jQuery(nativeElement).hasClass('ui-draggable') ) {
+      if (jQuery(nativeElement).hasClass('ui-draggable')) {
         jQuery(nativeElement).draggable('destroy');
       }
     }

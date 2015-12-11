@@ -1,84 +1,40 @@
-import {Component, NgIf, NgClass, Input, OnInit, Observable, ElementRef, Validators, FormBuilder, Form} from 'angular2/angular2';
-import {IFloorElement} from '../../services/FloorElementsService';
+import {Component, OnInit, Observable} from 'angular2/angular2';
+import {Filter} from './filter';
+import {Floors} from '../floors/floors';
+import {DesignService} from '../../services/DesignService';
 import {ReservationService} from '../../services/ReservationService';
 
-declare var jQuery: any;
-
 @Component({
-  selector: 'reservation',
-  directives: [NgIf, NgClass],
-  styleUrls: ['styles/booking.css'],
-  inputs: ['data'],
+  directives: [Filter, Floors],
+  selector: 'reserve',
   template: `
-    <div class="wrapper">
-      <div class="booking" *ng-if="reserveID === data.elementID" [ng-class]="{'active': isActive, 'submitting': isSubmitting}">
-        <form [ng-form-model]="reserveForm" (submit)="submitReservationForm($event)">
-          <div class="heading">
-            Booking room / {{ data.elementName }}
-          </div>
-
-          <div class="time">
-            <i class="fa fa-clock-o"></i>
-            12:30 - 13:30
-          </div>
-
-          <div class="form">
-            <label for="description">Description</label>
-            <textarea name="description" ng-control="description" id="description" placeholder="Enter description..."></textarea>
-          </div>
-
-          <div class="buttons">
-            <a (click)="dismissBooking()"><i class="fa fa-times"></i></a>
-            <a (click)="submitReservationForm()"><i class="fa fa-check"></i></a>
-          </div>
-        </form>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-3">
+          <element-filter (form)="getFormObj($event)"></element-filter>
+        </div>
+        <div class="col-sm-9">
+          <floors></floors>
+        </div>
       </div>
     </div>
-  `
+  `,
+  styleUrls: ['styles/reserve.css']
 })
 
-export class Reservation {
-  @Input() data: IFloorElement;
-  reserveID: string;
-  isActive: boolean;
-  isSubmitting: boolean;
-  reserveForm: any;
-  reservationObserver;
+export class Reserve {
+  formObj: Object;
+  reservationFilterObserver: any;
 
-  constructor(private elementRef: ElementRef, ReservationService: ReservationService, fb: FormBuilder) {
-    this.reservationObserver = ReservationService.getObservable();
-    this.isActive = false;
-    this.reserveForm = fb.group({
-      description: ['']
-    });
+  constructor(private DesignService: DesignService, ReservationService: ReservationService) {
+    this.DesignService.designModeState = false;
+    this.reservationFilterObserver = ReservationService.getReservationFilterObserver();
   }
 
-  dismissBooking() {
-    if (!this.isSubmitting) {
-      this.reservationObserver
-        .subscription.next();
-    }
-  }
-
-  submitReservationForm() {
-    if (!this.isSubmitting) {
-      this.isSubmitting = true;
-
-    }
-  }
-
-  ngOnInit() {
-    this.reservationObserver
-      .delay(50)
-      .subscribe(() => {
-        this.isActive = true;
-      });
-    this.reservationObserver
-      .subscribe(
-        res => {
-          this.isActive = false;
-          this.reserveID = res;
-        }
-      );
+  getFormObj(formObj) {
+    this.formObj = formObj;
+    this.reservationFilterObserver
+      .subscription
+      .next(this.formObj);
   }
 }

@@ -3,12 +3,14 @@ import {Component, Input, NgIf, NgClass, NgFor, NgSwitch, NgZone, NgSwitchWhen,
 import {IFloor} from '../../services/FloorService';
 import {FloorElementsService, IFloorElement} from '../../services/FloorElementsService';
 import {Room} from './room';
-import {Reservation} from '../reservation/reservation';
+import {ReservationModal} from '../reservation/reservation-modal';
 import {Placeholder} from './placeholder';
 import {LoadingIndicator} from '../../directives/loading-indicator';
 import {PlaceElement} from '../../directives/place-element';
+import {EditElement} from '../design/edit-element';
 import {Droppable} from '../../directives/droppable';
 import {DesignService} from '../../services/DesignService';
+import {IReservation, ReservationService} from '../../services/ReservationService';
 import * as _ from 'lodash';
 import * as io from 'socket.io-client';
 
@@ -16,7 +18,7 @@ import * as io from 'socket.io-client';
   selector: 'floor',
   providers: [FloorElementsService],
   directives: [NgFor, NgIf, NgClass, NgSwitch, NgSwitchWhen, NgSwitchDefault, Room,
-    PlaceElement, Reservation, Placeholder, Droppable, LoadingIndicator],
+    PlaceElement, ReservationModal, Placeholder, Droppable, LoadingIndicator, EditElement],
   styleUrls: ['styles/floors/floor.css'],
   template: `
   <div [ng-class]="{'design-mode': designMode}">
@@ -32,7 +34,8 @@ import * as io from 'socket.io-client';
       [attr.data-id]="floor.floorID" [ng-class]="{loading: isLoading}">
       <div class="inner">
         <div *ng-for="#element of floorElements" [ng-switch]="element.elementType">
-          <Reservation *ng-if="!designMode" [data]="element" place-element type="modal"></Reservation>
+          <edit-element *ng-if="designMode" place-element type="modal" [data]="element"></edit-element>
+          <reservation-modal *ng-if="!designMode" [data]="element" place-element type="modal"></reservation-modal>
           <Room *ng-switch-when="'room'" [data]="element" place-element></Room>
           <Placeholder [data]="element" place-element *ng-switch-default></Placeholder>
         </div>
@@ -44,17 +47,17 @@ import * as io from 'socket.io-client';
 
 export class Floor {
   floorElements: Array<IFloorElement>;
+  reservations: Array<IReservation>;
   floorElementsObservable;
   @Input() floor: IFloor;
   @Input() isLoading: boolean;
   designMode: boolean;
 
   constructor(private floorElementsService: FloorElementsService,
-    private changeRef: ChangeDetectorRef, private DesignService: DesignService
+    private changeRef: ChangeDetectorRef, private DesignService: DesignService,
+    private ReservationService: ReservationService
   ) {
     this.floorElements = [];
-    this.floorElementsObservable = this.floorElementsService.getObservable();
-    this.floorElementsObservable.connect();
     this.designMode = DesignService.designModeState;
     this.isLoading = false;
   }
@@ -73,6 +76,7 @@ export class Floor {
       );
   }
 
+
   ngOnInit() {
     let socket = io.connect('http://localhost:5555');
 
@@ -89,17 +93,27 @@ export class Floor {
       }
     });
 
-    this.floorElementsObservable
-      .subscribe((res: any) => {
-        if (res.type === 'data') {
-          this.isLoading = false;
-          this.floorElements = res.data;
-        } else {
-          this.isLoading = true;
-        }
-        this.changeRef.detectChanges();
-      });
+    socket.on('reservations', (res) => {
+      if (!this.DesignService.designModeState) {
+        this.ReservationService.fetchReservations()
+          .subscribe(() => {
+            this.reservations = this.ReservationService.reservations;
+            this.changeRef.markForCheck();
+          });
+      }
+    });
 
+    // this.floorElementsObservable
+    //   .subscribe((res: any) => {
+    //     if (res.type === 'data') {
+    //       this.isLoading = false;
+    //       this.floorElements = res.data;
+    //     } else {
+    //       this.isLoading = true;
+    //     }
+    //     this.changeRef.detectChanges();
+    //   });
+    //
     this.fetch(this.floor.floorID);
   }
 
