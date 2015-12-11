@@ -52,7 +52,8 @@ export class Droppable implements OnInit {
             elementPositionX: position.x,
             elementPositionY: position.y,
             elementHeight: 0,
-            elementWidth: 19
+            elementWidth: 19,
+            capacity: 5
           });
         }
       }

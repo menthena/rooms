@@ -76,10 +76,12 @@ export class EditElement {
       this.isSubmitting = true;
       let data: any = this.editForm.value;
       data.floorID = this.data.floorID;
+      this.isActive = false;
       this.FloorElementsService.editElement(this.data.elementID, data);
       this.floorElementsObservable
+        .delay(100)
         .subscribe(() => {
-          this.dismissEditing();
+          this.editID = null;
         }, (err) => {
           console.log(err);
         });

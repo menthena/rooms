@@ -59,9 +59,10 @@ export class ReservationModal {
 
   dismissBooking() {
     if (!this.isSubmitting) {
-      this.reservationObserver
-        .subscription
-        .next();
+      this.isActive = false;
+      setTimeout(() => {
+        this.reserveID = null;
+      }, 200);
     }
   }
 

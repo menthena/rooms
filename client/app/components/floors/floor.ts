@@ -46,11 +46,11 @@ import * as io from 'socket.io-client';
 })
 
 export class Floor {
+  @Input() floor: IFloor;
+  @Input() isLoading: boolean;
   floorElements: Array<IFloorElement>;
   reservations: Array<IReservation>;
   floorElementsObservable;
-  @Input() floor: IFloor;
-  @Input() isLoading: boolean;
   designMode: boolean;
 
   constructor(private floorElementsService: FloorElementsService,
@@ -58,6 +58,8 @@ export class Floor {
     private ReservationService: ReservationService
   ) {
     this.floorElements = [];
+    this.floorElementsObservable = this.floorElementsService.getObservable();
+    this.floorElementsObservable.connect();
     this.designMode = DesignService.designModeState;
     this.isLoading = false;
   }
@@ -70,7 +72,7 @@ export class Floor {
         (res: any) => {
           let arr = res.json().data;
           this.floorElements = arr;
-            this.isLoading = false;
+          this.isLoading = false;
           this.changeRef.markForCheck();
         }
       );
@@ -103,17 +105,17 @@ export class Floor {
       }
     });
 
-    // this.floorElementsObservable
-    //   .subscribe((res: any) => {
-    //     if (res.type === 'data') {
-    //       this.isLoading = false;
-    //       this.floorElements = res.data;
-    //     } else {
-    //       this.isLoading = true;
-    //     }
-    //     this.changeRef.detectChanges();
-    //   });
-    //
+    this.floorElementsObservable
+      .subscribe((res: any) => {
+        if (res.type === 'data') {
+          this.isLoading = false;
+          this.floorElements = res.data;
+        } else {
+          this.isLoading = true;
+        }
+        this.changeRef.detectChanges();
+      });
+
     this.fetch(this.floor.floorID);
   }
 
