@@ -6,13 +6,15 @@ var router = express.Router();
 var models = require('../models');
 var reservation = models.reservation;
 var io = require('../../socket');
+var moment = require('moment');
 
 router.get('/', function(req, res) {
   var sendResponse = function(err, reservations) {
     res.send({ data: reservations });
   };
-
-  reservation.find({}).exec(sendResponse);
+  reservation
+    .find({ reservationDate: { $gt: moment().add(-1, 'day') } })
+    .exec(sendResponse);
 });
 
 router.patch('/:id', function(req, res) {

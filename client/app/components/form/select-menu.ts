@@ -5,7 +5,7 @@ declare var jQuery:any;
 @Component({
   selector: '[select-menu]',
   inputs: ['formModel'],
-  properties: ['controlName'],
+  properties: ['controlName', 'selectFormat'],
   styleUrls: ['styles/form/select-menu.css'],
   encapsulation: ViewEncapsulation.None,
   template: `<ng-content></ng-content>`
@@ -14,6 +14,7 @@ declare var jQuery:any;
 export class SelectMenu implements OnInit {
   @Input() controlName: string;
   @Input() formModel: any;
+  @Input() selectFormat: any;
   constructor(private elementRef: ElementRef) {}
 
   updateModel(value) {
@@ -24,14 +25,28 @@ export class SelectMenu implements OnInit {
 
   ngOnInit() {
     let selectBox = jQuery(this.elementRef.nativeElement);
+    let options: any = {
+      style: 'popup',
+      width: 'auto',
+      select: (e, obj) => {
+        let value = obj.item.value;
+        this.updateModel(value);
+      }
+    };
+
+    console.log(this.selectFormat);
+
+    if (this.selectFormat === 'input') {
+      options.format = (() => {
+        let input = '<input class="other" type="text" value="Other..." />';
+        return jQuery('<span/>')
+                .append(input)
+                .outerHTML;
+      });
+      console.log(options);
+    }
     selectBox
-      .selectmenu({
-        width: 'auto',
-        select: (e, obj) => {
-          let value = obj.item.value;
-          this.updateModel(value);
-        }
-      })
+      .selectmenu(options)
       .selectmenu('menuWidget')
       .addClass('max-selectbox');
     setTimeout(() => {

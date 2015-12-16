@@ -3,6 +3,7 @@ import {Component, Input, NgIf, NgClass, NgFor, NgSwitch, NgZone, NgSwitchWhen,
 import {IFloor} from '../../services/FloorService';
 import {FloorElementsService, IFloorElement} from '../../services/FloorElementsService';
 import {Room} from './room';
+import {SOCKET_URL} from '../../constants';
 import {ReservationModal} from '../reservation/reservation-modal';
 import {Placeholder} from './placeholder';
 import {LoadingIndicator} from '../../directives/loading-indicator';
@@ -18,7 +19,7 @@ import * as io from 'socket.io-client';
   selector: 'floor',
   providers: [FloorElementsService],
   directives: [NgFor, NgIf, NgClass, NgSwitch, NgSwitchWhen, NgSwitchDefault, Room,
-    PlaceElement, ReservationModal, Placeholder, Droppable, LoadingIndicator, EditElement],
+    PlaceElement, Placeholder, Droppable, LoadingIndicator],
   styleUrls: ['styles/floors/floor.css'],
   template: `
   <div [ng-class]="{'design-mode': designMode}">
@@ -34,8 +35,6 @@ import * as io from 'socket.io-client';
       [attr.data-id]="floor.floorID" [ng-class]="{loading: isLoading}">
       <div class="inner">
         <div *ng-for="#element of floorElements" [ng-switch]="element.elementType">
-          <edit-element *ng-if="designMode" place-element type="modal" [data]="element"></edit-element>
-          <reservation-modal *ng-if="!designMode" [data]="element" place-element type="modal"></reservation-modal>
           <Room *ng-switch-when="'room'" [data]="element" place-element></Room>
           <Placeholder [data]="element" place-element *ng-switch-default></Placeholder>
         </div>
@@ -78,9 +77,8 @@ export class Floor {
       );
   }
 
-
   ngOnInit() {
-    let socket = io.connect('http://localhost:5555');
+    let socket = io.connect(SOCKET_URL);
 
     socket.on('elements', (res) => {
       if (!this.DesignService.designModeState) {

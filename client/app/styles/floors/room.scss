@@ -4,7 +4,7 @@
 .wrapper {
   position: absolute;
   display: inline-block;
-  &.reserved {
+  &.reserved, &.not-match {
     .room {
       opacity: 0.4;
       cursor: default;
@@ -12,6 +12,11 @@
       &:hover {
         background-color: $text-color;
       }
+    }
+  }
+  &.not-match:not(.reserved) {
+    .room {
+      opacity: 0.8;
     }
   }
 }

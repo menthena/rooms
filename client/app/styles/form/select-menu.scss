@@ -28,7 +28,7 @@
   }
   .ui-state-focus, .ui-widget-content {
     background: none;
-    border: none;
+    border-color: $input-color;
     box-shadow: none;
   }
 }

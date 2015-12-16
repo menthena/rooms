@@ -11,6 +11,7 @@ var floorElementSchema = new Schema({
   elementPositionY: Number,
   elementHeight: Number,
   elementWidth: Number,
+  features: Array,
   hasTV: Boolean,
   capacity: Number,
   date: { type: Date, default: Date.now }

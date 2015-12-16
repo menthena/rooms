@@ -1,0 +1,25 @@
+@import '../_variables';
+@import '../mixins';
+
+ul.ui-timepicker-list {
+  @include baseInput();
+  li {
+    color: $text-color;
+    &:hover {
+      background: $input-color;
+      color: $primary-color;
+    }
+    &.ui-timepicker-selected {
+      background: $input-color;
+      color: $primary-color;
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+}
+
+.ui-timepicker-list:hover .ui-timepicker-selected {
+  color: $primary-color;
+  background: $input-color;
+}

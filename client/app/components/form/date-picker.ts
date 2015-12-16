@@ -9,7 +9,6 @@ declare var jQuery:any;
   styleUrls: ['styles/filter.css', 'styles/form/date-picker.css'],
   encapsulation: ViewEncapsulation.None,
   template: `
-    <label for="date">Date</label>
     <i class="fa fa-calendar"></i>
     <input [attr.value]="formModel.value[controlName]" type="text">
   `

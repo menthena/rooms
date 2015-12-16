@@ -1,6 +1,6 @@
 module CONSTANTS {
 
-  export const DATE_FORMAT: string = 'DD/MM/YYYY HH:mm';
+  export const DATE_FORMAT: string = 'DD/MM/YYYY h:mma';
 
   export const DURATION_DATA = [{
       value: 15,
@@ -35,9 +35,18 @@ module CONSTANTS {
       text: '3 hours'
     }];
 
-  export const TIME_DATA = ['07:00', '07:30', '08:00', '08:30', '09:00', '09:30',
-  '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00',
-  '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00', '18:30'];
+  export const FEATURES_DATA = [
+    {
+      value: 'tv',
+      text: 'TV'
+    },
+    {
+      value: 'phone',
+      text: 'Phone'
+    }
+  ];
+
+  export const SOCKET_URL = 'http://localhost:5555';
 
 }
 

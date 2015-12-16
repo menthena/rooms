@@ -1,4 +1,4 @@
-import {Component, Attribute, NgIf, Input, OnInit, ElementRef} from 'angular2/angular2';
+import {Component, Attribute, NgIf, Input, OnInit, ElementRef, ChangeDetectorRef} from 'angular2/angular2';
 import {Observable} from 'rxjs';
 import {DATE_FORMAT} from '../../constants';
 import {IFloorElement} from '../../services/FloorElementsService';
@@ -6,6 +6,8 @@ import {IReservation, ReservationService} from '../../services/ReservationServic
 import {EditElement} from '../design/edit-element';
 import {Resizable} from '../../directives/resizable';
 import {Draggable} from '../../directives/draggable';
+import {PlaceElement} from '../../directives/place-element';
+import {ReservationModal} from '../reservation/reservation-modal';
 import {FloorElementsService} from '../../services/FloorElementsService';
 import {DesignService} from '../../services/DesignService';
 import * as moment from 'moment';
@@ -14,27 +16,33 @@ declare var jQuery:any;
 
 @Component({
   selector: 'room',
-  directives: [NgIf, Resizable, Draggable, EditElement],
+  directives: [NgIf, Resizable, Draggable, EditElement, PlaceElement, ReservationModal, EditElement],
   inputs: ['data', 'designMode'],
   styleUrls: ['styles/floors/room.css'],
   template: `
     <div class="wrapper" resizable-element draggable-element
     [containment]="'#floor' + data.floorID" [attr.element-id]="data.elementID" [attr.data-id]="data.floorID"
-      [class.reserved]="!designMode && !isAvailable">
+      [class.reserved]="!designMode && !isActive" [class.not-match]="!designMode && !isMatch">
+      <reservation-modal *ng-if="!designMode" [data]="data" place-element [place-type]="'modal'"></reservation-modal>
+      <edit-element *ng-if="designMode" place-element place-type="modal" [data]="data"></edit-element>
       <div class="room" (click)="handleClick()">
         <div><span>{{ data.elementName }}</span></div>
         <a *ng-if="designMode" (click)="editElement()"><i class="fa fa-pencil"></i></a>
-        <div *ng-if="!designMode && isAvailable">
+        <div *ng-if="!designMode && isActive && isMatch">
           <div class="features pull-left">
             <span><i class="fa fa-user"></i> {{ data.capacity }}</span>
-            <span><i class="fa fa-television" *ng-if="data.hasTV"></i></span>
+            <span><i class="fa fa-television" *ng-if="data.features && data.features.indexOf('tv') > -1"></i></span>
+            <span><i class="fa fa-phone" *ng-if="data.features && data.features.indexOf('phone') > -1"></i></span>
           </div>
           <div class="book pull-right">
             <i class="fa fa-plus-square"></i>
           </div>
         </div>
-        <div *ng-if="!designMode && !isAvailable" class="reserved">
+        <div *ng-if="!designMode && !isActive" class="reserved">
           Reserved
+        </div>
+        <div *ng-if="!designMode && isActive && !isMatch" class="reserved">
+          Not a match
         </div>
       </div>
     </div>
@@ -48,21 +56,26 @@ export class Room implements OnInit {
   designMode: boolean;
   reservationObserver;
   designObservable;
-  isAvailable: boolean;
+  reservationSubscriber;
+  filterSubscription;
+  isActive: boolean;
+  isMatch: boolean;
   filter: any;
   reservationFilterObserver;
 
   constructor(private elementRef: ElementRef, private ReservationService: ReservationService,
-      DesignService: DesignService, private FloorElementsService: FloorElementsService) {
+      DesignService: DesignService, private FloorElementsService: FloorElementsService,
+      private changeRef: ChangeDetectorRef) {
     this.reservationFilterObserver = ReservationService.getReservationFilterObserver();
     this.reservationObserver = ReservationService.getObservable();
-    this.isAvailable = true;
+    this.isActive = true;
+    this.isMatch = true;
     this.designObservable = DesignService.getObservable();
     this.designMode = DesignService.designModeState;
   }
 
   startReservation() {
-    if (this.isAvailable) {
+    if (this.isActive) {
       this.reservationObserver
         .subscription
         .next(this.data.elementID);
@@ -79,42 +92,64 @@ export class Room implements OnInit {
   }
 
   checkAvailability() {
-    this.isAvailable = true;
-    if (this.filter) {
+    this.isMatch = true;
+    this.isActive = true;
+    if (!this.designMode && this.filter) {
       Observable.fromArray(this.reservations)
-        .filter(res => {
-          return moment.utc(res.reservationDate).diff(this.filter.reservationDate) >= 0;
+        .filter((res: any) => {
+          return moment.utc(this.filter.reservationDate).diff(res.reservationDate) >= 0 ||
+            moment.utc(this.filter.reservationEndDate).diff(res.reservationDate) >= 0;
         })
-        .filter(res => {
-          return moment.utc(res.reservationDate).diff(this.filter.reservationEndDate) < 0;
+        .filter((res: any) => {
+          return moment.utc(this.filter.reservationDate).diff(res.reservationEndDate) < 0;
         })
         .filter(res => {
           return res.elementID === this.data.elementID;
         })
         .subscribe(res => {
-          this.isAvailable = false;
+          this.isActive = false;
         });
+      if (this.filter.capacity > this.data.capacity) {
+        this.isMatch = false;
+      }
+      if (this.filter.features) {
+        this.filter.features.map((res) => {
+          if (this.data.features.indexOf(res) === -1) {
+            this.isMatch = false;
+          }
+        });
+      }
+      this.changeRef.detectChanges();
     }
   }
 
   handleClick() {
-    if (!this.designMode) {
+    if (!this.designMode && this.isActive && this.isMatch) {
       this.startReservation();
     }
   }
 
+  ngOnDestroy() {
+    this.filterSubscription.unsubscribe();
+    this.reservationSubscriber.unsubscribe();
+  }
+
   ngOnInit() {
-    this.reservationFilterObserver.connect();
-    this.reservations = this.ReservationService.reservations;
-    this.filter = this.ReservationService.filter;
-    this.checkAvailability();
-    this.reservationFilterObserver
+    if (!this.reservationFilterObserver.subscription) {
+      this.reservationFilterObserver.connect();
+    }
+    if (!this.reservationObserver.subscription) {
+      this.reservationObserver.connect();
+    }
+    this.filterSubscription = this.reservationFilterObserver
       .subscribe(res => {
         this.filter = this.ReservationService.filter;
         this.checkAvailability();
       });
-    this.reservationObserver.connect();
-    this.reservationObserver
+    this.reservations = this.ReservationService.reservations;
+    this.filter = this.ReservationService.filter;
+    this.checkAvailability();
+    this.reservationSubscriber = this.reservationObserver
       .subscribe(res => {
         if (res && res.type) {
           this.reservations = res.data;

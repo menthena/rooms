@@ -16,8 +16,9 @@ interface IReservationService {
   saveFilter(filter: Object) : any;
   fetchReservations() : Observable<Object>;
   transformFilter(filter: Object) : Object;
-  makeReservation(elementID: string, description: string) : void;
+  makeReservation(elementID: string, description: string) : Observable<any>;
   getReservationFilterObserver(): Observable<Object>;
+  updateTime() : string;
   getObservable() : Observable<string>;
 }
 
@@ -25,12 +26,18 @@ interface IReservationService {
 export class ReservationService implements IReservationService {
   public reservationTime: string;
   public reservations: Array<IReservation>;
-  public filter;
+  public filter: any;
   reservationObserver;
   reservationFilterObserver: any;
   floorElementsObservable;
 
   constructor(private http: Http, FloorElementsService: FloorElementsService) {
+    this.filter = {
+      duration: 30,
+      capacity: 12,
+      features: [],
+      date: moment()
+    };
     this.floorElementsObservable = FloorElementsService.getObservable();
     this.floorElementsObservable.connect();
     this.floorElementsObservable
@@ -51,6 +58,11 @@ export class ReservationService implements IReservationService {
         this.saveFilter(res);
       }
     );
+  }
+
+  updateTime() {
+    this.filter.time = moment().add(10, 'minutes').format('h:mma');
+    return this.filter.time;
   }
 
   fetchReservations() {
@@ -78,34 +90,40 @@ export class ReservationService implements IReservationService {
     this.filter.description = description;
     this.filter.elementID = elementID;
 
-    this.http.post('/api/reservation', JSON.stringify(this.filter), {
+    let observable: any = this.http.post('/api/reservation', JSON.stringify(this.filter), {
       headers: new Headers({ 'Content-Type': 'application/json' })
-    })
-    .delay(400)
-    .subscribe((res: any) => {
-      let data = res.json().data;
-      this.floorElementsObservable.subscription.next({
-        type: 'reservation',
-        data: data
-      });
     });
+    observable
+      .delay(400)
+      .subscribe((res: any) => {
+        let data = res.json().data;
+        this.floorElementsObservable.subscription.next({
+          type: 'reservation',
+          data: data
+        });
+      });
+    return observable;
   }
 
   transformFilter(filter) {
     let filterDate = moment(filter.date + ' ' + filter.time, DATE_FORMAT);
     return {
       reservationDate: filterDate,
-      reservationEndDate: moment(filterDate).add(filter.duration, 'minutes')
+      reservationEndDate: moment(filterDate).add(filter.duration, 'minutes'),
+      capacity: filter.capacity,
+      features: filter.features,
+      time: filter.time,
+      date: moment(filter.date, DATE_FORMAT)
     };
   }
 
   saveFilter(filter) {
     if (filter) {
       this.filter = this.transformFilter(filter);
-      if (filter.time && filter.time.indexOf(':') > -1) {
-        let filterTime: any = String(filter.time).split(':');
+      if (filter.time) {
         this.reservationTime = filter.time + ' - ' +
-          moment().hours(filterTime[0]).minutes(filterTime[1]).add(filter.duration, 'minutes').format('HH:mm');
+          moment(filter.date + ' ' + filter.time, DATE_FORMAT)
+            .add(filter.duration, 'minutes').format('HH:mm');
       }
     }
   }

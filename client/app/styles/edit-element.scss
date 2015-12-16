@@ -7,13 +7,13 @@
 
 .edit-element {
   @include modalBoxShadow();
-  @include transition(all);
+  @include transition(opacity, 0.1s);
   pointer-events: all;
   position: absolute;
   top: 0;
   left: 0;
-  width: 100px;
-  height: 55px;
+  width: 236px;
+  height: 255px;
   background: $primary-color;
   color: #FFF;
   z-index: 99;
@@ -25,8 +25,6 @@
     opacity: 0;
   }
   &.active {
-    width: 236px;
-    height: 255px;
     > * {
       opacity: 1;
     }

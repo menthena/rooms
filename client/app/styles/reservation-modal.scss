@@ -7,12 +7,12 @@
 
 .booking {
   @include modalBoxShadow();
-  @include transition(all);
+  @include transition(opacity, 0.1s);
   position: absolute;
   top: 0;
   left: 0;
-  width: 100px;
-  height: 55px;
+  width: 236px;
+  height: 180px;
   background: $primary-color;
   color: #FFF;
   z-index: 2;
@@ -24,8 +24,6 @@
     opacity: 0;
   }
   &.active {
-    width: 236px;
-    height: 180px;
     > * {
       opacity: 1;
     }

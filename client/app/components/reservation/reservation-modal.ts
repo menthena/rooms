@@ -69,7 +69,10 @@ export class ReservationModal {
   submitReservationForm() {
     if (!this.isSubmitting) {
       this.isSubmitting = true;
-      this.ReservationService.makeReservation(this.data.elementID, this.reserveForm.value.description);
+      this.ReservationService.makeReservation(this.data.elementID, this.reserveForm.value.description)
+        .subscribe(() => {
+          this.isSubmitting = false;
+        });
     }
   }
 

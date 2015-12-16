@@ -29,7 +29,7 @@ declare var jQuery: any;
               <input type="text" name="elementName" ng-control="elementName" id="elementName" placeholder="Element name..." />
             </div>
             <div class="input-group">
-              <label>Min capacity</label>
+              <label>Min capacity: <span class="slider-content">({{ editForm.value.capacity }})</span></label>
               <slider control-name="capacity" [(form-model)]="editForm"></slider>
             </div>
             <div class="input-group">
