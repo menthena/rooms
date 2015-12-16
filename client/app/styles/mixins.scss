@@ -14,6 +14,10 @@
   box-shadow: (0 1px 2px rgba(187, 214, 216, 0.4), 0 1px 1px rgba(187, 214, 216, 0.9));
 }
 
+@mixin transform($type) {
+  transform: $type;
+}
+
 @mixin dragShadow() {
   box-shadow: (0 1px 10px rgba(187, 214, 216, 0.8), 0 2px 2px rgba(187, 214, 216, 0.9));
 }
@@ -56,7 +60,7 @@
 }
 
 @mixin transition($type, $duration: 0.15s) {
-  transition: $type $duration;
+  transition: $type $duration ease-out;
 }
 
 @mixin pulse() {

@@ -123,7 +123,7 @@ export class ReservationService implements IReservationService {
       if (filter.time) {
         this.reservationTime = filter.time + ' - ' +
           moment(filter.date + ' ' + filter.time, DATE_FORMAT)
-            .add(filter.duration, 'minutes').format('HH:mm');
+            .add(filter.duration, 'minutes').format('h:mma');
       }
     }
   }

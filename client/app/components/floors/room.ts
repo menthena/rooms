@@ -27,22 +27,27 @@ declare var jQuery:any;
       <edit-element *ng-if="designMode" place-element place-type="modal" [data]="data"></edit-element>
       <div class="room" (click)="handleClick()">
         <div><span>{{ data.elementName }}</span></div>
-        <a *ng-if="designMode" (click)="editElement()"><i class="fa fa-pencil"></i></a>
-        <div *ng-if="!designMode && isActive && isMatch">
-          <div class="features pull-left">
-            <span><i class="fa fa-user"></i> {{ data.capacity }}</span>
-            <span><i class="fa fa-television" *ng-if="data.features && data.features.indexOf('tv') > -1"></i></span>
-            <span><i class="fa fa-phone" *ng-if="data.features && data.features.indexOf('phone') > -1"></i></span>
+        <div class="second-line">
+          <a *ng-if="designMode" (click)="editElement()"><i class="fa fa-pencil"></i></a>
+          <div *ng-if="!designMode && isActive && isMatch">
+            <div class="features pull-left">
+              <span><i class="fa fa-user"></i> {{ data.capacity }}</span>
+              <span><i class="fa fa-television" *ng-if="data.features && data.features.indexOf('tv') > -1"></i></span>
+              <span><i class="fa fa-phone" *ng-if="data.features && data.features.indexOf('phone') > -1"></i></span>
+            </div>
+            <div class="book pull-right hidden-xs">
+              <i class="fa fa-plus-square"></i>
+            </div>
+            <i class="visible-xs fa fa-plus-square"></i>
           </div>
-          <div class="book pull-right">
-            <i class="fa fa-plus-square"></i>
+          <div *ng-if="!designMode && !isActive" class="reserved">
+            <i class="visible-xs fa fa-ban"></i>
+            <span>Reserved</span>
           </div>
-        </div>
-        <div *ng-if="!designMode && !isActive" class="reserved">
-          Reserved
-        </div>
-        <div *ng-if="!designMode && isActive && !isMatch" class="reserved">
-          Not a match
+          <div *ng-if="!designMode && isActive && !isMatch" class="reserved">
+            <i class="visible-xs fa fa-filter"></i>
+            <span>Not a match</span>
+          </div>
         </div>
       </div>
     </div>

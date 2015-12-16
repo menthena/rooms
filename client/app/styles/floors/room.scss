@@ -19,6 +19,9 @@
       opacity: 0.8;
     }
   }
+  reservation-modal {
+    position: relative;
+  }
 }
 
 .room {
@@ -38,6 +41,11 @@
   &:hover {
     background-color: darken($primary-color, 5);
   }
+  .second-line {
+    .text {
+      white-space: nowrap;
+    }
+  }
   .fa-pencil {
     padding-top: 3px;
   }
@@ -53,4 +61,18 @@
 
 span, i {
   color: #FFF;
+}
+
+@media (max-width: 768px) {
+  reservation-modal {
+    position: absolute;
+  }
+  .room {
+    text-align: center;
+    min-height: auto;
+    height: auto;
+    span {
+      display: none;
+    }
+  }
 }

@@ -17,8 +17,9 @@ import {ReservationService} from './services/ReservationService';
 
 @View({
   encapsulation: ViewEncapsulation.None,
-  directives: [RouterOutlet, Header],
+  directives: [RouterOutlet, Header, Overlay],
   template: `
+  <overlay></overlay>
   <header></header>
   <router-outlet></router-outlet>
   `,

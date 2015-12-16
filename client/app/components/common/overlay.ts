@@ -27,13 +27,16 @@ export class Overlay {
       .connect();
     this.reservationObservable
       .subscribe(res => {
-        if (res) {
+        if (typeof res === 'string') {
           this.isPanelActive = true;
           setTimeout(() => {
             this.isActive = true;
           }, 100);
         } else {
-          this.isPanelActive = this.isActive = false;
+          this.isActive = false;
+          setTimeout(() => {
+            this.isPanelActive = false;
+          }, 100);
         }
       });
   }
