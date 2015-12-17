@@ -6,6 +6,7 @@ import {IReservation, ReservationService} from '../../services/ReservationServic
 import {EditElement} from '../design/edit-element';
 import {Resizable} from '../../directives/resizable';
 import {Draggable} from '../../directives/draggable';
+import {Tooltip} from '../../directives/tooltip';
 import {PlaceElement} from '../../directives/place-element';
 import {ReservationModal} from '../reservation/reservation-modal';
 import {FloorElementsService} from '../../services/FloorElementsService';
@@ -16,7 +17,8 @@ declare var jQuery:any;
 
 @Component({
   selector: 'room',
-  directives: [NgIf, Resizable, Draggable, EditElement, PlaceElement, ReservationModal, EditElement],
+  directives: [NgIf, Resizable, Draggable, EditElement, PlaceElement, ReservationModal, EditElement,
+    Tooltip],
   inputs: ['data', 'designMode'],
   styleUrls: ['styles/floors/room.css'],
   template: `
@@ -25,7 +27,7 @@ declare var jQuery:any;
       [class.reserved]="!designMode && !isActive" [class.not-match]="!designMode && !isMatch">
       <reservation-modal *ng-if="!designMode" [data]="data" place-element [place-type]="'modal'"></reservation-modal>
       <edit-element *ng-if="designMode" place-element place-type="modal" [data]="data"></edit-element>
-      <div class="room" (click)="handleClick()">
+      <div class="room" (click)="handleClick()" tooltip [data]="data" [reservations]="reservations">
         <div><span>{{ data.elementName }}</span></div>
         <div class="second-line">
           <a *ng-if="designMode" (click)="editElement()"><i class="fa fa-pencil"></i></a>
