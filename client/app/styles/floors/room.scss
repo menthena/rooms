@@ -22,6 +22,11 @@
   reservation-modal {
     position: relative;
   }
+  &:hover {
+    .reservation-popover {
+      display: block;
+    }
+  }
 }
 
 .room {
@@ -33,7 +38,7 @@
   width: 100%;
   height: 100%;
   min-height: 55px;
-  overflow: hidden;
+  // overflow: hidden;
   position: absolute;
   color: #FFF;
   display: inline-block;

@@ -1,6 +1,8 @@
 module CONSTANTS {
 
   export const DATE_FORMAT: string = 'DD/MM/YYYY h:mma';
+  export const DATE_ONLY_FORMAT: string = 'DD/MM/YYYY';
+  export const EMAIL_REGEX = '^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$';
 
   export const DURATION_DATA = [{
       value: 15,

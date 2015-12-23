@@ -2,11 +2,12 @@
 
 // var _ = require('lodash');
 var express = require('express');
+var middleware = require('../middleware');
 var router = express.Router();
 var models = require('../models');
 var floorElement = models.floorElement;
 
-router.get('/', function(req, res) {
+router.get('/', middleware.requiresUser, function(req, res) {
   var sendResponse = function(err, floorElements) {
     res.send({ data: floorElements });
   };
@@ -14,7 +15,7 @@ router.get('/', function(req, res) {
   floorElement.find({}).exec(sendResponse);
 });
 
-router.patch('/:id', function(req, res) {
+router.patch('/:id', middleware.requiresUser, function(req, res) {
   var updatedModel = req.body;
 
   floorElement.findOne({ elementName: updatedModel.elementName }, function(err, floorElementDetails) {
@@ -35,7 +36,7 @@ router.patch('/:id', function(req, res) {
   });
 });
 
-router.post('/', function(req, res) {
+router.post('/', middleware.requiresUser, function(req, res) {
   var newFloor = req.body;
   floorElement.count(newFloor, function(err, floorElementCount) {
     if (err) {
@@ -58,7 +59,7 @@ router.post('/', function(req, res) {
   });
 });
 
-router.delete('/:id', function(req, res) {
+router.delete('/:id', middleware.requiresUser, function(req, res) {
 
   floorElement.remove({ _id: req.params.id }, function(err) {
     if (err) {

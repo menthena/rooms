@@ -1,10 +1,6 @@
 @import '_variables';
 @import 'mixins';
 
-.input-group {
-  margin: 15px 0 5px;
-  width: 100%;
-}
 
 .filter {
   h1 {
@@ -12,6 +8,11 @@
     font-weight: 400;
     font-size: 20px;
     padding-top: 10px;
+  }
+  .input-group {
+    margin: 15px 0 5px;
+    width: 100%;
+    max-width: 150px;
   }
   .fa {
     position: absolute;
@@ -74,9 +75,7 @@ label {
   font-size: 15px;
 }
 
-.input-group {
-  max-width: 150px;
-}
+
 
 select[name=duration] {
   width: 165px;

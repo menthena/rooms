@@ -1,4 +1,4 @@
-import {Injectable} from 'angular2/angular2';
+import {Injectable} from 'angular2/core';
 import {Observable} from 'rxjs';
 import {Http, Response, Headers} from 'angular2/http';
 import * as _ from 'lodash';
@@ -19,6 +19,7 @@ export interface IFloorElement {
   elementPositionY: number;
   elementWidth: number;
   elementHeight: number;
+  elementIcon?: string;
   features: string;
   capacity?: number;
 }

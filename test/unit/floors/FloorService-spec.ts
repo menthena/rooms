@@ -1,5 +1,5 @@
 /// <reference path="../../../typings/tsd.d.ts" />
-import {Component, provide} from 'angular2/angular2';
+import {Component, provide} from 'angular2/core';
 import * as Rooms from '../../../client/app/rooms';
 import {Floors} from '../../../client/app/components/floors/floors';
 

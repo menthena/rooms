@@ -1,6 +1,12 @@
 'use strict';
 
 var models = require('./api/models');
+var bcrypt = require('bcrypt-nodejs');
+
+function hashPassword(password) {
+  var salt = bcrypt.genSaltSync(10);
+  return bcrypt.hashSync(password, salt);
+}
 
 models.floor.count(function(err, count) {
   if (count === 0) {
@@ -77,46 +83,27 @@ models.floor.count(function(err, count) {
     });
   }
 });
-//
-// models.company.create({
-//   companyName: 'Manager company'
-// }, function(err, company) {
-//   if (company) {
-//     models.User.create({
-//       email: 'manager@manager.com',
-//       companyID: company._id,
-//       hashed_password: '$2a$10$URr4pxjP507Zqchmb7kFOu4psFI9thWdalXYdqNZc1BZ/MfiMbVOm',
-//       firstName: 'Manager',
-//       lastName: 'Company'
-//     }, function() {});
-//   }
-// });
-//
-// models.User.create({
-//   email: 'portfoliotool@portsidegroup.com',
-//   hashed_password: '$2a$10$EHaHwkEnA5dWm5PP5XRThe8pZxKnTs/BCekdEe5CBhS3H6BVqFkLu',
-//   firstName: 'Portside',
-//   lastName: 'Group'
-// }, function() {
-//   models.OAuthClientsModel.create({
-//     clientId: 'portfolio-tool',
-//     clientSecret: 'clix2Eal',
-//     redirectUri: '/oauth/redirect'
-//   }, function(){});
-// });
-//
-// models.User.create({
-//   email: 'menthena@gmail.com',
-//   hashed_password: '$2a$10$EHaHwkEnA5dWm5PP5XRThe8pZxKnTs/BCekdEe5CBhS3H6BVqFkLu',
-//   firstName: 'Menthena',
-//   lastName: 'A'
-// }, function() {
-// });
-//
-// models.User.create({
-//   email: 'rhermann@portsidegroup.com',
-//   hashed_password: '$2a$10$EHaHwkEnA5dWm5PP5XRThe8pZxKnTs/BCekdEe5CBhS3H6BVqFkLu',
-//   firstName: 'Richard',
-//   lastName: 'Hermann'
-// }, function() {
-// });
+models.company.count(function(err, count) {
+  if (count === 0) {
+    models.company.create({
+      companyName: 'Menthena Ltd'
+    }, function(err, company) {
+      if (company) {
+        models.User.create({
+          email: 'menthena@gmail.com',
+          companyID: company._id,
+          hashed_password: hashPassword('asdasd'),
+          firstName: 'Ahmet',
+          lastName: 'Atasoy'
+        }, function() {});
+        models.User.create({
+          email: 'menthena2@gmail.com',
+          companyID: company._id,
+          hashed_password: hashPassword('asdasd'),
+          firstName: 'Ahmet2',
+          lastName: 'Atasoy2'
+        }, function() {});
+      }
+    });
+  }
+});

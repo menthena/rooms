@@ -1,4 +1,4 @@
-import {Component, OnInit, ElementRef, ViewEncapsulation} from 'angular2/angular2';
+import {Component, OnInit, ElementRef, ViewEncapsulation} from 'angular2/core';
 import {Draggable} from '../../directives/draggable';
 import {Scrollable} from '../../directives/scrollable';
 

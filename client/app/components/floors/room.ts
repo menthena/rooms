@@ -1,4 +1,4 @@
-import {Component, Attribute, NgIf, Input, OnInit, ElementRef, ChangeDetectorRef} from 'angular2/angular2';
+import {Component, Attribute,  Input, OnInit, ElementRef, ChangeDetectorRef} from 'angular2/core';
 import {Observable} from 'rxjs';
 import {DATE_FORMAT} from '../../constants';
 import {IFloorElement} from '../../services/FloorElementsService';
@@ -6,7 +6,7 @@ import {IReservation, ReservationService} from '../../services/ReservationServic
 import {EditElement} from '../design/edit-element';
 import {Resizable} from '../../directives/resizable';
 import {Draggable} from '../../directives/draggable';
-import {Tooltip} from '../../directives/tooltip';
+import {Popover} from '../../directives/popover';
 import {PlaceElement} from '../../directives/place-element';
 import {ReservationModal} from '../reservation/reservation-modal';
 import {FloorElementsService} from '../../services/FloorElementsService';
@@ -17,36 +17,44 @@ declare var jQuery:any;
 
 @Component({
   selector: 'room',
-  directives: [NgIf, Resizable, Draggable, EditElement, PlaceElement, ReservationModal, EditElement,
-    Tooltip],
+  directives: [ Resizable, Draggable, EditElement, PlaceElement,
+    ReservationModal, EditElement, Popover],
   inputs: ['data', 'designMode'],
   styleUrls: ['styles/floors/room.css'],
   template: `
     <div class="wrapper" resizable-element draggable-element
     [containment]="'#floor' + data.floorID" [attr.element-id]="data.elementID" [attr.data-id]="data.floorID"
-      [class.reserved]="!designMode && !isActive" [class.not-match]="!designMode && !isMatch">
-      <reservation-modal *ng-if="!designMode" [data]="data" place-element [place-type]="'modal'"></reservation-modal>
-      <edit-element *ng-if="designMode" place-element place-type="modal" [data]="data"></edit-element>
-      <div class="room" (click)="handleClick()" tooltip [data]="data" [reservations]="reservations">
+      [class.reserved]="!designMode && !isActive" [class.not-match]="!designMode && !isMatch"
+      [class.reservation-modal-opened]="reservationModalOpened">
+      <reservation-modal
+        *ngIf="!designMode"
+        [activeReservation]="activeReservation"
+        [data]="data"
+        place-element [place-type]="'modal'"></reservation-modal>
+      <edit-element *ngIf="designMode" place-element place-type="modal" [data]="data"></edit-element>
+      <popover [data]="data" [reservations]="reservations"
+        (edit-reservation)="handleEditReservation()"
+        [activeReservation]="activeReservation"></popover>
+      <div class="room" (click)="handleClick()">
         <div><span>{{ data.elementName }}</span></div>
         <div class="second-line">
-          <a *ng-if="designMode" (click)="editElement()"><i class="fa fa-pencil"></i></a>
-          <div *ng-if="!designMode && isActive && isMatch">
+          <a *ngIf="designMode" (click)="editElement()"><i class="fa fa-pencil"></i></a>
+          <div *ngIf="!designMode && isActive && isMatch">
             <div class="features pull-left">
               <span><i class="fa fa-user"></i> {{ data.capacity }}</span>
-              <span><i class="fa fa-television" *ng-if="data.features && data.features.indexOf('tv') > -1"></i></span>
-              <span><i class="fa fa-phone" *ng-if="data.features && data.features.indexOf('phone') > -1"></i></span>
+              <span><i class="fa fa-television" *ngIf="data.features && data.features.indexOf('tv') > -1"></i></span>
+              <span><i class="fa fa-phone" *ngIf="data.features && data.features.indexOf('phone') > -1"></i></span>
             </div>
             <div class="book pull-right hidden-xs">
               <i class="fa fa-plus-square"></i>
             </div>
             <i class="visible-xs fa fa-plus-square"></i>
           </div>
-          <div *ng-if="!designMode && !isActive" class="reserved">
+          <div *ngIf="!designMode && !isActive" class="reserved">
             <i class="visible-xs fa fa-ban"></i>
             <span>Reserved</span>
           </div>
-          <div *ng-if="!designMode && isActive && !isMatch" class="reserved">
+          <div *ngIf="!designMode && isActive && !isMatch" class="reserved">
             <i class="visible-xs fa fa-filter"></i>
             <span>Not a match</span>
           </div>
@@ -59,6 +67,7 @@ declare var jQuery:any;
 export class Room implements OnInit {
   @Input() data: IFloorElement;
   reservations: Array<IReservation>;
+  activeReservation: IReservation;
   floorElementsObservable;
   designMode: boolean;
   reservationObserver;
@@ -67,6 +76,7 @@ export class Room implements OnInit {
   filterSubscription;
   isActive: boolean;
   isMatch: boolean;
+  reservationModalOpened: boolean;
   filter: any;
   reservationFilterObserver;
 
@@ -81,12 +91,16 @@ export class Room implements OnInit {
     this.designMode = DesignService.designModeState;
   }
 
-  startReservation() {
-    if (this.isActive) {
-      this.reservationObserver
-        .subscription
-        .next(this.data.elementID);
-    }
+  openReservationModal() {
+    this.reservationModalOpened = true;
+    this.checkAvailability();
+    this.reservationObserver
+      .subscription
+      .next(this.data.elementID);
+  }
+
+  handleEditReservation() {
+    this.openReservationModal();
   }
 
   editElement() {
@@ -98,11 +112,21 @@ export class Room implements OnInit {
       });
   }
 
+  getActiveReservation(res) {
+    if (res) {
+      this.activeReservation = _.find(this.reservations, { reservationID: res.reservationID });
+    }
+  }
+
   checkAvailability() {
     this.isMatch = true;
     this.isActive = true;
+    this.activeReservation = undefined;
     if (!this.designMode && this.filter) {
       Observable.fromArray(this.reservations)
+        .filter(res => {
+          return res.elementID === this.data.elementID;
+        })
         .filter((res: any) => {
           return moment.utc(this.filter.reservationDate).diff(res.reservationDate) >= 0 ||
             moment.utc(this.filter.reservationEndDate).diff(res.reservationDate) >= 0;
@@ -110,10 +134,8 @@ export class Room implements OnInit {
         .filter((res: any) => {
           return moment.utc(this.filter.reservationDate).diff(res.reservationEndDate) < 0;
         })
-        .filter(res => {
-          return res.elementID === this.data.elementID;
-        })
-        .subscribe(res => {
+        .subscribe((res: any) => {
+          this.getActiveReservation(res);
           this.isActive = false;
         });
       if (this.filter.capacity > this.data.capacity) {
@@ -132,7 +154,7 @@ export class Room implements OnInit {
 
   handleClick() {
     if (!this.designMode && this.isActive && this.isMatch) {
-      this.startReservation();
+      this.openReservationModal();
     }
   }
 
@@ -158,6 +180,9 @@ export class Room implements OnInit {
     this.checkAvailability();
     this.reservationSubscriber = this.reservationObserver
       .subscribe(res => {
+        if (res === undefined) {
+          this.reservationModalOpened = false;
+        }
         if (res && res.type) {
           this.reservations = res.data;
           this.checkAvailability();

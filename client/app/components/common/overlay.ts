@@ -1,13 +1,12 @@
-import {Component, NgIf} from 'angular2/angular2';
+import {Component} from 'angular2/core';
 import {RouterLink} from 'angular2/router';
 import {DesignService} from '../../services/DesignService';
 import {ReservationService} from '../../services/ReservationService';
 
 @Component({
   selector: 'overlay',
-  directives: [NgIf],
   template: `
-    <div class="overlay" *ng-if="isPanelActive" [class.active]="isActive">
+    <div class="overlay" *ngIf="isPanelActive" [class.active]="isActive">
     <div>
   `,
   styleUrls: ['styles/common/overlay.css']

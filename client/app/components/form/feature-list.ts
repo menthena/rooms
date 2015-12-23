@@ -1,24 +1,26 @@
-import {Component, Input, FORM_DIRECTIVES} from 'angular2/angular2';
+import {Component, Input} from 'angular2/core';
 import {FEATURES_DATA} from '../../constants';
 import {Button} from '../form/button';
 
 @Component({
   selector: 'feature-list',
-  directives: [FORM_DIRECTIVES, Button],
+  directives: [Button],
   inputs: ['formModel'],
   properties: ['controlName'],
   template: `
   <ul class="list-unstyled features list-inline">
-    <li *ng-for="#feature of features">
-      <input [control-name]="controlName" [(form-model)]="formModel"
+    <li *ngFor="#feature of features">
+      <input [controlName]="controlName" [formModel]="formModel"
         type="checkbox" [attr.id]="feature.value" button [attr.value]="feature.value"
-        [checked]="formModel.value[controlName].indexOf(feature.value) > -1">
+        >
+
       <label [attr.for]="feature.value"><i></i><span>{{ feature.text }}</span></label>
     </li>
   </ul>
   `
 })
-
+// TODO: ADD
+// [checked]="formModel.value[controlName].indexOf(feature.value) > -1"
 export class FeatureList {
   @Input() controlName: string;
   @Input() formModel: any;

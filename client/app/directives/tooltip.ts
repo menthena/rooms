@@ -1,4 +1,4 @@
-import {Directive, OnInit, ElementRef, Input, Injectable, ViewEncapsulation} from 'angular2/angular2';
+import {Directive, OnInit, ElementRef, Input, Injectable, ViewEncapsulation} from 'angular2/core';
 import {IFloorElement} from '../services/FloorElementsService';
 import {IReservation} from '../services/ReservationService';
 
@@ -21,8 +21,8 @@ export class Tooltip implements OnInit {
     jQuery('.room').tooltip({
       html: true,
       placement: 'bottom',
-      // container: true,
-      title: `<a href="">a</a>`
+      delay: 50,
+      title: ``
     });
   }
 };

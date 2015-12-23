@@ -11,8 +11,8 @@
   padding: 8px 10px;
   border-radius: 2px;
   background-color: lighten($light-text-color, 30);
-  color: $light-text-color;
   border: 1px lighten($light-text-color, 20) solid;
+  color: $light-text-color;
   min-height: 35px;
   height: 100%;
   overflow: hidden;
@@ -20,4 +20,8 @@
   position: absolute;
   display: inline-block;
   line-height: 17px;
+  .fa-pencil {
+    padding-top: 3px;
+    color: $light-text-color;
+  }
 }

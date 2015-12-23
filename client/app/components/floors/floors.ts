@@ -1,4 +1,5 @@
-import {Component, OnInit, NgClass, NgFor, NgIf, Observable} from 'angular2/angular2';
+import {Component, OnInit} from 'angular2/core';
+import {Observable} from 'rxjs';
 import {FloorService, IFloor} from '../../services/FloorService';
 import {ReservationService} from '../../services/ReservationService';
 import {Floor} from './floor';
@@ -7,12 +8,12 @@ import {LoadingIndicator} from '../../directives/loading-indicator';
 @Component({
   selector: 'floors',
   providers: [FloorService],
-  directives: [NgFor, NgClass, NgIf, Floor, LoadingIndicator],
+  directives: [Floor, LoadingIndicator],
   template: `
-    <loading-indicator *ng-if="isLoading"></loading-indicator>
-    <div *ng-if="floors">
-      <div *ng-if="floors.length === 0">No floors</div>
-      <Floor *ng-for="#floor of floors" [floor]="floor"></Floor>
+    <loading-indicator *ngIf="isLoading"></loading-indicator>
+    <div *ngIf="floors">
+      <div *ngIf="floors.length === 0">No floors</div>
+      <floor *ngFor="#floor of floors" [floor]="floor"></floor>
     </div>
   `
 })

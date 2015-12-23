@@ -1,17 +1,17 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES5",
     "module": "commonjs",
-    "declaration": false,
-    "noImplicitAny": false,
-    "removeComments": true,
-    "noLib": false,
+    "moduleResolution": "node",
+    "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "sourceMap": true,
-    "listFiles": true,
-    "defaultJSExtensions": true
+    "removeComments": false,
+    "noImplicitAny": false
   },
+  "exclude": [
+    "node_modules"
+  ],
   "files": [
     "./typings/lodash/lodash.d.ts"
   ]

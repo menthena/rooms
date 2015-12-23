@@ -13,6 +13,11 @@
       height: 10px;
     }
   }
+  &.white {
+    > div {
+      background-color: #FFF;
+    }
+  }
 }
 
 .spinner > div {

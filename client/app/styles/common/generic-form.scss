@@ -1,0 +1,108 @@
+@import '../_variables';
+@import '../mixins';
+
+.generic-form {
+  @include genericFormShadow();
+  @include transition(background-color);
+  background-color: $light-text-color;
+  width: 350px;
+  margin: 40px auto;
+  border-radius: 3px;
+  &.valid {
+    background-color: $primary-color;
+  }
+  legend {
+    font-size: 24px;
+    border-bottom: none;
+    margin-bottom: 0;
+    color: #FFF;
+    padding: 13px 20px;
+  }
+  .white-bg {
+    background-color: #FFF;
+    border-radius: 0 0 3px 3px;
+    padding: 20px 20px;
+  }
+  ::-webkit-input-placeholder {
+    color: $light-text-color;
+  }
+  label {
+    color: $light-text-color;
+  }
+  .additional {
+    font-weight: normal;
+    color: $primary-color;
+    padding-left: 5px;
+  }
+  button {
+    @include transition(all);
+    background: $primary-color;
+    color: #FFF;
+    outline: none;
+    padding: 12px 28px;
+    margin-top: 8px;
+    &.submitting {
+      @include pulseScale();
+      border-radius: 99px;
+      padding: 0;
+      width: 45px;
+      height: 45px;
+      span {
+        display: none;
+      }
+    }
+    &:hover {
+      background: darken($primary-color, 4);
+    }
+  }
+  input {
+    @include genericFormInputShadow();
+    @include transition(all);
+    border: 1px lighten($light-text-color, 20) solid;
+    border: none;
+    color: $text-color;
+    border-radius: 3px;
+    outline: none;
+    background: darken($background-color, 0);
+    padding: 11px 15px;
+    width: 100%;
+    display: block;
+    &:focus {
+      @include genericFormInputShadow(0);
+      background-color: lighten($background-color, 5);
+    }
+  }
+  .err, .server-err {
+    @include transition(max-height);
+    overflow: hidden;
+    max-height: 0;
+    background-color: $err-color;
+    color: #FFF;
+    font-size: 13px;
+    padding-left: 1px;
+    display: inline-block;
+    border-radius: 0 0 2px 2px;
+    margin-top: 0;
+    padding-left: 7px;
+    i {
+      margin-right: 5px;
+    }
+    &.active {
+      max-height: 21px;
+      padding: 2px 7px;
+      margin-top: 1px;
+    }
+  }
+  .server-err {
+    background-color: inherit;
+    margin-bottom: 10px;
+    color: $err-color;
+    &.active {
+      padding: 0 1px;
+    }
+  }
+  .input-group {
+    width: 100%;
+    margin-bottom: 18px;
+  }
+}

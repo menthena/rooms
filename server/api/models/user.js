@@ -16,6 +16,14 @@ var OAuthUsersSchema = new Schema({
   companyID: String
 });
 
+OAuthUsersSchema.options.toJSON = {
+  transform: function(doc, ret) {
+    ret.userID = ret._id;
+    delete ret._id;
+    delete ret.__v;
+  }
+};
+
 function hashPassword(password) {
   var salt = bcrypt.genSaltSync(10);
   return bcrypt.hashSync(password, salt);

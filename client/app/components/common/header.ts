@@ -1,4 +1,4 @@
-import {Component} from 'angular2/angular2';
+import {Component} from 'angular2/core';
 import {RouterLink} from 'angular2/router';
 
 @Component({
@@ -9,12 +9,12 @@ import {RouterLink} from 'angular2/router';
     <div class="container">
       <div class="row">
         <div class="col-sm-3 col-xs-4">
-          <a [router-link]="['/Reserve']" class="logo">Rooms</a>
+          <a [routerLink]="['/Reserve']" class="logo">Rooms</a>
         </div>
         <div class="col-sm-6 hidden-xs">
           <ul class="list-inline">
-            <li><a [router-link]="['/Reserve']">Reserve</a></li>
-            <li><a [router-link]="['/Design']">Design</a></li>
+            <li><a [routerLink]="['/Reserve']">Reserve</a></li>
+            <li><a [routerLink]="['/Design']">Design</a></li>
             <li><a href>My bookings</a></li>
           </ul>
         </div>

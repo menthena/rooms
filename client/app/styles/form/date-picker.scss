@@ -15,7 +15,7 @@
   @include baseInput();
 }
 
-.ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+#ui-datepicker-div.ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
   background: $input-color;
   border-radius: 2px;
   border-color: $input-color;

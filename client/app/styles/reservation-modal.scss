@@ -1,12 +1,17 @@
 @import '_variables';
 @import 'mixins';
 
-.wrapper {
+reservation-modal .wrapper {
   position: absolute;
   margin: -60px 0 0 -60px;
 }
 
-.booking {
+.reservation-modal .ui-timepicker-list {
+  border: none;
+  background: none;
+}
+
+reservation-modal .booking {
   @include modalBoxShadow();
   @include transition(all, 0.1s);
   @include transform(scale(0.3));
@@ -14,7 +19,7 @@
   top: 0;
   left: 0;
   width: 236px;
-  height: 180px;
+  height: 200px;
   opacity: 0;
   background: $primary-color;
   color: #FFF;
@@ -38,17 +43,30 @@
       @include pulse();
     }
   }
+  .form-element {
+    padding-top: 8px;
+  }
   .time {
-    margin-top: 5px;
+    margin-top: 10px;
     background: darken($primary-color, 7);
     color: #FFF;
-    padding: 5px 8px;
+    padding: 3px 8px;
     border-radius: 2px;
+    .fa-clock-o {
+      margin-left: 1px;
+    }
+    i {
+      margin-right: 5px;
+      opacity: 0.7;
+    }
+    div {
+      padding: 1px 0 0;
+    }
   }
   .form {
     margin-top: 10px;
   }
-  textarea {
+  textarea, input {
     border-radius: 2px;
     border: none;
     display: block;
@@ -56,6 +74,11 @@
     width: 100%;
     resize: none;
     color: $text-color;
+  }
+  input {
+    width: 65px;
+    display: inline-block;
+    padding: 2px 6px;
   }
   .buttons {
     margin-top: 10px;
@@ -74,7 +97,7 @@
 }
 
 @media (max-width: 768px) {
-  .wrapper {
+  reservation-modal .wrapper {
     z-index: 99;
     position: fixed;
     width: 100% !important;

@@ -14,6 +14,18 @@
   box-shadow: (0 1px 2px rgba(187, 214, 216, 0.4), 0 1px 1px rgba(187, 214, 216, 0.9));
 }
 
+@mixin genericFormShadow() {
+  box-shadow: (0 1px 2px rgba(187, 214, 216, 0.4), 0 1px 1px rgba(187, 214, 216, 0.9));
+}
+
+@mixin genericFormInputShadow($position: 1) {
+  box-shadow: (0 0px 1px rgba(187, 214, 216, 0.4), 0 #{$position}px 1px rgba(187, 214, 216, 0.9));
+}
+
+@mixin popoverShadow() {
+  box-shadow: (0 1px 2px rgba(80, 106, 120, 0.4), 0 1px 3px rgba(80, 106, 120, 0.4));
+}
+
 @mixin transform($type) {
   transform: $type;
 }
@@ -66,6 +78,11 @@
 @mixin pulse() {
   animation: pulse 1s infinite;
 }
+
+@mixin pulseScale() {
+  animation: pulseScale 1s infinite;
+}
+
 @keyframes pulse {
   0% {
     opacity: 0.6;
@@ -75,5 +92,21 @@
   }
   100% {
     opacity: 0.6;
+  }
+}
+
+@keyframes pulseScale {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+
+  }
+  50% {
+    transform: scale(0.6);
+    opacity: 0.2;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.9;
   }
 }

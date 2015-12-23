@@ -1,4 +1,5 @@
-import {Component, OnInit, Observable} from 'angular2/angular2';
+import {Component, OnInit} from 'angular2/core';
+import {Observable} from 'rxjs';
 import {Filter} from './filter';
 import {Floors} from '../floors/floors';
 import {DesignService} from '../../services/DesignService';

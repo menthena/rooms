@@ -23,9 +23,42 @@
   padding: 8px 10px;
   border-radius: 2px;
   overflow: hidden;
+  &.element-placeholder {
+    background-color: lighten($light-text-color, 30);
+    border: 1px lighten($light-text-color, 20) solid;
+    color: $light-text-color;
+    .buttons {
+      a {
+        background: $light-text-color;
+        color: #FFF;
+      }
+      .submit {
+        background: $primary-color;
+      }
+    }
+    input[type=text] {
+      background: $light-text-color;
+      color: #FFF;
+    }
+  }
   > * {
     @include transition(opacity);
     opacity: 0;
+  }
+  .icons {
+    li {
+      margin-bottom: 10px;
+    }
+    a {
+      padding: 1px 7px;
+      color: $light-text-color;
+      border-radius: 3px;
+      border: 1px $light-text-color solid;
+      &.selected {
+        background: $light-text-color;
+        color: #FFF;
+      }
+    }
   }
   &.active {
     @include transform(scale(1));

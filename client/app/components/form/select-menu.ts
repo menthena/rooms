@@ -1,4 +1,4 @@
-import {Component, OnInit, ElementRef, ViewEncapsulation, Input} from 'angular2/angular2';
+import {Component, OnInit, ElementRef, ViewEncapsulation, Input} from 'angular2/core';
 
 declare var jQuery:any;
 
@@ -34,8 +34,6 @@ export class SelectMenu implements OnInit {
       }
     };
 
-    console.log(this.selectFormat);
-
     if (this.selectFormat === 'input') {
       options.format = (() => {
         let input = '<input class="other" type="text" value="Other..." />';
@@ -43,7 +41,6 @@ export class SelectMenu implements OnInit {
                 .append(input)
                 .outerHTML;
       });
-      console.log(options);
     }
     selectBox
       .selectmenu(options)

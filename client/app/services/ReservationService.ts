@@ -1,4 +1,4 @@
-import {Injectable} from 'angular2/angular2';
+import {Injectable} from 'angular2/core';
 import {Http, Response, Headers} from 'angular2/http';
 import * as moment from 'moment';
 import {Observable} from 'rxjs';
@@ -6,6 +6,7 @@ import {FloorElementsService} from './FloorElementsService';
 import {DATE_FORMAT} from '../constants';
 
 export interface IReservation {
+  reservationID: string;
   elementID: string;
   reservationDate: string;
   reservationEndDate: string;
@@ -15,8 +16,9 @@ export interface IReservation {
 interface IReservationService {
   saveFilter(filter: Object) : any;
   fetchReservations() : Observable<Object>;
+  cancelReservation(reservationID: string) : void;
   transformFilter(filter: Object) : Object;
-  makeReservation(elementID: string, description: string) : Observable<any>;
+  makeReservation(elementID: string, description: string) : void;
   getReservationFilterObserver(): Observable<Object>;
   updateTime() : string;
   getObservable() : Observable<string>;
@@ -85,6 +87,27 @@ export class ReservationService implements IReservationService {
     return observable;
   }
 
+  cancelReservation(reservationID: string) {
+    let observable = this.http.delete('/api/reservation/' + reservationID);
+    let subscription = observable
+      .subscribe((res) => {
+        let reservation: any = res.json();
+        this.reservations = reservation.data;
+        if (this.reservationObserver.subscription) {
+          // TODO: Refactor
+          this.reservationObserver
+            .subscription
+            .next({
+              type: 'reservation',
+              data: this.reservations
+            });
+        }
+      }, (err) => {
+        console.log(err);
+      });
+    return subscription;
+  }
+
   makeReservation(elementID: string, description: string) {
     this.floorElementsObservable.subscription.next({ type: 'loading' });
     this.filter.description = description;
@@ -93,7 +116,7 @@ export class ReservationService implements IReservationService {
     let observable: any = this.http.post('/api/reservation', JSON.stringify(this.filter), {
       headers: new Headers({ 'Content-Type': 'application/json' })
     });
-    observable
+    let subscription = observable
       .delay(400)
       .subscribe((res: any) => {
         let data = res.json().data;
@@ -102,7 +125,7 @@ export class ReservationService implements IReservationService {
           data: data
         });
       });
-    return observable;
+    return subscription;
   }
 
   transformFilter(filter) {

@@ -1,4 +1,4 @@
-import {Directive, OnInit, ElementRef, Input, Injectable} from 'angular2/angular2';
+import {Directive, OnInit, ElementRef, Input, Injectable} from 'angular2/core';
 import {DesignService} from '../services/DesignService';
 import {IFloorElement, FloorElementsService} from '../services/FloorElementsService';
 

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from 'angular2/angular2';
+import {Component, OnInit, ViewEncapsulation} from 'angular2/core';
 import {DesignTools} from './design-tools';
 import {Floors} from '../floors/floors';
 import {DesignService} from '../../services/DesignService';

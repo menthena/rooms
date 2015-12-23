@@ -1,5 +1,7 @@
 /// <reference path="../../typings/tsd.d.ts" />
-import {Component, ViewEncapsulation, View, bootstrap, provide} from 'angular2/angular2';
+import 'reflect-metadata';
+import {Component, ViewEncapsulation, View, provide} from 'angular2/core';
+import {bootstrap} from 'angular2/platform/browser';
 import {HTTP_BINDINGS} from 'angular2/http';
 import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2/router';
 import {ROUTER_DIRECTIVES, RouterOutlet, RouteConfig, Router, Location, Route} from 'angular2/router';
@@ -7,6 +9,7 @@ import {APP_ROUTES} from './routes';
 import {Header} from './components/common/header';
 import {Overlay} from './components/common/overlay';
 import {FloorService} from './services/FloorService';
+import {UserService} from './services/UserService';
 import {DesignService} from './services/DesignService';
 import {FloorElementsService} from './services/FloorElementsService';
 import {ReservationService} from './services/ReservationService';
@@ -36,5 +39,5 @@ class Room {
   }
 }
 
-bootstrap(Room, [FloorService, DesignService, FloorElementsService, ReservationService, HTTP_BINDINGS, ROUTER_PROVIDERS,
+bootstrap(Room, [FloorService, DesignService, UserService, FloorElementsService, ReservationService, HTTP_BINDINGS, ROUTER_PROVIDERS,
   provide(LocationStrategy, {useClass: HashLocationStrategy})]);

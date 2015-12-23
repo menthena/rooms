@@ -1,14 +1,15 @@
 'use strict';
 
-// var _ = require('lodash');
+var _ = require('lodash');
 var express = require('express');
 var router = express.Router();
 var models = require('../models');
 var reservation = models.reservation;
 var io = require('../../socket');
+var middleware = require('../middleware');
 var moment = require('moment');
 
-router.get('/', function(req, res) {
+router.get('/', middleware.requiresUser, function(req, res) {
   var sendResponse = function(err, reservations) {
     res.send({ data: reservations });
   };
@@ -17,7 +18,7 @@ router.get('/', function(req, res) {
     .exec(sendResponse);
 });
 
-router.patch('/:id', function(req, res) {
+router.patch('/:id', middleware.requiresUser, function(req, res) {
   var updatedModel = req.body;
 
   reservation.findOne({ elementName: updatedModel.elementName }, function(err, reservationDetails) {
@@ -39,7 +40,7 @@ router.patch('/:id', function(req, res) {
   });
 });
 
-router.post('/', function(req, res) {
+router.post('/', middleware.requiresUser, function(req, res) {
   var newReservation = req.body;
   reservation.count(newReservation, function(err, reservationCount) {
     if (err) {
@@ -63,7 +64,7 @@ router.post('/', function(req, res) {
   });
 });
 
-router.delete('/:id', function(req, res) {
+router.delete('/:id', middleware.requiresUser, function(req, res) {
 
   reservation.remove({ _id: req.params.id }, function(err) {
     if (err) {
@@ -71,9 +72,21 @@ router.delete('/:id', function(req, res) {
       res.send({ message: 'Bad request'});
     }
     else {
-      io.sockets.emit('reservations-delete', reservation);
-      res.status(204);
-      res.send({});
+      reservation
+        .find({ reservationDate: { $gt: moment().add(-1, 'day') } })
+        .exec(function(err, reservations) {
+          if (err) {
+            res.status(422);
+            res.send({ message: 'Bad request'});
+          } else {
+            _.remove(reservations, function(item) {
+              return item._id === req.params.id;
+            });
+            io.sockets.emit('reservations', 1);
+            res.status(201);
+            res.send({ data: reservations} );
+          }
+        });
     }
   });
 });

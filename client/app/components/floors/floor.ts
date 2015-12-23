@@ -1,5 +1,5 @@
-import {Component, Input, NgIf, NgClass, NgFor, NgSwitch, NgZone, NgSwitchWhen,
-  ChangeDetectionStrategy, NgSwitchDefault, Observable, ChangeDetectorRef, OnChanges} from 'angular2/angular2';
+import {Component, Input, NgZone, ChangeDetectionStrategy, ChangeDetectorRef} from 'angular2/core';
+import {Observable} from 'rxjs';
 import {IFloor} from '../../services/FloorService';
 import {FloorElementsService, IFloorElement} from '../../services/FloorElementsService';
 import {Room} from './room';
@@ -18,25 +18,24 @@ import * as io from 'socket.io-client';
 @Component({
   selector: 'floor',
   providers: [FloorElementsService],
-  directives: [NgFor, NgIf, NgClass, NgSwitch, NgSwitchWhen, NgSwitchDefault, Room,
-    PlaceElement, Placeholder, Droppable, LoadingIndicator],
+  directives: [Room, PlaceElement, Placeholder, Droppable, LoadingIndicator],
   styleUrls: ['styles/floors/floor.css'],
   template: `
-  <div [ng-class]="{'design-mode': designMode}">
+  <div [ngClass]="{'design-mode': designMode}">
     <ul class="list-inline">
       <li>
         <h1>{{ floor.floorName }}</h1>
       </li>
       <li>
-        <loading-indicator *ng-if="isLoading" mini="true"></loading-indicator>
+        <loading-indicator *ngIf="isLoading" mini="true"></loading-indicator>
       </li>
     </ul>
     <div [attr.id]="'floor' + floor.floorID" class="floor" droppable-element
-      [attr.data-id]="floor.floorID" [ng-class]="{loading: isLoading}">
+      [attr.data-id]="floor.floorID" [ngClass]="{loading: isLoading}">
       <div class="inner">
-        <div *ng-for="#element of floorElements" [ng-switch]="element.elementType">
-          <Room *ng-switch-when="'room'" [data]="element" place-element></Room>
-          <Placeholder [data]="element" place-element *ng-switch-default></Placeholder>
+        <div *ngFor="#element of floorElements" [ngSwitch]="element.elementType">
+          <room *ngSwitchWhen="'room'" [data]="element" place-element></room>
+          <placeholder [data]="element" place-element *ngSwitchDefault></placeholder>
         </div>
       </div>
     </div>

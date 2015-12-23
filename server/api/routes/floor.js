@@ -5,10 +5,11 @@ var express = require('express');
 var router = express.Router();
 var models = require('../models');
 var floor = models.floor;
+var middleware = require('../middleware');
 var floorElement = models.floorElement;
 var io = require('../../socket');
 
-router.get('/', function(req, res) {
+router.get('/', middleware.requiresUser, function(req, res) {
   var sendResponse = function(err, floors) {
     res.send({ data: floors });
   };
@@ -16,7 +17,7 @@ router.get('/', function(req, res) {
   floor.find({}).exec(sendResponse);
 });
 
-router.get('/:id/elements', function(req, res) {
+router.get('/:id/elements', middleware.requiresUser, function(req, res) {
   var sendResponse = function(err, floorElements) {
     res.send({ data: floorElements });
   };
@@ -24,7 +25,7 @@ router.get('/:id/elements', function(req, res) {
   floorElement.find({ floorID: req.params.id }).exec(sendResponse);
 });
 
-router.post('/:id/elements', function(req, res) {
+router.post('/:id/elements', middleware.requiresUser, function(req, res) {
   var newFloor = req.body;
   floorElement.count(newFloor, function(err, floorElementCount) {
     if (err) {
@@ -48,7 +49,7 @@ router.post('/:id/elements', function(req, res) {
   });
 });
 
-router.patch('/:id/elements/:elementID', function(req, res) {
+router.patch('/:id/elements/:elementID', middleware.requiresUser, function(req, res) {
   var updatedModel = req.body;
 
   floorElement.findOneAndUpdate({ floorID: req.params.id, _id: req.params.elementID }, updatedModel, function(err) {
@@ -73,7 +74,7 @@ router.patch('/:id/elements/:elementID', function(req, res) {
 router.patch('/:id', function(req, res) {
   var updatedModel = req.body;
 
-  floor.findOne({ elementName: updatedModel.elementName }, function(err, floorDetails) {
+  floor.findOne({ elementName: updatedModel.elementName }, middleware.requiresUser, function(err, floorDetails) {
     if (floorDetails && String(floorDetails._id) !== String(req.params.id)) {
       res.status(500);
       res.send({ message: 'Already exists' });
@@ -91,7 +92,7 @@ router.patch('/:id', function(req, res) {
   });
 });
 
-router.post('/', function(req, res) {
+router.post('/', middleware.requiresUser, function(req, res) {
   var newFloor = req.body;
   floor.count(newFloor, function(err, floorCount) {
     if (err) {
@@ -114,7 +115,7 @@ router.post('/', function(req, res) {
   });
 });
 
-router.delete('/:id', function(req, res) {
+router.delete('/:id', middleware.requiresUser, function(req, res) {
 
   floor.remove({ _id: req.params.id }, function(err) {
     if (err) {
