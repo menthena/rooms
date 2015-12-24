@@ -7,7 +7,7 @@ var models = require('../models');
 var company = models.company;
 var User = models.User;
 var middleware = require('../middleware');
-var allowedUserProps = ['firstName', 'lastName', 'email', 'password', 'userType'];
+var allowedUserProps = ['name', 'email', 'password', 'userType'];
 
 router.get('/', middleware.requiresUser, function(req, res) {
   var sendResponse = function(err, companies) {

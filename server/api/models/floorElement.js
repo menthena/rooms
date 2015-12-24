@@ -11,6 +11,7 @@ var floorElementSchema = new Schema({
   elementPositionY: Number,
   elementHeight: Number,
   elementWidth: Number,
+  elementVertical: Boolean,
   features: Array,
   hasTV: Boolean,
   capacity: Number,

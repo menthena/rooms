@@ -4,6 +4,9 @@ import {Observable} from 'rxjs';
 
 interface IUserService {
   login(email: string, password: string) : void;
+  recoverPassword(email: string) : void;
+  resetPassword(email: string, password: string, token: string) : void;
+  register(userObject: Object) : void;
 }
 
 @Injectable()
@@ -20,7 +23,6 @@ export class UserService implements IUserService {
       headers: new Headers({ 'Content-Type': 'application/json' })
     });
     let subscription = observable
-      .delay(500)
       .subscribe((res: any) => {
         this.isLogged = true;
         console.log(res);
@@ -30,5 +32,32 @@ export class UserService implements IUserService {
         return err;
       });
     return subscription;
+  }
+
+  recoverPassword(email: string) {
+    let observable = this.http.post('/oauth/forgot-password', JSON.stringify({
+      email: email
+    }), {
+      headers: new Headers({ 'Content-Type': 'application/json' })
+    });
+    return observable;
+  }
+
+  resetPassword(email: string, password: string, token: string) {
+    let observable = this.http.post('/oauth/reset-password', JSON.stringify({
+      email: email,
+      password: password,
+      token: token
+    }), {
+      headers: new Headers({ 'Content-Type': 'application/json' })
+    });
+    return observable;
+  }
+
+  register(userObject: Object) {
+    let observable = this.http.post('/api/user', JSON.stringify(userObject), {
+      headers: new Headers({ 'Content-Type': 'application/json' })
+    });
+    return observable;
   }
 }

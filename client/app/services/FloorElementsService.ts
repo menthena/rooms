@@ -19,6 +19,7 @@ export interface IFloorElement {
   elementPositionY: number;
   elementWidth: number;
   elementHeight: number;
+  elementVertical?: boolean;
   elementIcon?: string;
   features: string;
   capacity?: number;

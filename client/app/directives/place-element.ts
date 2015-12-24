@@ -32,7 +32,7 @@ export class PlaceElement implements OnInit {
       };
       if (this.data.elementHeight > 0) {
         placement.height = this.data.elementHeight + 'px';
-      } else {
+      } else if (this.data.elementType !== 'line') {
         placement.height = '55px';
       }
       placement.left = left;

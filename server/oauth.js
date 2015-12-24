@@ -28,7 +28,7 @@ module.exports = function(app) {
           res.status(401);
           next();
         } else {
-          res.send(200, { userType: user.userType, firstName: user.firstName, lastName: user.lastName });
+          res.send(200, { userType: user.userType, name: user.name });
         }
       });
     }
@@ -106,9 +106,9 @@ module.exports = function(app) {
     }
     User.forgotPassword(req.body.email, function(err, code) {
       if (err) {
-        res.send(404, err);
+        res.send(200, 'true');
       } else {
-        email.send(req.body.email, 'Portfolio Tool: Forgot password', 'Greetings,\r\n\r\nYou are receiving this email because you requested that your password be reset. \r\n\r\nTo reset your password, please click the following link, or copy and paste it into your web browser: \r\n' + domain + '/reset-password/' + code + '\r\n\r\nBest regards');
+        email.send(req.body.email, 'Recover password', 'Greetings,\r\n\r\nYou are receiving this email because you requested that your password be reset. \r\n\r\nTo reset your password, please click the following link, or copy and paste it into your web browser: \r\n' + domain + '/#/reset-password/' + code + '\r\n\r\nBest regards');
         res.send(200, 'true');
       }
     });

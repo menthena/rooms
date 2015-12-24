@@ -10,8 +10,7 @@ var OAuthUsersSchema = new Schema({
   hashed_password: { type: String, required: true },
   password_reset_token: { type: String, unique: false },
   reset_token_expires: Date,
-  firstName: String,
-  lastName: String,
+  name: String,
   userType: Number,
   companyID: String
 });
@@ -56,6 +55,7 @@ OAuthUsersSchema.static('forgotPassword', function(email, cb) {
       return cb(true);
     }
     var token = getResetToken();
+    console.log(token);
     user.update({password_reset_token: token}, function(){});
     cb(null, token);
   }.bind(this));
@@ -64,6 +64,7 @@ OAuthUsersSchema.static('forgotPassword', function(email, cb) {
 OAuthUsersSchema.static('resetPassword', function(email, password, token, cb) {
   if (token) {
     this.findOne({ email: email, password_reset_token: token }, function(err, user) {
+      console.log(err, user);
       if (err || !user || user === null) {
         return cb(true);
       }
@@ -114,8 +115,7 @@ OAuthUsersSchema.static('getUserInfo', function(userId, cb) {
     userObject.userType = userType;
     if (user) {
       userObject.companyID = user.companyID;
-      userObject.firstName = user.firstName;
-      userObject.lastName = user.lastName;
+      userObject.name = user.name;
     }
     cb(userObject);
   });

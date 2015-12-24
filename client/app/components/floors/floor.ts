@@ -6,6 +6,7 @@ import {Room} from './room';
 import {SOCKET_URL} from '../../constants';
 import {ReservationModal} from '../reservation/reservation-modal';
 import {Placeholder} from './placeholder';
+import {Line} from './line';
 import {LoadingIndicator} from '../../directives/loading-indicator';
 import {PlaceElement} from '../../directives/place-element';
 import {EditElement} from '../design/edit-element';
@@ -18,7 +19,7 @@ import * as io from 'socket.io-client';
 @Component({
   selector: 'floor',
   providers: [FloorElementsService],
-  directives: [Room, PlaceElement, Placeholder, Droppable, LoadingIndicator],
+  directives: [Room, PlaceElement, Placeholder, Line, Droppable, LoadingIndicator],
   styleUrls: ['styles/floors/floor.css'],
   template: `
   <div [ngClass]="{'design-mode': designMode}">
@@ -35,6 +36,7 @@ import * as io from 'socket.io-client';
       <div class="inner">
         <div *ngFor="#element of floorElements" [ngSwitch]="element.elementType">
           <room *ngSwitchWhen="'room'" [data]="element" place-element></room>
+          <line *ngSwitchWhen="'line'" [data]="element" place-element></line>
           <placeholder [data]="element" place-element *ngSwitchDefault></placeholder>
         </div>
       </div>

@@ -1,0 +1,55 @@
+@import '../_variables';
+@import '../mixins';
+
+.wrapper {
+  position: absolute;
+  .line {
+    &:not(.vertical):before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: -5px;
+      height: 5px;
+      width: 100%;
+    }
+    &.vertical:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0px;
+      width: 10px;
+      height: 100%;
+      left: -3px;
+    }
+    // @include boxShadow();
+    height: 3px;
+    width: 100%;
+    background: $line-color;
+    &.vertical {
+      width: 3px !important;
+      height: 100%;
+    }
+  }
+  .rotate-icon {
+    position: absolute;
+    right: -12px;
+    font-size: 10px;
+    left: auto;
+    top: -8px;
+  }
+  .vertical {
+    .rotate-icon {
+      position: absolute;
+      right: 0;
+      left: -3px;
+      bottom: -11px;
+      top: auto;
+    }
+  }
+  .fa {
+    margin-top: 4px;
+  }
+  &.ui-resizable:before {
+    display: none!important;
+  }
+}

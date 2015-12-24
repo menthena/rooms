@@ -25,6 +25,13 @@ import {Scrollable} from '../../directives/scrollable';
             Drag a placeholder
           </a>
         </li>
+
+        <li class="line">
+          <a draggable-element clone="true" data-type="line">
+            Drag a line
+            <div class="bar"></div>
+          </a>
+        </li>
       </ul>
     </div>
   </div>

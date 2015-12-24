@@ -18,12 +18,17 @@
       color: $light-text-color;
     }
   }
+  line {
+    .wrapper .rotate-icon {
+      display: block;
+    }
+  }
 }
 
-room, placeholder {
+room, placeholder, line {
   .ui-draggable-handle {
     cursor: -webkit-grab;
-    .placeholder, .room {
+    .placeholder, .room, .line {
       @include transition(box-shadow);
     }
     &:active {

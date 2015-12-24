@@ -1,12 +1,14 @@
 import {Component} from 'angular2/core';
 import {FormBuilder, NgForm, Validators, Control} from 'angular2/common';
+import {Router, RouterLink} from 'angular2/router';
 import {EMAIL_REGEX} from '../../constants';
 import {LoadingIndicator} from '../../directives/loading-indicator';
+import {UserValidators} from '../../validators/UserValidators';
 import {UserService} from '../../services/UserService';
 
 @Component({
   selector: 'login',
-  directives: [NgForm, LoadingIndicator],
+  directives: [NgForm, LoadingIndicator, RouterLink],
   styleUrls: ['styles/common/generic-form.css'],
   template: `
   <div class="generic-form">
@@ -21,7 +23,7 @@ import {UserService} from '../../services/UserService';
             <label for="email">
               Email
             </label>
-            <input type="email" placeholder="Please enter you email" name="email" id="email"
+            <input type="email" placeholder="Please enter your email" name="email" id="email"
               ngControl="email">
             <div [class.active]="(submitted || loginForm.controls.email.touched) && !loginForm.controls.email.valid" class="err">
               <div *ngIf="loginForm.controls.email.errors && loginForm.controls.email.errors.required">
@@ -35,17 +37,25 @@ import {UserService} from '../../services/UserService';
           </div>
           <div class="input-group">
             <label for="password">
-              Password <span class="additional"><a>Forgot?</a></span>
+              Password
             </label>
-            <input type="password" placeholder="Please enter you password" name="password"
+            <input type="password" placeholder="Please enter your password" name="password"
               id="password" ngControl="password">
             <div [class.active]="(submitted || loginForm.controls.password.touched) && !loginForm.controls.password.valid" class="err">
-                <i class="fa fa-exclamation-circle"></i> Please enter password
+                <i class="fa fa-exclamation-circle"></i> Please enter your password
             </div>
           </div>
-          <button class="btn" [class.submitting]="submitting">
-            <span>Log in</span>
-          </button>
+          <div class="buttons">
+            <button class="btn" [class.submitting]="submitting">
+              <span>Log in</span>
+            </button>
+          </div>
+          <div class="sub-form">
+            You forgot your password? It is okay, we all have been there. <a [routerLink]="['/RecoverPassword']">Recover password</a>.
+            <div>
+              OR you can <a [routerLink]="['/Register']">register</a> kindly.
+            </div>
+          </div>
         </div>
       </fieldset>
     </form>
@@ -59,22 +69,10 @@ export class Login {
   invalidCredentials: boolean;
   submitting: boolean;
 
-  constructor(private fb: FormBuilder, private UserService: UserService) {
+  constructor(private fb: FormBuilder, private router: Router, private UserService: UserService,
+    private UserValidators: UserValidators) {
     this.loginForm = this.fb.group({
-      email: ['', (control: any): Object => {
-        if (!control.value) {
-          return {
-            required: true
-          };
-        } else if (control.value) {
-          if (!new RegExp(EMAIL_REGEX).test(control.value)) {
-            return {
-              invalid: true
-            };
-          }
-        }
-        return {};
-      }],
+      email: ['', this.UserValidators.EmailValidator],
       password: ['', Validators.required]
     });
   }
@@ -87,12 +85,14 @@ export class Login {
       this.invalidCredentials = false;
       this.UserService.login(login.email, login.password)
         .add((res) => {
-          this.submitting = false;
-          if (!this.UserService.isLogged) {
-            this.invalidCredentials = true;
-          } else {
-            console.log('tick');
-          }
+          setTimeout(() => {
+            this.submitting = false;
+            if (!this.UserService.isLogged) {
+              this.invalidCredentials = true;
+            } else {
+              this.router.navigate(['Reserve']);
+            }
+          }, 250);
         });
     }
   }

@@ -28,7 +28,7 @@
 }
 
 // .ui-draggable-handle {
-.room, .placeholder {
+.room, .placeholder, .line {
   margin: 0 0 10px;
   a {
     @include transition(box-shadow);
@@ -59,6 +59,33 @@
   background-color: lighten($light-text-color, 30);
   color: $light-text-color;
   border: 1px lighten($light-text-color, 20) solid;
+}
+
+.line {
+  padding: 0;
+  .bar {
+    margin-top: 10px;
+    height: 3px;
+    width: 100%;
+    background-color: $line-color;
+  }
+  .ui-draggable {
+    width: 180px;
+  }
+  .ui-draggable-dragging {
+    @include noShadow();
+    .bar {
+      @include dragShadow();
+    }
+  }
+  a {
+    // background-color: lighten($light-text-color, 30);
+    color: $light-text-color;
+    // @include dragShadow();
+    &:active, &:focus {
+      @include noShadow();
+    }
+  }
 }
 
 @media (max-width: 768px) {

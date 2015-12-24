@@ -4,12 +4,37 @@
 .generic-form {
   @include genericFormShadow();
   @include transition(background-color);
-  background-color: $light-text-color;
+  background-color: $text-color;
   width: 350px;
   margin: 40px auto;
   border-radius: 3px;
   &.valid {
     background-color: $primary-color;
+  }
+  .message {
+    color: $light-text-color;
+    margin-bottom: 16px;
+    border-bottom: 1px #ececec solid;
+    padding-bottom: 11px;
+  }
+  .success {
+    i {
+      background: $icon-bg-color;
+      padding: 4px;
+      border-radius: 4px;
+      color: $primary-color;
+      margin-top: 4px;
+      border: 1px $icon-border-color solid;
+      margin-right: 10px;
+    }
+    .success-message {
+      margin-left: 10px;
+    }
+  }
+  .tip {
+    margin-top: 6px;
+    color: $light-text-color;
+    font-style: italic;
   }
   legend {
     font-size: 24px;
@@ -55,6 +80,10 @@
       background: darken($primary-color, 4);
     }
   }
+  .buttons {
+    display: block;
+    height: 55px;
+  }
   input {
     @include genericFormInputShadow();
     @include transition(all);
@@ -97,12 +126,25 @@
     background-color: inherit;
     margin-bottom: 10px;
     color: $err-color;
+    padding: 0;
+    margin-bottom: 0;
     &.active {
-      padding: 0 1px;
+      padding: 0;
+      margin: 1px 0 10px;
     }
   }
   .input-group {
     width: 100%;
     margin-bottom: 18px;
+  }
+  .sub-form {
+    border-top: 1px $light-border-color solid;
+    margin-top: 22px;
+    padding-top: 9px;
+    color: $light-text-color;
+    font-size: 13px;
+    div {
+      margin-top: 14px;
+    }
   }
 }

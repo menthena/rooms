@@ -23,7 +23,7 @@ router.get('/', middleware.requiresUser, function(req, res) {
   } else {
     filter.userType = 0;
   }
-  User.find(filter).select('_id firstName lastName email userType date').exec(sendResponse);
+  User.find(filter).select('_id name email userType date').exec(sendResponse);
 });
 
 router.get('/:id', middleware.requiresUser, function(req, res) {
@@ -37,11 +37,11 @@ router.get('/:id', middleware.requiresUser, function(req, res) {
     res.send({ data: User });
   };
 
-  User.findById(req.params.id).select('_id firstName lastName email date').exec(sendResponse);
+  User.findById(req.params.id).select('_id name email date').exec(sendResponse);
 });
 
 router.patch('/:id', middleware.requiresUser, function(req, res) {
-  var updatedModel = _.pick(req.body, ['firstName', 'lastName', 'email', 'userType']);
+  var updatedModel = _.pick(req.body, ['name', 'email', 'userType']);
   User.findOne({ email: updatedModel.email }, function(err, user) {
     if (user && String(user._id) !== String(req.params.id)) {
       res.status(500);
@@ -60,7 +60,7 @@ router.patch('/:id', middleware.requiresUser, function(req, res) {
         userType = updatedModel.userType > 0 ? updatedModel.userType : 1;
       }
       console.log(filter, userType);
-      User.findOneAndUpdate(filter, {firstName: updatedModel.firstName, lastName: updatedModel.lastName, email: updatedModel.email, userType: userType}, function(err, User) {
+      User.findOneAndUpdate(filter, {name: updatedModel.name, email: updatedModel.email, userType: userType}, function(err, User) {
         if (err) {
           res.status(422);
           res.send({ message: 'Bad request'});
@@ -74,7 +74,7 @@ router.patch('/:id', middleware.requiresUser, function(req, res) {
 });
 
 router.post('/', middleware.requiresUser, function(req, res) {
-  var newUser = _.pick(req.body, ['companyID', 'firstName', 'lastName', 'email', 'password', 'userType']);
+  var newUser = _.pick(req.body, ['companyID', 'name', 'email', 'password', 'userType']);
   User.count({ email: newUser.email }, function(err, userCount) {
     if (err) {
       res.status(422);
@@ -93,7 +93,7 @@ router.post('/', middleware.requiresUser, function(req, res) {
       } else {
         userType = newUser.userType > 0 ? newUser.userType : 1;
       }
-      User.create({ companyID: companyID, firstName: newUser.firstName, lastName: newUser.lastName, email: newUser.email, hashed_password: hashPassword(newUser.password), userType: userType }, function(err, User) {
+      User.create({ companyID: companyID, name: newUser.name, email: newUser.email, hashed_password: hashPassword(newUser.password), userType: userType }, function(err, User) {
         if (err) {
           res.status(422);
           res.send({ message: 'Bad request'});

@@ -1,5 +1,5 @@
 'use strict';
-var postmark = require('postmark')(process.env.POSTMARK_API_TOKEN || '290daab2-ebd6-4bcc-8157-330b1a7fd089');
+var postmark = require('postmark')(process.env.POSTMARK_API_TOKEN || '27f5f6f2-1a7c-487a-a7aa-bc0ae3361110');
 
 module.exports = {
   send: function(to, subject, text) {

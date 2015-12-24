@@ -13,6 +13,7 @@ import {UserService} from './services/UserService';
 import {DesignService} from './services/DesignService';
 import {FloorElementsService} from './services/FloorElementsService';
 import {ReservationService} from './services/ReservationService';
+import {UserValidators} from './validators/UserValidators';
 
 @Component({
   selector: 'rooms'
@@ -39,5 +40,6 @@ class Room {
   }
 }
 
-bootstrap(Room, [FloorService, DesignService, UserService, FloorElementsService, ReservationService, HTTP_BINDINGS, ROUTER_PROVIDERS,
+bootstrap(Room, [FloorService, DesignService, UserValidators, UserService,
+  FloorElementsService, ReservationService, HTTP_BINDINGS, ROUTER_PROVIDERS,
   provide(LocationStrategy, {useClass: HashLocationStrategy})]);

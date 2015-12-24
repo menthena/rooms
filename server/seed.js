@@ -93,15 +93,13 @@ models.company.count(function(err, count) {
           email: 'menthena@gmail.com',
           companyID: company._id,
           hashed_password: hashPassword('asdasd'),
-          firstName: 'Ahmet',
-          lastName: 'Atasoy'
+          name: 'Ahmet',
         }, function() {});
         models.User.create({
           email: 'menthena2@gmail.com',
           companyID: company._id,
           hashed_password: hashPassword('asdasd'),
-          firstName: 'Ahmet2',
-          lastName: 'Atasoy2'
+          name: 'Ahmet2',
         }, function() {});
       }
     });
