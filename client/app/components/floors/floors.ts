@@ -12,10 +12,11 @@ import {LoadingIndicator} from '../../directives/loading-indicator';
   template: `
     <loading-indicator *ngIf="isLoading"></loading-indicator>
     <div *ngIf="floors">
-      <div *ngIf="floors.length === 0">No floors</div>
+      <div class="no-floor" *ngIf="floors.length === 0">No floors</div>
       <floor *ngFor="#floor of floors" [floor]="floor"></floor>
     </div>
-  `
+  `,
+  styleUrls: ['styles/floors/floors.css']
 })
 
 export class Floors {
@@ -33,6 +34,7 @@ export class Floors {
       .subscribe(
         (res: any) => {
           this.isLoading = false;
+          console.log(res.json().data);
           this.floors = res.json().data;
         }
       );

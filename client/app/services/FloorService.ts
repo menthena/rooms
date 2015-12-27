@@ -3,6 +3,7 @@ import {Http, Response} from 'angular2/http';
 
 interface IFloorService<T> {
   fetchAll();
+  deleteFloor(floorID: string);
 }
 
 export interface IFloor {
@@ -16,6 +17,10 @@ export class FloorService implements IFloorService<IFloor> {
 
   constructor(private http: Http) {
     this.floors = new Array<IFloor>();
+  }
+
+  deleteFloor(floorID: string) {
+    return this.http.delete('/api/floor/' + floorID);
   }
 
   fetchAll() {

@@ -8,8 +8,10 @@ import {ROUTER_DIRECTIVES, RouterOutlet, RouteConfig, Router, Location, Route} f
 import {APP_ROUTES} from './routes';
 import {Header} from './components/common/header';
 import {Overlay} from './components/common/overlay';
+import {AppwideOverlay} from './components/common/appwide-overlay';
 import {FloorService} from './services/FloorService';
 import {UserService} from './services/UserService';
+import {AppService} from './services/AppService';
 import {DesignService} from './services/DesignService';
 import {FloorElementsService} from './services/FloorElementsService';
 import {ReservationService} from './services/ReservationService';
@@ -21,8 +23,9 @@ import {UserValidators} from './validators/UserValidators';
 
 @View({
   encapsulation: ViewEncapsulation.None,
-  directives: [RouterOutlet, Header, Overlay],
+  directives: [RouterOutlet, Header, Overlay, AppwideOverlay],
   template: `
+  <appwide-overlay></appwide-overlay>
   <overlay></overlay>
   <header></header>
   <router-outlet></router-outlet>
@@ -40,6 +43,6 @@ class Room {
   }
 }
 
-bootstrap(Room, [FloorService, DesignService, UserValidators, UserService,
+bootstrap(Room, [FloorService, DesignService, AppService, UserValidators, UserService,
   FloorElementsService, ReservationService, HTTP_BINDINGS, ROUTER_PROVIDERS,
   provide(LocationStrategy, {useClass: HashLocationStrategy})]);
