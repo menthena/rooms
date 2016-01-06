@@ -1,7 +1,9 @@
 import {Component, OnInit, ViewEncapsulation} from 'angular2/core';
+import {Router} from 'angular2/router';
 import {DesignTools} from './design-tools';
 import {Floors} from '../floors/floors';
 import {DesignService} from '../../services/DesignService';
+import {UserService} from '../../services/UserService';
 
 @Component({
   directives: [DesignTools, Floors],
@@ -23,7 +25,12 @@ import {DesignService} from '../../services/DesignService';
 })
 
 export class Design {
-  constructor(private DesignService: DesignService) {
+  constructor(private DesignService: DesignService,
+    private UserService: UserService, private router: Router
+  ) {
     this.DesignService.designModeState = true;
+    if (!this.UserService.isLogged) {
+      this.router.navigate(['Login']);
+    }
   }
 }

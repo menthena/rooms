@@ -1,0 +1,11 @@
+@import '../_variables';
+@import '../mixins';
+
+.wrapper {
+  position: absolute;
+  display: inline-block;
+}
+
+.icon {
+  // @include boxShadow();
+}

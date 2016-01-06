@@ -2,5 +2,36 @@
 @import '../mixins';
 
 .no-floor {
-  color: $primary-color;
+  color: $light-text-color;
+  margin-top: 28px;
+  font-size: 20px;
+}
+
+a.button {
+  @include transition(color);
+  // background: $light-text-color;
+  color: $light-text-color;
+  padding: 4px 5px 4px 6px;
+  border-radius: 2px;
+  font-size: 16px;
+  display: inline-block;
+  margin-top: 20px;
+  &:hover {
+    color: lighten($text-color, 5);
+  }
+}
+
+.button.add-floor {
+  @include transition(background);
+  background: lighten($text-color, 10);
+  color: #FFF;
+  font-size: 16px;
+  padding: 5px 9px 4px;
+  i {
+    padding-right: 5px;
+  }
+  &:hover {
+    color: #FFF;
+    background: lighten($text-color, 5);
+  }
 }

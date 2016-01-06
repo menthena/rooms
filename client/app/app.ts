@@ -27,8 +27,8 @@ import {UserValidators} from './validators/UserValidators';
   template: `
   <appwide-overlay></appwide-overlay>
   <overlay></overlay>
-  <header></header>
-  <router-outlet></router-outlet>
+  <header [logged]="isLogged"></header>
+  <router-outlet (loggedChange)="handleLoggedChange($event)"></router-outlet>
   `,
   styleUrls: ['styles/base.css', 'styles/rooms.css']
 })
@@ -36,10 +36,25 @@ import {UserValidators} from './validators/UserValidators';
 @RouteConfig(APP_ROUTES)
 
 class Room {
-  constructor(private ReservationService: ReservationService) {}
+  isLogged: boolean;
+  userObservable;
+
+  constructor(private UserService: UserService) {
+    this.userObservable = this.UserService.getUserObservable();
+    this.userObservable.connect();
+  }
+
 
   ngOnInit() {
-    this.ReservationService.fetchReservations();
+    this.UserService.getUser();
+    this.userObservable
+      .subscribe(() => {
+        this.isLogged = this.UserService.isLogged;
+      });
+  }
+
+  handleLoggedChange() {
+    console.log('tick');
   }
 }
 

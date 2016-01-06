@@ -1,19 +1,38 @@
 import {Component, OnInit} from 'angular2/core';
 import {Observable} from 'rxjs';
 import {FloorService, IFloor} from '../../services/FloorService';
+import {AppService} from '../../services/AppService';
 import {ReservationService} from '../../services/ReservationService';
+import {DesignService} from '../../services/DesignService';
 import {Floor} from './floor';
 import {LoadingIndicator} from '../../directives/loading-indicator';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'floors',
   providers: [FloorService],
   directives: [Floor, LoadingIndicator],
   template: `
+    <a *ngIf="designMode && floors && floors.length > 0" (click)="addFloor()"
+      class="add-floor button"><i class="fa fa-plus"></i> Add floor</a>
     <loading-indicator *ngIf="isLoading"></loading-indicator>
     <div *ngIf="floors">
-      <div class="no-floor" *ngIf="floors.length === 0">No floors</div>
-      <floor *ngFor="#floor of floors" [floor]="floor"></floor>
+      <div class="no-floor text-center" *ngIf="!isLoading && floors.length === 0">
+        <div>
+          No floors, why don't you add one?
+        </div>
+        <a *ngIf="designMode" (click)="addFloor()"><i class="fa fa-plus"></i> Add floor</a>
+      </div>
+
+      <div *ngFor="#floor of floors">
+        <div *ngIf="designMode" class="pull-right">
+          <a (click)="changeOrder(floor.floorID, 'up')" *ngIf="floor.order > 0" class="button"><i class="fa fa-arrow-up"></i></a>
+          <a (click)="changeOrder(floor.floorID, 'down')" *ngIf="floor.order < floors.length - 1"
+            class="button"><i class="fa fa-arrow-down"></i></a>
+          <a (click)="showDeleteFloorConfirmation(floor.floorID)" class="button"><i class="fa fa-trash"></i></a>
+        </div>
+        <floor [floor]="floor"></floor>
+      </div>
     </div>
   `,
   styleUrls: ['styles/floors/floors.css']
@@ -21,10 +40,40 @@ import {LoadingIndicator} from '../../directives/loading-indicator';
 
 export class Floors {
   floors: Array<IFloor>;
+  overlayObservable;
+  showConfirmDeletion: boolean;
   isLoading: boolean;
   designMode: boolean;
 
-  constructor(private floorService: FloorService) {
+  constructor(private floorService: FloorService, private DesignService: DesignService,
+    private AppService: AppService) {
+    this.overlayObservable = this.AppService.overlayObservable;
+  }
+
+  ngOnInit() {
+    this.fetchAll();
+    this.designMode = this.DesignService.designModeState;
+    this.overlayObservable
+      .subscription
+      .subscribe((res) => {
+        if (res.type === 'response') {
+          if (res.data === true) {
+            this.deleteFloor(res.id);
+          }
+        }
+      });
+  }
+
+  addFloor() {
+    this.isLoading = true;
+    this.floorService.addFloor('Untitled floor')
+      .delay(500)
+      .subscribe(
+        (res: any) => {
+          this.isLoading = false;
+          this.floors.splice(0, 0, res.json().data);
+        }
+      );
   }
 
   fetchAll() {
@@ -34,13 +83,49 @@ export class Floors {
       .subscribe(
         (res: any) => {
           this.isLoading = false;
-          console.log(res.json().data);
-          this.floors = res.json().data;
+          let floors = res.json().data;
+          floors = _.sortBy(floors, 'order');
+          this.floors = floors;
         }
       );
   }
 
-  ngOnInit() {
-    this.fetchAll();
+  showDeleteFloorConfirmation(id) {
+    this.showConfirmDeletion = true;
+    if (this.overlayObservable.subscription) {
+      this.overlayObservable.subscription
+        .next({
+          type: 'show',
+          message: `You are about to delete a floor. Are you sure you want to do that?
+            Be aware that you will also delete the reservations.`,
+          panelType: 'confirmation',
+          id: id
+        });
+    }
   }
+
+  deleteFloor(floorID) {
+    this.floorService.deleteFloor(floorID)
+      .delay(200)
+      .subscribe(
+        (res: any) => {
+          if (res.status === 204) {
+            _.remove(this.floors, { floorID: floorID });
+          }
+        }
+      );
+  }
+
+  changeOrder(id, direction) {
+    this.floorService.changeOrder(id, direction)
+      .delay(200)
+      .subscribe(
+        (res: any) => {
+          let floors = res.json().data;
+          floors = _.sortBy(floors, 'order');
+          this.floors = floors;
+        }
+      );
+  }
+
 }

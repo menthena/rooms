@@ -32,6 +32,14 @@ import {Scrollable} from '../../directives/scrollable';
             <div class="bar"></div>
           </a>
         </li>
+
+        <li class="icons">
+          <a draggable-element clone="true" data-type="icon-kitchen" class="icon icon-kitchen"></a>
+          <a draggable-element clone="true" data-type="icon-wc" class="icon icon-wc"></a>
+          <a draggable-element clone="true" data-type="icon-elevator" class="icon icon-elevator"></a>
+          <a draggable-element clone="true" data-type="icon-exit" class="icon icon-exit"></a>
+          <a draggable-element clone="true" data-type="icon-stairs" class="icon icon-stairs"></a>
+        </li>
       </ul>
     </div>
   </div>

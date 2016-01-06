@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component, Output, EventEmitter} from 'angular2/core';
 import {FormBuilder, NgForm, Validators, Control} from 'angular2/common';
 import {Router, RouterLink} from 'angular2/router';
 import {EMAIL_REGEX} from '../../constants';
@@ -9,6 +9,7 @@ import {UserService} from '../../services/UserService';
 @Component({
   selector: 'login',
   directives: [NgForm, LoadingIndicator, RouterLink],
+  outputs: ['loggedChange'],
   styleUrls: ['styles/common/generic-form.css'],
   template: `
   <div class="generic-form">
@@ -66,6 +67,7 @@ import {UserService} from '../../services/UserService';
 export class Login {
   loginForm;
   submitted: boolean;
+  @Output() loggedChange: any = new EventEmitter();
   invalidCredentials: boolean;
   submitting: boolean;
 
@@ -83,6 +85,9 @@ export class Login {
     if (this.loginForm.valid) {
       this.submitting = true;
       this.invalidCredentials = false;
+      this.loggedChange
+        .next(1);
+
       this.UserService.login(login.email, login.password)
         .add((res) => {
           setTimeout(() => {

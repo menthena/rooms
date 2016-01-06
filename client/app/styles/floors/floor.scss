@@ -22,7 +22,8 @@
   }
 }
 
-h1 {
+
+h1, .header {
   @include gradient();
   @include boxShadow();
   border-radius: 4px 4px 0 0;
@@ -32,6 +33,39 @@ h1 {
   padding: 7px 10px;
   margin-bottom: 0;
   font-size: 20px;
+  margin-top: 20px;
+  a.button {
+    font-size: 16px;
+    margin-top: 0;
+    margin-left: 10px;
+  }
+  form {
+    margin-bottom: 0;
+    input {
+      border-radius: 3px;
+      border: 1px $light-border-color solid;
+      padding: 0px 5px;
+      font-size: 16px;
+      outline: none;
+    }
+    .button {
+      background: none;
+      margin-left: 3px;
+      font-size: 15px;
+    }
+    button {
+      border: none;
+      outline: none;
+      background: none;
+      i {
+        color: ligthen($text-color, 20);
+      }
+    }
+  }
+}
+
+.header {
+  padding: 5px 10px;
 }
 
 .inner {

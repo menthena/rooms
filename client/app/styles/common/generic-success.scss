@@ -1,0 +1,40 @@
+@import '../_variables';
+@import '../mixins';
+
+.generic-success {
+  @include genericFormShadow();
+  @include transition(background-color);
+  background-color: $primary-color;
+  width: 350px;
+  margin: 40px auto;
+  border-radius: 3px;
+  .message {
+    color: $light-text-color;
+    margin-bottom: 16px;
+    border-bottom: 1px #ececec solid;
+    padding-bottom: 11px;
+  }
+  .header {
+    font-size: 24px;
+    border-bottom: none;
+    margin-bottom: 0;
+    color: #FFF;
+    padding: 13px 20px;
+  }
+  .white-bg {
+    background-color: #FFF;
+    border-radius: 0 0 3px 3px;
+    padding: 20px 20px;
+  }
+  button {
+    @include transition(all);
+    background: $primary-color;
+    color: #FFF;
+    outline: none;
+    padding: 12px 28px;
+    margin-top: 8px;
+    &:hover {
+      background: darken($primary-color, 4);
+    }
+  }
+}

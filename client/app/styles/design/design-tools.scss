@@ -25,10 +25,17 @@
     z-index: 99;
     background: $background-color;
   }
+  .icons {
+    display: block;
+    max-width: 205px;
+    a {
+      margin: 0 25px 10px 5px;
+    }
+  }
 }
 
 // .ui-draggable-handle {
-.room, .placeholder, .line {
+.room, .placeholder, .line, .icons {
   margin: 0 0 10px;
   a {
     @include transition(box-shadow);
@@ -42,6 +49,10 @@
     &:active, &:focus {
       cursor: -webkit-grabbing;
       @include dragShadow();
+    }
+    &.icon {
+      display: inline-block;
+      width: 64px;
     }
   }
 }

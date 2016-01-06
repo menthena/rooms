@@ -138,12 +138,14 @@ export class Room implements OnInit {
           this.getActiveReservation(res);
           this.isActive = false;
         });
-      if (this.filter.capacity > this.data.capacity) {
+
+      if (this.filter.capacity < this.data.capacity) {
         this.isMatch = false;
       }
       if (this.filter.features) {
         this.filter.features.map((res) => {
           if (this.data.features.indexOf(res) === -1) {
+            console.log(res);
             this.isMatch = false;
           }
         });

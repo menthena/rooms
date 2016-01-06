@@ -102,7 +102,7 @@ import {UserValidators} from '../../validators/UserValidators';
           </div>
           <div class="buttons">
             <button class="btn" [class.submitting]="submitting">
-              <span>Log in</span>
+              <span>Register</span>
             </button>
           </div>
         </div>
@@ -153,6 +153,7 @@ export class Register {
       }).subscribe((res) => {
           setTimeout(() => {
             this.submitting = false;
+            this.router.navigate(['RegisterSuccess']);
           }, 250);
         }, (err) => {
           this.submitting = false;

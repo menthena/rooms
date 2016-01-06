@@ -8,6 +8,10 @@ var reservationSchema = new Schema({
   reservationDate: Date,
   reservationEndDate: Date,
   description: String,
+  room: String,
+  recurring: String,
+  recurringEndDate: Date,
+  recurringID: String,
   date: { type: Date, default: Date.now }
 });
 

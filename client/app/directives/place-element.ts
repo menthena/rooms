@@ -36,6 +36,10 @@ export class PlaceElement implements OnInit {
         placement.height = '55px';
       }
       placement.left = left;
+      if (this.data.elementType === 'icon') {
+        placement.width = 'inherit';
+        placement.height = 'inherit';
+      }
     }
 
     jQuery(wrapper).css(placement);

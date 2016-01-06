@@ -25,15 +25,15 @@
   }
 }
 
-room, placeholder, line {
+room, placeholder, line, icon {
   .ui-draggable-handle {
     cursor: -webkit-grab;
-    .placeholder, .room, .line {
+    .placeholder, .room, .line, .icon {
       @include transition(box-shadow);
     }
     &:active {
       cursor: -webkit-grabbing;
-      .placeholder, .room {
+      .placeholder, .room, .icon {
         @include dragShadow();
       }
     }

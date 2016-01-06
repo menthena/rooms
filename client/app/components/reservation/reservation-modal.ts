@@ -4,6 +4,7 @@ import {Validators, FormBuilder} from 'angular2/common';
 import {Observable} from 'rxjs';
 import {IFloorElement} from '../../services/FloorElementsService';
 import {TimePicker} from '../form/time-picker';
+import {Button} from '../form/button';
 import {DATE_ONLY_FORMAT} from '../../constants';
 import {IReservation, ReservationService} from '../../services/ReservationService';
 import * as moment from 'moment';
@@ -12,7 +13,7 @@ declare var jQuery: any;
 
 @Component({
   selector: 'reservation-modal',
-  directives: [  TimePicker],
+  directives: [Button, TimePicker],
   styleUrls: ['styles/reservation-modal.css'],
   encapsulation: ViewEncapsulation.None,
   inputs: ['data', 'formData', 'activeReservation'],
@@ -60,6 +61,13 @@ declare var jQuery: any;
           <div class="form-element">
             <label for="description">Description</label>
             <textarea name="description" ngControl="description" id="description" placeholder="Enter description..."></textarea>
+          </div>
+
+          <div class="form-element">
+            <label for="description">Recurring</label>
+            <input [controlName]="controlName" [formModel]="formModel"
+              type="checkbox" [attr.id]="feature.value" button [attr.value]="feature.value"
+              >
           </div>
 
           <div class="buttons">

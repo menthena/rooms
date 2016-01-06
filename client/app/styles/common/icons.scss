@@ -1,0 +1,41 @@
+@import '../_variables';
+@import '../mixins';
+
+.icon {
+  background: $icon-bg-color;
+  border-radius: 3px;
+  width: 64px;
+  height: 64px;
+  display: block;
+  position: relative;
+  &:before {
+    transform: scale(0.6);
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 64px;
+    height: 64px;
+    display: block;
+  }
+}
+
+.icon-kitchen:before {
+  background-position: -186px -55px;
+}
+
+.icon-wc:before {
+  background-position: -3px -55px;
+}
+
+.icon-elevator:before {
+  background-position: -68px -55px;
+}
+
+.icon-exit:before {
+  background-position: -126px -51px;
+}
+
+.icon-stairs:before {
+  background-position: -11px -120px;
+}

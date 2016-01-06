@@ -1,8 +1,10 @@
 import {Component, OnInit} from 'angular2/core';
+import {Router} from 'angular2/router';
 import {Observable} from 'rxjs';
 import {Filter} from './filter';
 import {Floors} from '../floors/floors';
 import {DesignService} from '../../services/DesignService';
+import {UserService} from '../../services/UserService';
 import {ReservationService} from '../../services/ReservationService';
 
 @Component({
@@ -27,9 +29,15 @@ export class Reserve {
   formObj: Object;
   reservationFilterObserver: any;
 
-  constructor(private DesignService: DesignService, ReservationService: ReservationService) {
+  constructor(private DesignService: DesignService, private ReservationService: ReservationService,
+    private UserService: UserService, private router: Router
+    ) {
+    this.ReservationService.fetchReservations();
     this.DesignService.designModeState = false;
     this.reservationFilterObserver = ReservationService.getReservationFilterObserver();
+    if (!this.UserService.isLogged) {
+      this.router.navigate(['Login']);
+    }
   }
 
   getFormObj(formObj) {

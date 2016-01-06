@@ -1,6 +1,7 @@
 @import 'mixins.scss';
 @import '_variables.scss';
 @import 'common/tooltip.scss';
+@import 'common/icons.scss';
 
 body {
   background: $background-color;
@@ -23,4 +24,4 @@ a {
   }
 }
 
-@include sprite('header a.logo:before');
+@include sprite('header a.logo:before, .icon:before');

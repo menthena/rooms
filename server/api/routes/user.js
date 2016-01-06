@@ -5,6 +5,7 @@ var express = require('express');
 var router = express.Router();
 var models = require('../models');
 var User = models.User;
+var company = models.company;
 var bcrypt = require('bcrypt-nodejs');
 var middleware = require('../middleware');
 
@@ -74,37 +75,82 @@ router.patch('/:id', middleware.requiresUser, function(req, res) {
 });
 
 router.post('/', middleware.requiresUser, function(req, res) {
-  var newUser = _.pick(req.body, ['companyID', 'name', 'email', 'password', 'userType']);
+  var newUser = _.pick(req.body, ['companyName', 'companyID', 'name', 'email', 'password', 'userType']);
   User.count({ email: newUser.email }, function(err, userCount) {
     if (err) {
       res.status(422);
       res.send({ message: 'Bad request'});
     } else if (userCount > 0) {
-      res.status(500);
+      res.status(409);
       res.send({ message: 'Already exists' });
     } else {
       var companyID = newUser.companyID;
-      var userType;
-      if (req.user.userType !== 0) {
-        companyID = req.user.companyID;
-      }
-      if (req.user.userType === 0) {
-        userType = newUser.userType;
+      var userType = 0;
+      if (!companyID) {
+        req.session.userId = newUser.email;
+        company.create({ companyName: newUser.companyName }, function(err, newCompany) {
+          if (err) {
+            res.status(422);
+            res.send({ message: 'Bad request' });
+          } else {
+            User.create({ companyID: newCompany._id, name: newUser.name, email: newUser.email, hashed_password: hashPassword(newUser.password), userType: userType }, function(err, User) {
+              if (err) {
+                res.status(422);
+                res.send({ message: 'Bad request'});
+              }
+              else {
+                res.status(201).send({ data: User });
+              }
+            });
+          }
+        });
       } else {
-        userType = newUser.userType > 0 ? newUser.userType : 1;
+        User.create({ companyID: companyID, name: newUser.name, email: newUser.email, hashed_password: hashPassword(newUser.password), userType: userType }, function(err, User) {
+          if (err) {
+            res.status(422);
+            res.send({ message: 'Bad request'});
+          }
+          else {
+            res.status(201).send({ data: User });
+          }
+        });
       }
-      User.create({ companyID: companyID, name: newUser.name, email: newUser.email, hashed_password: hashPassword(newUser.password), userType: userType }, function(err, User) {
-        if (err) {
-          res.status(422);
-          res.send({ message: 'Bad request'});
-        }
-        else {
-          res.status(201).send({ data: User });
-        }
-      });
     }
   });
 });
+
+// router.post('/', middleware.requiresUser, function(req, res) {
+//   var newUser = _.pick(req.body, ['companyID', 'name', 'email', 'password', 'userType']);
+//   User.count({ email: newUser.email }, function(err, userCount) {
+//     if (err) {
+//       res.status(422);
+//       res.send({ message: 'Bad request'});
+//     } else if (userCount > 0) {
+//       res.status(500);
+//       res.send({ message: 'Already exists' });
+//     } else {
+//       var companyID = newUser.companyID;
+//       var userType;
+//       if (req.user.userType !== 0) {
+//         companyID = req.user.companyID;
+//       }
+//       if (req.user.userType === 0) {
+//         userType = newUser.userType;
+//       } else {
+//         userType = newUser.userType > 0 ? newUser.userType : 1;
+//       }
+//       User.create({ companyID: companyID, name: newUser.name, email: newUser.email, hashed_password: hashPassword(newUser.password), userType: userType }, function(err, User) {
+//         if (err) {
+//           res.status(422);
+//           res.send({ message: 'Bad request'});
+//         }
+//         else {
+//           res.status(201).send({ data: User });
+//         }
+//       });
+//     }
+//   });
+// });
 
 router.delete('/:id', middleware.requiresUser, middleware.requiresUser, function(req, res) {
   var filter = {

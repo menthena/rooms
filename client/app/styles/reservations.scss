@@ -1,0 +1,18 @@
+@import 'mixins';
+@import '_variables';
+
+h1 {
+  font-weight: 400;
+  font-size: 20px;
+  padding-top: 10px;
+}
+
+.no-reservation {
+  color: $light-text-color;
+  margin-top: 28px;
+  font-size: 20px;
+}
+
+.cancelling {
+  @include pulse();
+}

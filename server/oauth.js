@@ -21,7 +21,7 @@ module.exports = function(app) {
   app.all('/oauth/tokeninfo', function(req, res, next) {
     if (!req.session.userId) {
       res.status(401);
-      next();
+      res.send('');
     } else {
       User.getUserInfo(req.session.userId, function(user) {
         if (user.userType === -1) {
@@ -132,19 +132,17 @@ module.exports = function(app) {
 
       if (user) {
         req.session.userId = user.email;
-        res.sendStatus(200);
-        next();
+        res.send(200, user);
       } else {
         res.redirect(401, '/login?incorrect');
       }
     });
   });
 
-  app.get('/oauth/logout', function(req, res, next) {
+  app.get('/oauth/logout', function(req, res) {
     req.session = null;
     res.clearCookie('express:sess');
     res.clearCookie('express:sess.sig');
-    res.status(200);
-    next();
+    res.redirect(301, '/');
   });
 };

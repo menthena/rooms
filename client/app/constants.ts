@@ -4,6 +4,9 @@ module CONSTANTS {
   export const DATE_ONLY_FORMAT: string = 'DD/MM/YYYY';
   export const EMAIL_REGEX = '^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$';
 
+  export const CLIENT_ID = '1047154648442-9drs94v5uj6ces90795h6mcn438au1qr.apps.googleusercontent.com';
+  export const SCOPES = ['https://www.googleapis.com/auth/calendar'];
+
   export const DURATION_DATA = [{
       value: 15,
       text: '15 minutes'

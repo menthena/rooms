@@ -6,6 +6,7 @@ var Schema = mongoose.Schema;
 var floorSchema = new Schema({
   floorName: String,
   companyID: String,
+  order: Number,
   date: { type: Date, default: Date.now }
 });
 

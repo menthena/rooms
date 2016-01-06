@@ -83,8 +83,21 @@
     "static-favicon": "~1.0.0",
     "superstatic": "^3.0.0",
     "traceur": "0.0.92",
-    "typescript": "^1.6.2"
+    "typescript": "^1.6.2",
+    "webpack": "^1.12.9"
   },
+  "cordovaPlugins": [
+    "cordova-plugin-device",
+    "cordova-plugin-console",
+    "cordova-plugin-whitelist",
+    "cordova-plugin-splashscreen",
+    "cordova-plugin-statusbar",
+    "ionic-plugin-keyboard"
+  ],
+  "cordovaPlatforms": [
+    "ios",
+    "android"
+  ],
   "jspm": {
     "dependencies": {
       "lodash": "npm:lodash@^3.10.1",

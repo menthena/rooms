@@ -1,4 +1,4 @@
-import {Component, Input, NgZone, ChangeDetectionStrategy, ChangeDetectorRef, ComponentRef} from 'angular2/core';
+import {Component, Input, NgZone, ChangeDetectionStrategy, ChangeDetectorRef, EventEmitter} from 'angular2/core';
 import {FormBuilder, Validators} from 'angular2/common';
 import {Observable} from 'rxjs';
 import {IFloor} from '../../services/FloorService';
@@ -10,6 +10,7 @@ import {AppService} from '../../services/AppService';
 import {FloorService} from '../../services/FloorService';
 import {Placeholder} from './placeholder';
 import {Line} from './line';
+import {Icon} from './icon';
 import {LoadingIndicator} from '../../directives/loading-indicator';
 import {PlaceElement} from '../../directives/place-element';
 import {EditElement} from '../design/edit-element';
@@ -22,8 +23,8 @@ import * as io from 'socket.io-client';
 @Component({
   selector: 'floor',
   providers: [FloorElementsService],
-  directives: [Room, PlaceElement, Placeholder, Line, Droppable, LoadingIndicator],
-  styleUrls: ['styles/floors/floor.css'],
+  directives: [Room, Icon, PlaceElement, Placeholder, Line, Droppable, LoadingIndicator],
+  styleUrls: ['styles/floors/floor.css', 'styles/floors/floors.css'],
   template: `
   <div [ngClass]="{'design-mode': designMode}">
     <ul class="list-inline">
@@ -31,18 +32,15 @@ import * as io from 'socket.io-client';
         <h1 *ngIf="!editMode">
           {{ floor.floorName }}
           <span *ngIf="designMode">
-            <a (click)="switchEditMode()">Edit</a>
+            <a (click)="switchEditMode()" class="button"><i class="fa fa-pencil"></i></a>
           </span>
         </h1>
-        <div *ngIf="editMode">
+        <div *ngIf="editMode" class="header">
           <form [ngFormModel]="editFloorNameForm">
             <input type="text" name="floorName" id="floorName" ngControl="floorName">
-            <a (click)="submitEditFloorNameForm()">Submit</a>
-            <a (click)="cancelEditFloorNameForm()">Cancel</a>
+            <button (click)="submitEditFloorNameForm($event)" type="submit" class="button"><i class="fa fa-check"></i></button>
+            <button (click)="cancelEditFloorNameForm($event)" class="button"><i class="fa fa-times"></i></button>
           </form>
-        </div>
-        <div *ngIf="designMode" class="pull-right">
-          <a (click)="showDeleteFloorConfirmation()">Delete</a>
         </div>
       </li>
       <li>
@@ -55,7 +53,8 @@ import * as io from 'socket.io-client';
         <div *ngFor="#element of floorElements" [ngSwitch]="element.elementType">
           <room *ngSwitchWhen="'room'" [data]="element" place-element></room>
           <line *ngSwitchWhen="'line'" [data]="element" place-element></line>
-          <placeholder [data]="element" place-element *ngSwitchDefault></placeholder>
+          <placeholder *ngSwitchWhen="'placeholder'" [data]="element" place-element></placeholder>
+          <icon *ngSwitchDefault [data]="element" place-element></icon>
         </div>
       </div>
     </div>
@@ -66,67 +65,89 @@ import * as io from 'socket.io-client';
 export class Floor {
   @Input() floor: IFloor;
   @Input() isLoading: boolean;
+  // @Output() deleteFloor = new EventEmitter();
+  // @Output() updateFloor = new EventEmitter();
   floorElements: Array<IFloorElement>;
   reservations: Array<IReservation>;
   floorElementsObservable;
-  overlayObservable;
   editMode: boolean;
   designMode: boolean;
   editFloorNameForm;
-  showConfirmDeletion: boolean;
 
   constructor(private floorElementsService: FloorElementsService,
     private changeRef: ChangeDetectorRef, private DesignService: DesignService,
     private ReservationService: ReservationService, private fb: FormBuilder,
-    private AppService: AppService, private floorService: FloorService,
-    private componentRef: ComponentRef
+    private floorService: FloorService
   ) {
     this.floorElements = [];
     this.floorElementsObservable = this.floorElementsService.getObservable();
     this.floorElementsObservable.connect();
     this.designMode = DesignService.designModeState;
     this.isLoading = false;
-    this.overlayObservable = this.AppService.overlayObservable;
   }
 
   switchEditMode() {
     this.editMode = true;
   }
 
-  cancelEditFloorNameForm() {
+  cancelEditFloorNameForm(e) {
+    e.preventDefault();
     this.editMode = false;
   }
 
-  submitEditFloorNameForm() {
-    this.editMode = false;
-  }
-
-  showDeleteFloorConfirmation() {
-    this.showConfirmDeletion = true;
-    if (this.overlayObservable.subscription) {
-      this.overlayObservable.subscription
-        .next({
-          type: 'show',
-          message: `You are about to delete a floor. Are you sure you want to do that?
-            Be aware that you will also delete the reservations.`,
-          panelType: 'confirmation',
-          id: this.floor.floorID
-        });
-    }
-  }
-
-  deleteFloor() {
+  submitEditFloorNameForm(e) {
+    e.preventDefault();
     this.isLoading = true;
-    this.floorService.deleteFloor(this.floor.floorID)
-      .delay(200)
+    this.floorService.updateFloor(this.floor.floorID, {
+      floorName: this.editFloorNameForm.value.floorName
+    })
+      .delay(500)
       .subscribe(
         (res: any) => {
-          if (res.status === 204) {
-            console.log(this.componentRef.dispose());
-          }
+          this.editMode = false;
+          this.isLoading = false;
+          this.floor.floorName = this.editFloorNameForm.value.floorName;
         }
       );
   }
+
+  // changeOrder(direction) {
+  //   this.isLoading = true;
+  //   this.updateFloor
+  //     .next({
+  //       floorID: this.floor.floorID,
+  //       type: 'order',
+  //       direction: direction
+  //     });
+  // }
+  //
+  // showDeleteFloorConfirmation() {
+  //   this.showConfirmDeletion = true;
+  //   if (this.overlayObservable.subscription) {
+  //     this.overlayObservable.subscription
+  //       .next({
+  //         type: 'show',
+  //         message: `You are about to delete a floor. Are you sure you want to do that?
+  //           Be aware that you will also delete the reservations.`,
+  //         panelType: 'confirmation',
+  //         id: this.floor.floorID
+  //       });
+  //   }
+  // }
+
+  // deleteFloor() {
+  //   this.isLoading = true;
+  //   this.floorService.deleteFloor(this.floor.floorID)
+  //     .delay(200)
+  //     .subscribe(
+  //       (res: any) => {
+  //         if (res.status === 204) {
+  //           console.log(this.componentRef);
+  //           // this.componentRef.dispose();
+  //         }
+  //       }
+  //     );
+  // }
 
   fetch(floorID) {
     this.isLoading = true;
@@ -183,16 +204,6 @@ export class Floor {
     this.editFloorNameForm = this.fb.group({
       floorName: [this.floor.floorName, Validators.required]
     });
-
-    this.overlayObservable
-      .subscription
-      .subscribe((res) => {
-        if (res.type === 'response' && this.floor.floorID === res.id) {
-          if (res.data) {
-            this.deleteFloor();
-          }
-        }
-      });
   }
 
 }

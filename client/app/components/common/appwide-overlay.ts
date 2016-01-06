@@ -7,16 +7,20 @@ import {AppService} from '../../services/AppService';
   selector: 'appwide-overlay',
   template: `
     <div class="appwide-overlay" *ngIf="isPanelActive" [class.active]="isActive">
-      <a (click)="hide()">
-        Hide
-        <div>
-          {{ message }}
-        </div>
-        <div *ngIf="panelType === 'confirmation'">
-          <a (click)="confirm(true)">Yes</a>
-          <a (click)="confirm(false)">No</a>
-        </div>
+      <a (click)="hide()" class="pull-right hide-button">
+        <i class="fa fa-times"></i>
       </a>
+      <div class="box text-center">
+        <div class="inner">
+          <div>
+            {{ message }}
+          </div>
+          <div *ngIf="panelType === 'confirmation'" class="buttons">
+            <a (click)="confirm(true)" class="yes">Yes</a>
+            <a (click)="confirm(false)">No</a>
+          </div>
+        </div>
+      </div>
     <div>
   `,
   styleUrls: ['styles/common/appwide-overlay.css']

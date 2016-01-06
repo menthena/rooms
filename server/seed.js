@@ -11,7 +11,8 @@ function hashPassword(password) {
 models.floor.count(function(err, count) {
   if (count === 0) {
     models.floor.create({
-      floorName: '1st Floor'
+      floorName: '1st Floor',
+      order: 0
     }, function(err, floor) {
       if (floor) {
         models.floorElement.create([
@@ -52,7 +53,8 @@ models.floor.count(function(err, count) {
     });
 
     models.floor.create({
-      floorName: '2nd Floor'
+      floorName: '2nd Floor',
+      order: 1
     }, function(err, floor) {
       if (floor) {
         models.floorElement.create([

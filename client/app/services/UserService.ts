@@ -7,13 +7,21 @@ interface IUserService {
   recoverPassword(email: string) : void;
   resetPassword(email: string, password: string, token: string) : void;
   register(userObject: Object) : void;
+  getUser() : void;
 }
 
 @Injectable()
 export class UserService implements IUserService {
   public isLogged: boolean;
+  public userData: Object;
+  userObservable;
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) {
+    this.userObservable = Observable
+      .create(observer => {
+        return () => console.log('disposed');
+      }).publish();
+  }
 
   login(email: string, password: string) {
     let observable = this.http.post('/oauth/login', JSON.stringify({
@@ -25,7 +33,10 @@ export class UserService implements IUserService {
     let subscription = observable
       .subscribe((res: any) => {
         this.isLogged = true;
-        console.log(res);
+        this.userData = res.json();
+        this.userObservable
+          .subscription
+          .next();
         return res;
       }, (err) => {
         this.isLogged = false;
@@ -52,6 +63,27 @@ export class UserService implements IUserService {
       headers: new Headers({ 'Content-Type': 'application/json' })
     });
     return observable;
+  }
+
+  getUserObservable() {
+    return this.userObservable;
+  }
+
+  getUser() {
+    let observable = this.http.get('/oauth/tokeninfo');
+    let subscription = observable
+      .subscribe((res: any) => {
+        this.userData = res.json();
+        this.isLogged = true;
+        this.userObservable
+          .subscription
+          .next();
+        return res;
+      }, (err) => {
+        this.isLogged = false;
+        return err;
+      });
+    return subscription;
   }
 
   register(userObject: Object) {

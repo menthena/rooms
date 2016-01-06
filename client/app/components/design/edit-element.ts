@@ -45,23 +45,8 @@ declare var jQuery: any;
                       </a>
                     </li>
                     <li>
-                      <a (click)="setIcon('elevator')" [class.selected]="data.elementIcon === 'elevator'">
-                        <i class="fa fa-sort"></i> Elevator
-                      </a>
-                    </li>
-                    <li>
                       <a (click)="setIcon('information')" [class.selected]="data.elementIcon === 'information'">
                         <i class="fa fa-info"></i> Information
-                      </a>
-                    </li>
-                    <li>
-                      <a (click)="setIcon('wc')" [class.selected]="data.elementIcon === 'wc'">
-                        <i class="fa fa-wc"></i> W.C.
-                      </a>
-                    </li>
-                    <li>
-                      <a (click)="setIcon('kitchen')" [class.selected]="data.elementIcon === 'kitchen'">
-                        <i class="fa fa-cutlery"></i> Kitchen
                       </a>
                     </li>
                   </ul>
