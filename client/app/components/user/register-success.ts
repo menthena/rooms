@@ -26,6 +26,7 @@ import {UserService} from '../../services/UserService';
 
 export class RegisterSuccess {
   user: Object;
+  obc: Object;
 
   constructor(private router: Router, private UserService: UserService) {
     this.user = {};

@@ -8,7 +8,7 @@ module.exports = {
     },
     sass: {
       src: ['client/**/*.scss'],
-      dest: 'www/build/css',
+      dest: 'dist/app/styles',
       include: ['node_modules/ionic-framework']
     },
     fonts: {

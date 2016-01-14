@@ -71,7 +71,9 @@ export class Floors {
       .subscribe(
         (res: any) => {
           this.isLoading = false;
-          this.floors.splice(0, 0, res.json().data);
+          let floors = res.json().data;
+          floors = _.sortBy(floors, 'order');
+          this.floors = floors;
         }
       );
   }

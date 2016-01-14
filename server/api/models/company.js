@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 
 var companySchema = new Schema({
   companyName: String,
+  googleToken: String,
   date: { type: Date, default: Date.now }
 });
 

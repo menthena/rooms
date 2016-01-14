@@ -20,8 +20,8 @@ declare var gapi: any;
           <ul class="list-inline">
             <li><a [routerLink]="['/Reserve']">Reserve</a></li>
             <li><a [routerLink]="['/Design']">Design</a></li>
-            <li><a [routerLink]="['/Reservations']">My reservations</a></li>
-            <li><a (click)="handleClick();">A</a></li>
+            <li><a [routerLink]="['/Reservations']">Reservations</a></li>
+            <li><a [routerLink]="['/Accounts']">Account</a></li>
           </ul>
         </div>
         <div class="col-sm-3 hidden-xs text-right" *ngIf="logged">

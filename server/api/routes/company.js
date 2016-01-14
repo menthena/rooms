@@ -48,23 +48,18 @@ router.get('/:id', middleware.requiresUser, function(req, res) {
   }
 });
 
-router.patch('/:id', middleware.requiresUser, function(req, res) {
-  var updatedModel = _.pick(req.body, 'companyName');
+router.patch('/', middleware.requiresUser, function(req, res) {
+  var updatedModel = _.pick(req.body, 'companyName', 'googleToken');
+  console.log(req);
+  return ;
 
-  company.findOne({ companyName: updatedModel.companyName }, function(err, companyDetails) {
-    if (companyDetails && String(companyDetails._id) !== String(req.params.id)) {
-      res.status(500);
-      res.send({ message: 'Already exists' });
-    } else {
-      company.findOneAndUpdate({ _id: req.params.id }, updatedModel, function(err, company) {
-        if (err) {
-          res.status(422);
-          res.send({ message: 'Bad request'});
-        }
-        else {
-          res.send({ data: company });
-        }
-      });
+  company.findOneAndUpdate({ _id: req.user.companyID }, updatedModel, function(err, company) {
+    if (err) {
+      res.status(422);
+      res.send({ message: 'Bad request'});
+    }
+    else {
+      res.send({ data: company });
     }
   });
 });

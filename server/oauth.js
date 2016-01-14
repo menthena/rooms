@@ -28,7 +28,7 @@ module.exports = function(app) {
           res.status(401);
           next();
         } else {
-          res.send(200, { userType: user.userType, name: user.name });
+          res.send(200, user);
         }
       });
     }

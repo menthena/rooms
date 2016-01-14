@@ -1,2 +1,28 @@
 @import './_variables';
 @import './mixins';
+
+.container {
+}
+
+h1 {
+  font-size: 24px;
+  color: $light-text-color;
+}
+
+.row {
+  margin-bottom: 10px;
+}
+
+.account-info {
+  background: darken($background-color, 5);
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  .row:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.name {
+  font-weight: bold;
+}

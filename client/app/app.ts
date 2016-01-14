@@ -13,6 +13,7 @@ import {FloorService} from './services/FloorService';
 import {UserService} from './services/UserService';
 import {AppService} from './services/AppService';
 import {DesignService} from './services/DesignService';
+import {CalendarService} from './services/CalendarService';
 import {FloorElementsService} from './services/FloorElementsService';
 import {ReservationService} from './services/ReservationService';
 import {UserValidators} from './validators/UserValidators';
@@ -44,7 +45,6 @@ class Room {
     this.userObservable.connect();
   }
 
-
   ngOnInit() {
     this.UserService.getUser();
     this.userObservable
@@ -59,5 +59,5 @@ class Room {
 }
 
 bootstrap(Room, [FloorService, DesignService, AppService, UserValidators, UserService,
-  FloorElementsService, ReservationService, HTTP_BINDINGS, ROUTER_PROVIDERS,
+  FloorElementsService, ReservationService, HTTP_BINDINGS, ROUTER_PROVIDERS, CalendarService,
   provide(LocationStrategy, {useClass: HashLocationStrategy})]);

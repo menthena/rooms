@@ -7,6 +7,27 @@ module CONSTANTS {
   export const CLIENT_ID = '1047154648442-9drs94v5uj6ces90795h6mcn438au1qr.apps.googleusercontent.com';
   export const SCOPES = ['https://www.googleapis.com/auth/calendar'];
 
+  export const INTERVAL_DATA = [{
+    value: 'day',
+    text: 'Daily'
+  },
+  {
+    value: 'week1',
+    text: 'Weekly'
+  },
+  {
+    value: 'week2',
+    text: '2 week'
+  },
+  {
+    value: 'week3',
+    text: '3 week'
+  },
+  {
+    value: 'month',
+    text: 'Monthly'
+  }];
+
   export const DURATION_DATA = [{
       value: 15,
       text: '15 minutes'

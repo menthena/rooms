@@ -138,13 +138,20 @@ router.post('/', middleware.requiresUser, function(req, res) {
           res.send({ message: 'Bad request'});
         } else {
           newFloor.order = 0;
-          floor.create(newFloor, function(err, floor) {
+          floor.create(newFloor, function(err) {
             if (err) {
               res.status(422);
               res.send({ message: 'Bad request'});
             }
             else {
-              res.status(201).send({ data: floor });
+              floor.find({}, function(err, floors) {
+                if (err) {
+                  res.status(422);
+                  res.send({ message: 'Bad request'});
+                } else {
+                  res.status(201).send({ data: floors });
+                }
+              });
             }
           });
         }

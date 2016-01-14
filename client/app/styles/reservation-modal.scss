@@ -19,7 +19,7 @@ reservation-modal .booking {
   top: 0;
   left: 0;
   width: 236px;
-  height: 200px;
+  min-height: 200px;
   opacity: 0;
   background: $primary-color;
   color: #FFF;
@@ -74,12 +74,43 @@ reservation-modal .booking {
     width: 100%;
     resize: none;
     color: $text-color;
+    padding: 5px 7px;
+    font-size: 15px;
   }
-  input {
-    width: 65px;
-    display: inline-block;
-    padding: 2px 6px;
+  .max-selectbox {
+    height: auto;
   }
+  .recurring {
+    input, label {
+      display: inline-block;
+      width: auto;
+    }
+  }
+  .ui-selectmenu-button {
+    @include noShadow();
+    border: none;
+    &:before {
+      display: none;
+    }
+  }
+  .ui-selectmenu-text {
+    background: #FFF;
+    color: $text-color;
+    font-weight: normal;
+  }
+  date-picker {
+    i {
+      display: none;
+    }
+    input {
+      width: 100%
+    }
+  }
+  // input[type=text] {
+  //   width: 65px;
+  //   display: inline-block;
+  //   padding: 2px 6px;
+  // }
   .buttons {
     margin-top: 10px;
     text-align: right;

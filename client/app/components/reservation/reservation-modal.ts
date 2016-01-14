@@ -1,11 +1,13 @@
 import {Component,   Input, OnInit,
   ElementRef, ViewEncapsulation} from 'angular2/core';
 import {Validators, FormBuilder} from 'angular2/common';
+import {DatePicker} from '../form/date-picker';
+import {SelectMenu} from '../form/select-menu';
 import {Observable} from 'rxjs';
 import {IFloorElement} from '../../services/FloorElementsService';
 import {TimePicker} from '../form/time-picker';
 import {Button} from '../form/button';
-import {DATE_ONLY_FORMAT} from '../../constants';
+import {DATE_ONLY_FORMAT, INTERVAL_DATA} from '../../constants';
 import {IReservation, ReservationService} from '../../services/ReservationService';
 import * as moment from 'moment';
 
@@ -13,14 +15,14 @@ declare var jQuery: any;
 
 @Component({
   selector: 'reservation-modal',
-  directives: [Button, TimePicker],
+  directives: [DatePicker, SelectMenu, Button, TimePicker],
   styleUrls: ['styles/reservation-modal.css'],
   encapsulation: ViewEncapsulation.None,
   inputs: ['data', 'formData', 'activeReservation'],
   template: `
     <div class="wrapper">
       <div class="booking" *ngIf="reserveID === data.elementID" [ngClass]="{'active': isActive, 'submitting': isSubmitting}">
-        <form #reserveForm="ngForm" (submit)="submitReservationForm($event)">
+        <form [ngFormModel]="reserveForm" (submit)="submitReservationForm($event)">
           <div *ngIf="!activeReservation">
             <div class="heading">
               Booking room / {{ data.elementName }}
@@ -63,11 +65,27 @@ declare var jQuery: any;
             <textarea name="description" ngControl="description" id="description" placeholder="Enter description..."></textarea>
           </div>
 
-          <div class="form-element">
-            <label for="description">Recurring</label>
-            <input [controlName]="controlName" [formModel]="formModel"
-              type="checkbox" [attr.id]="feature.value" button [attr.value]="feature.value"
-              >
+          <div class="form-element recurring">
+              <input button type="checkbox" name="recurring" id="recurring"
+                ngControl="recurring" [formModel]="reserveForm">
+              <label for="recurring">
+                Recurring
+              </label>
+
+          </div>
+
+          <div class="row form-element" *ngIf="reserveForm.value.recurring">
+            <div class="col-xs-6">
+              <label for="from">Interval</label>
+              <select controlName="interval" [formModel]="reserveForm" name="interval" id="interval" select-menu>
+                <option *ngFor="#item of intervalData" value="{{ item.value }}">{{ item.text }}</option>
+              </select>
+            </div>
+
+            <div class="col-xs-6">
+              <label for="to">Until</label>
+              <date-picker controlName="until" [formModel]="reserveForm" [data]="filter"></date-picker>
+            </div>
           </div>
 
           <div class="buttons">
@@ -91,6 +109,7 @@ export class ReservationModal implements OnInit {
   reservationTime: string;
   reservationObserver;
   reservationFilterObserver;
+  intervalData;
 
   constructor(private elementRef: ElementRef, private ReservationService: ReservationService, private fb: FormBuilder) {
     this.reservationFilterObserver = ReservationService.getReservationFilterObserver();
@@ -98,6 +117,7 @@ export class ReservationModal implements OnInit {
     this.reservationDate = this.ReservationService.filter.reservationDate.format(DATE_ONLY_FORMAT);
     this.reservationObserver = ReservationService.getObservable();
     this.isActive = false;
+    this.intervalData = INTERVAL_DATA;
   }
 
   dismissBooking() {
@@ -139,7 +159,10 @@ export class ReservationModal implements OnInit {
       this.reserveForm = this.fb.group({
         description: [''],
         from: [''],
-        to: ['']
+        to: [''],
+        recurring: [false],
+        interval: ['day'],
+        until: ['']
       });
     }
   }

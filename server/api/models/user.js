@@ -3,6 +3,7 @@
 var bcrypt = require('bcrypt-nodejs');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var company = require('./company');
 
 var OAuthUsersModel;
 var OAuthUsersSchema = new Schema({
@@ -55,7 +56,6 @@ OAuthUsersSchema.static('forgotPassword', function(email, cb) {
       return cb(true);
     }
     var token = getResetToken();
-    console.log(token);
     user.update({password_reset_token: token}, function(){});
     cb(null, token);
   }.bind(this));
@@ -64,7 +64,6 @@ OAuthUsersSchema.static('forgotPassword', function(email, cb) {
 OAuthUsersSchema.static('resetPassword', function(email, password, token, cb) {
   if (token) {
     this.findOne({ email: email, password_reset_token: token }, function(err, user) {
-      console.log(err, user);
       if (err || !user || user === null) {
         return cb(true);
       }
@@ -116,8 +115,13 @@ OAuthUsersSchema.static('getUserInfo', function(userId, cb) {
     if (user) {
       userObject.companyID = user.companyID;
       userObject.name = user.name;
+      userObject.email = user.email;
+      company.find({ _id: user.companyID }, function(err, foundCompany) {
+        userObject.companyName = foundCompany.companyName;
+        userObject.googleToken = foundCompany.googleToken;
+        cb(userObject);
+      });
     }
-    cb(userObject);
   });
 });
 
