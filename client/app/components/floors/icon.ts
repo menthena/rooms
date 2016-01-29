@@ -2,6 +2,7 @@ import {Component, Input, OnInit, ElementRef} from 'angular2/core';
 import {Observable} from 'rxjs';
 import {Resizable} from '../../directives/resizable';
 import {DesignService} from '../../services/DesignService';
+import {FloorElementsService} from '../../services/FloorElementsService';
 import {EditElement} from '../design/edit-element';
 import {Draggable} from '../../directives/draggable';
 
@@ -11,11 +12,14 @@ declare var jQuery:any;
   selector: 'icon',
   directives: [Draggable],
   inputs: ['data'],
-  styleUrls: ['styles/floors/icon.css'],
+  styleUrls: ['styles/floors/icon.css', 'styles/common/controls.css'],
   template: `
-    <div class="wrapper" draggable-element
+    <div class="wrapper control" draggable-element
       [attr.element-id]="data.elementID" [attr.data-id]="data.floorID">
       <div [ngClass]="addIconClass()">
+      </div>
+      <div class="hover-controls" *ngIf="designMode">
+        <a (click)="destroy()"><i class="fa fa-trash"></i></a>
       </div>
     </div>
   `
@@ -26,9 +30,14 @@ export class Icon {
   designObservable;
   designMode;
 
-  constructor(DesignService: DesignService) {
+  constructor(DesignService: DesignService, private FloorElementsService: FloorElementsService) {
     this.designMode = DesignService.designModeState;
     this.designObservable = DesignService.getObservable();
+  }
+
+  destroy() {
+    this.FloorElementsService
+      .deleteElement(this.data.floorID, this.data.elementID);
   }
 
   addIconClass() {

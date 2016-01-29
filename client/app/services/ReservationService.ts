@@ -16,9 +16,9 @@ export interface IReservation {
 interface IReservationService {
   saveFilter(filter: Object) : any;
   fetchReservations() : Observable<Object>;
-  cancelReservation(reservationID: string) : void;
+  cancelReservation(reservationID: string, recurring?: boolean) : void;
   transformFilter(filter: Object) : Object;
-  makeReservation(elementID: string, description: string) : void;
+  makeReservation(reservation: Object) : void;
   getReservationFilterObserver(): Observable<Object>;
   updateTime() : string;
   getObservable() : Observable<string>;
@@ -87,8 +87,8 @@ export class ReservationService implements IReservationService {
     return observable;
   }
 
-  cancelReservation(reservationID: string) {
-    let observable = this.http.delete('/api/reservation/' + reservationID);
+  cancelReservation(reservationID: string, recurring?: boolean) {
+    let observable = this.http.delete('/api/reservation/' + reservationID + '?recurring=' + recurring);
     let subscription = observable
       .subscribe((res) => {
         let reservation: any = res.json();
@@ -108,10 +108,10 @@ export class ReservationService implements IReservationService {
     return subscription;
   }
 
-  makeReservation(elementID: string, description: string) {
+  makeReservation(reservation: Object) {
     this.floorElementsObservable.subscription.next({ type: 'loading' });
-    this.filter.description = description;
-    this.filter.elementID = elementID;
+    this.filter = _.extend(this.filter, reservation);
+    console.log(this.filter, reservation);
 
     let observable: any = this.http.post('/api/reservation', JSON.stringify(this.filter), {
       headers: new Headers({ 'Content-Type': 'application/json' })

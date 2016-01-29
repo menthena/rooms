@@ -1,0 +1,19 @@
+@import '../_variables';
+@import '../mixins';
+
+.control {
+  .hover-controls {
+    display: none;
+    position: absolute;
+    top: -25px;
+    i {
+      padding: 5px 10px 10px 0;
+      color: $light-text-color !important;
+    }
+  }
+  &:hover {
+    .hover-controls {
+      display: block;
+    }
+  }
+}

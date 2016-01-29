@@ -6,6 +6,7 @@ interface IUserService {
   login(email: string, password: string) : void;
   recoverPassword(email: string) : void;
   resetPassword(email: string, password: string, token: string) : void;
+  changePassword(oldPassword: string, newPassword: string) : void;
   register(userObject: Object) : void;
   getUser() : void;
 }
@@ -59,6 +60,16 @@ export class UserService implements IUserService {
       email: email,
       password: password,
       token: token
+    }), {
+      headers: new Headers({ 'Content-Type': 'application/json' })
+    });
+    return observable;
+  }
+
+  changePassword(oldPassword: string, newPassword: string) {
+    let observable = this.http.patch('/oauth/change-password', JSON.stringify({
+      oldPassword: oldPassword,
+      password: newPassword
     }), {
       headers: new Headers({ 'Content-Type': 'application/json' })
     });

@@ -5,8 +5,6 @@ var basicAuth = require('basic-auth');
 var User = models.User;
 
 function requiresUser(req, res, next) {
-  next();
-  return;
   var user = basicAuth(req);
   // Basic authentication
   if (user && user.name) {

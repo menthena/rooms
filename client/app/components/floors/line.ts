@@ -12,14 +12,17 @@ declare var jQuery:any;
   selector: 'line',
   directives: [ Resizable, Draggable, EditElement],
   inputs: ['data'],
-  styleUrls: ['styles/floors/line.css'],
+  styleUrls: ['styles/floors/line.css', 'styles/common/controls.css'],
   template: `
-    <div class="wrapper" resizable-element draggable-element
+    <div class="wrapper control" resizable-element draggable-element
       [containment]="'#floor' + data.floorID" [data]="data" [attr.element-id]="data.elementID" [attr.data-id]="data.floorID">
       <div class="line" [class.vertical]="data.elementVertical">
         <a (click)="rotate()" class="rotate-icon" *ngIf="designMode">
           <i class="fa" [class.fa-repeat]="!data.elementVertical" [class.fa-undo]="data.elementVertical"></i>
         </a>
+      </div>
+      <div class="hover-controls" *ngIf="designMode">
+        <a (click)="destroy()"><i class="fa fa-trash"></i></a>
       </div>
     </div>
   `
@@ -52,6 +55,11 @@ export class Line {
       elementHeight: height,
       elementVertical: !this.data.elementVertical
     });
+  }
+
+  destroy() {
+    this.FloorElementsService
+      .deleteElement(this.data.floorID, this.data.elementID);
   }
 
   editElement() {

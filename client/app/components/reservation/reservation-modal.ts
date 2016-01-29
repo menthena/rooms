@@ -84,6 +84,7 @@ declare var jQuery: any;
 
             <div class="col-xs-6">
               <label for="to">Until</label>
+              <input type="hidden" id="until" name="until" ngControl="until" value="">
               <date-picker controlName="until" [formModel]="reserveForm" [data]="filter"></date-picker>
             </div>
           </div>
@@ -135,7 +136,13 @@ export class ReservationModal implements OnInit {
   submitReservationForm() {
     if (!this.isSubmitting) {
       this.isSubmitting = true;
-      this.ReservationService.makeReservation(this.data.elementID, this.reserveForm.value.description)
+      this.ReservationService.makeReservation({
+          elementID: this.data.elementID,
+          description: this.reserveForm.value.description,
+          recurring: this.reserveForm.value.recurring,
+          interval: this.reserveForm.value.interval,
+          until: moment(this.reserveForm.value.until, DATE_ONLY_FORMAT)
+        })
         .add(() => {
           this.reservationObserver
             .subscription
@@ -165,6 +172,10 @@ export class ReservationModal implements OnInit {
         until: ['']
       });
     }
+    this.reserveForm.valueChanges
+    .subscribe((res) => {
+      this.reserveForm.value = res;
+    });
   }
 
   ngOnInit() {

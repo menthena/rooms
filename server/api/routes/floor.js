@@ -184,4 +184,19 @@ router.delete('/:id', middleware.requiresUser, function(req, res) {
   });
 });
 
+router.delete('/:id/elements/:elementID', middleware.requiresUser, function(req, res) {
+
+  floorElement.remove({ _id: req.params.elementID }, function(err) {
+    if (err) {
+      res.status(422);
+      res.send({ message: 'Bad request'});
+    }
+    else {
+      res.status(204);
+      res.send({});
+    }
+  });
+});
+
+
 module.exports = router;

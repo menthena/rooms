@@ -20,8 +20,9 @@
   position: absolute;
   display: inline-block;
   line-height: 17px;
-  .fa-pencil {
+  .fa {
     padding-top: 3px;
+    padding-right: 5px;
     color: $light-text-color;
   }
 }

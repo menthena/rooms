@@ -25,14 +25,21 @@ import * as _ from 'lodash';
             <th>Ends</th>
             <th>Room</th>
             <th>Description</th>
-            <th>Cancel</th>
+            <th>Actions</th>
           <tr>
           <tr *ngFor="#reservation of reservations" [class.cancelling]="cancelling === reservation.reservationID">
             <td>{{ reservation.reservationDate }}</td>
             <td>{{ reservation.reservationEndDate }}</td>
             <td>{{ reservation.room }}</td>
             <td>{{ reservation.description }}</td>
-            <td><a (click)="cancelReservation(reservation.reservationID)"><i class="fa fa-times"></i></a></td>
+            <td>
+              <a (click)="cancelReservation(reservation.reservationID)">
+                <i class="fa fa-times"></i> Cancel
+              </a>
+              <a (click)="cancelReservation(reservation.reservationID, true)" *ngIf="reservation.recurring">
+                <i class="fa fa-times"></i> Cancel recurring
+              </a>
+            </td>
           </tr>
         </table>
       </div>
@@ -66,9 +73,9 @@ export class Reservations {
 
   }
 
-  cancelReservation(reservationID) {
+  cancelReservation(reservationID, recurring) {
     this.cancelling = reservationID;
-    this.ReservationService.cancelReservation(reservationID)
+    this.ReservationService.cancelReservation(reservationID, recurring)
       .add(() => {
         setTimeout(() => {
           this.cancelling = null;

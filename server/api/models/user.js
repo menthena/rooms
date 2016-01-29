@@ -13,6 +13,7 @@ var OAuthUsersSchema = new Schema({
   reset_token_expires: Date,
   name: String,
   userType: Number,
+  calendarID: String,
   companyID: String
 });
 
@@ -75,9 +76,9 @@ OAuthUsersSchema.static('resetPassword', function(email, password, token, cb) {
   }
 });
 
-OAuthUsersSchema.static('changePassword', function(id, password, cb) {
+OAuthUsersSchema.static('changePassword', function(id, oldPassword, password, cb) {
   this.findOne({ email: id }, function(err, user) {
-    if (err || !user || user === null) {
+    if (err || !user || user === null || !bcrypt.compareSync(oldPassword, user.hashed_password)) {
       return cb(true);
     }
     user.update({hashed_password: hashPassword(password)}, function(){});
@@ -116,7 +117,7 @@ OAuthUsersSchema.static('getUserInfo', function(userId, cb) {
       userObject.companyID = user.companyID;
       userObject.name = user.name;
       userObject.email = user.email;
-      company.find({ _id: user.companyID }, function(err, foundCompany) {
+      company.findOne({ _id: user.companyID }, function(err, foundCompany) {
         userObject.companyName = foundCompany.companyName;
         userObject.googleToken = foundCompany.googleToken;
         cb(userObject);

@@ -12,6 +12,7 @@ var reservationSchema = new Schema({
   recurring: String,
   recurringEndDate: Date,
   recurringID: String,
+  calendarID: String,
   date: { type: Date, default: Date.now }
 });
 

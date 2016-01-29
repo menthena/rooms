@@ -16,10 +16,14 @@ declare var jQuery: any;
       <div class="content">
         <i class="fa fa-check-square-o"></i> Reserved by you.
         <div class="controllers">
-          You can <a (click)="handleEditReservation()">edit</a> and <a (click)="handleCancelReservation()">cancel</a>.
+          <div><a (click)="handleEditReservation()"><i class="fa fa-pencil"></i> Edit</a></div>
+          <div><a (click)="handleCancelReservation()"><i class="fa fa-trash"></i> Cancel</a></div>
+          <div *ngIf="activeReservation && activeReservation.recurring">
+            <a (click)="handleCancelReservation(true)"><i class="fa fa-bars"></i> Cancel all recurring</a>
+          </div>
         </div>
       </div>
-      <div class="next-available">
+      <!--div class="next-available">
         <div class="content">
           <span class="title">Next available</span>
           <div>
@@ -34,7 +38,7 @@ declare var jQuery: any;
             </div>
           </div>
         </div>
-      </div>
+      </div-->
     </div>
   `
 })
@@ -49,9 +53,9 @@ export class Popover implements OnInit {
 
   constructor(private elementRef: ElementRef, private ReservationService: ReservationService) {}
 
-  handleCancelReservation() {
+  handleCancelReservation(recurring) {
     this.isCancelling = true;
-    this.ReservationService.cancelReservation(this.activeReservation.reservationID)
+    this.ReservationService.cancelReservation(this.activeReservation.reservationID, recurring)
       .add(() => {
         this.isCancelling = false;
       });

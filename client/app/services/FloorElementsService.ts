@@ -7,6 +7,7 @@ interface IFloorElementsService<T> {
   getObservable() : any;
   addElement(element: T) : void;
   editElement(elementID: string, element: T) : void;
+  deleteElement(floorID: string, elementID: string) : void;
   fetchElementsByFloorID(floorID: string) : void;
 }
 
@@ -71,6 +72,26 @@ export class FloorElementsService implements IFloorElementsService<IFloorElement
     .subscribe((res: any) => {
       let floorElement = res.json().data;
       this.floorElements.push(floorElement);
+      this.floorElementsObservable.subscription.next({
+        type: 'data',
+        data: this.floorElements
+      });
+    }, (err) => {
+      console.log(err);
+    });
+  }
+
+  deleteElement(floorID: string, elementID: string) {
+    this.floorElementsObservable.subscription.next({ type: 'loading' });
+
+    this.http.delete('/api/floor/' + floorID + '/elements/' + elementID, {
+      headers: new Headers({ 'Content-Type': 'application/json' })
+    })
+    .delay(400)
+    .subscribe((res: any) => {
+      _.remove(this.floorElements, (element) => {
+        return String(element.elementID) === String(elementID);
+      });
       this.floorElementsObservable.subscription.next({
         type: 'data',
         data: this.floorElements

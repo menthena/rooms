@@ -69,43 +69,48 @@ router.patch('/:id', middleware.requiresUser, function(req, res) {
 router.post('/', middleware.requiresUser, function(req, res) {
   var newReservation = req.body;
   var reservations = [newReservation];
-  var startDate = newReservation.reservationDate;
-  var endDate = newReservation.reservationEndDate;
-  var recurringEndDate = newReservation.recurringEndDate;
-  var diff, i, reservationID;
+  var startDate = moment.utc(newReservation.reservationDate);
+  var endDate = moment.utc(newReservation.reservationEndDate);
+  var recurringEndDate = moment.utc(newReservation.until);
+  var diff, i, reservationID, recurringReservation;
   if (newReservation.recurring) {
-    switch(newReservation.recurring) {
+    switch(newReservation.interval) {
       case 'day':
-        diff = moment.utc(recurringEndDate).diff(startDate, 'day');
+        diff = moment(recurringEndDate).diff(startDate, 'day');
+        console.log(diff);
         for (i = 0; i < diff; i++) {
           startDate.add(1, 'day');
           endDate.add(1, 'day');
-          newReservation.reservationDate = startDate;
-          newReservation.reservationEndDate = endDate;
-          reservations.push(newReservation);
+          recurringReservation = _.clone(newReservation);
+          recurringReservation.reservationDate = startDate;
+          recurringReservation.reservationEndDate = endDate;
+          reservations.push(recurringReservation);
         }
         break;
       case 'week1':
       case 'week2':
       case 'week3':
-        var week = newReservation.recurring.replace(/week/, '');
-        diff = moment.utc(recurringEndDate).diff(startDate, 'week');
+        var week = newReservation.interval.replace(/week/, '');
+        diff = moment(recurringEndDate).diff(startDate, 'week');
         for (i = 0; i < diff; i++) {
           startDate.add(week, 'week');
           endDate.add(week, 'week');
-          newReservation.reservationDate = startDate;
-          newReservation.reservationEndDate = endDate;
-          reservations.push(newReservation);
+          recurringReservation = _.clone(newReservation);
+          recurringReservation.reservationDate = startDate;
+          recurringReservation.reservationEndDate = endDate;
+          reservations.push(recurringReservation);
         }
         break;
       case 'month':
-        diff = moment.utc(recurringEndDate).diff(startDate, 'month');
+        diff = moment(recurringEndDate).diff(startDate, 'month');
+        console.log(diff);
         for (i = 0; i < diff; i++) {
           startDate.add(1, 'month');
           endDate.add(1, 'month');
-          newReservation.reservationDate = startDate;
-          newReservation.reservationEndDate = endDate;
-          reservations.push(newReservation);
+          recurringReservation = _.clone(newReservation);
+          recurringReservation.reservationDate = startDate;
+          recurringReservation.reservationEndDate = endDate;
+          reservations.push(recurringReservation);
         }
         break;
     }
@@ -118,21 +123,24 @@ router.post('/', middleware.requiresUser, function(req, res) {
       res.status(500);
       res.send({ message: 'Already exists' });
     } else {
+      console.log(reservations);
       _.each(reservations, function(newReservation, index) {
-        if (reservationID) {
-          newReservation.reservationID = reservationID;
-        }
-        reservation.create(newReservation, function(err, reservation) {
+        reservation.create(newReservation, function(err, _reservation) {
+          console.log('tick');
           if (index === 0) {
-            reservationID = reservation._id;
+            reservationID = _reservation._id;
             if (err) {
               res.status(422);
               res.send({ message: 'Bad request'});
             }
             else {
               io.sockets.emit('reservations', 1);
-              res.status(201).send({ data: reservation });
+              res.status(201).send({ data: _reservation });
             }
+          } else {
+            _reservation.update({ recurringID: reservationID }, function(err) {
+              console.log(err);
+            });
           }
         });
       });
@@ -141,14 +149,13 @@ router.post('/', middleware.requiresUser, function(req, res) {
 });
 
 router.delete('/:id', middleware.requiresUser, function(req, res) {
-
   reservation.remove({ _id: req.params.id }, function(err, deletedReservation) {
     if (err) {
       res.status(422);
       res.send({ message: 'Bad request'});
     }
     else {
-      if (req.params.deleteRecurring) {
+      if (req.query.recurring === true || req.query.recurring === 'true') {
         reservation.remove({ recurringID: deletedReservation.recurringID }, function(err) {
           if (err) {
             console.log(err);

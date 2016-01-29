@@ -20,9 +20,9 @@ declare var jQuery:any;
   directives: [ Resizable, Draggable, EditElement, PlaceElement,
     ReservationModal, EditElement, Popover],
   inputs: ['data', 'designMode'],
-  styleUrls: ['styles/floors/room.css'],
+  styleUrls: ['styles/floors/room.css', 'styles/common/controls.css'],
   template: `
-    <div class="wrapper" resizable-element draggable-element
+    <div class="wrapper control" resizable-element draggable-element
     [containment]="'#floor' + data.floorID" [attr.element-id]="data.elementID" [attr.data-id]="data.floorID"
       [class.reserved]="!designMode && !isActive" [class.not-match]="!designMode && !isMatch"
       [class.reservation-modal-opened]="reservationModalOpened">
@@ -38,7 +38,10 @@ declare var jQuery:any;
       <div class="room" (click)="handleClick()">
         <div><span>{{ data.elementName }}</span></div>
         <div class="second-line">
-          <a *ngIf="designMode" (click)="editElement()"><i class="fa fa-pencil"></i></a>
+          <div *ngIf="designMode">
+            <a (click)="editElement()"><i class="fa fa-pencil"></i></a>
+            <a (click)="destroy()"><i class="fa fa-trash"></i></a>
+          </div>
           <div *ngIf="!designMode && isActive && isMatch">
             <div class="features pull-left">
               <span><i class="fa fa-user"></i> {{ data.capacity }}</span>
@@ -101,6 +104,11 @@ export class Room implements OnInit {
 
   handleEditReservation() {
     this.openReservationModal();
+  }
+
+  destroy() {
+    this.FloorElementsService
+      .deleteElement(this.data.floorID, this.data.elementID);
   }
 
   editElement() {

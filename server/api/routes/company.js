@@ -50,9 +50,6 @@ router.get('/:id', middleware.requiresUser, function(req, res) {
 
 router.patch('/', middleware.requiresUser, function(req, res) {
   var updatedModel = _.pick(req.body, 'companyName', 'googleToken');
-  console.log(req);
-  return ;
-
   company.findOneAndUpdate({ _id: req.user.companyID }, updatedModel, function(err, company) {
     if (err) {
       res.status(422);

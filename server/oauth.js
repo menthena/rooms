@@ -70,7 +70,7 @@ module.exports = function(app) {
         req.query.client_id +'&redirect_uri=' + req.query.redirect_uri);
     }
 
-    User.changePassword(req.session.userId, req.body.password, function(err) {
+    User.changePassword(req.session.userId, req.body.oldPassword, req.body.password, function(err) {
       if (err) {
         res.send(404, err);
       } else {

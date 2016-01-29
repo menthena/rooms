@@ -1,12 +1,12 @@
 import {Component} from 'angular2/core';
-import {Router} from 'angular2/router';
+import {Router, RouterLink} from 'angular2/router';
 import {LoadingIndicator} from '../../directives/loading-indicator';
 import {UserService} from '../../services/UserService';
 import {CalendarService} from '../../services/CalendarService';
 
 @Component({
   selector: 'accounts',
-  directives: [LoadingIndicator],
+  directives: [LoadingIndicator, RouterLink],
   styleUrls: ['styles/accounts.css'],
   template: `
     <loading-indicator *ngIf="isLoading"></loading-indicator>
@@ -38,7 +38,7 @@ import {CalendarService} from '../../services/CalendarService';
             Password
           </div>
           <div class="col-xs-3">
-            *******
+            ******* [<a [routerLink]="['/ChangePassword']">Change</a>]
           </div>
           <div class="col-xs-1">
           </div>
@@ -81,10 +81,15 @@ export class Accounts {
   }
 
   integrateWithGoogle() {
-    this.CalendarService.authorize();
+    this.CalendarService.authorize((res) => {
+      if (res) {
+        this.userData.googleToken = res.googleToken;
+      }
+    });
   }
 
   ngOnInit() {
+    // this.CalendarService.fetchCalendars();
     this.userData = this.UserService.userData;
     setTimeout(() => {
       this.isLoading = false;
