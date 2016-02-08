@@ -1,4 +1,3 @@
-module CONSTANTS {
 
   export const DATE_FORMAT: string = 'DD/MM/YYYY h:mma';
   export const DATE_ONLY_FORMAT: string = 'DD/MM/YYYY';
@@ -74,6 +73,4 @@ module CONSTANTS {
 
   export const SOCKET_URL = 'http://localhost:5555';
 
-}
 
-export = CONSTANTS;

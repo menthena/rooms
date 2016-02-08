@@ -8,10 +8,15 @@ var config = require('./gulp.config')();
 var sass = require('gulp-sass');
 var clean = require('gulp-clean');
 var nodemon = require('gulp-nodemon');
+var useref = require('gulp-useref');
 var typescript = require('typescript');
 var runSequence = require('run-sequence');
 var KarmaServer = require('karma').Server;
+var cordova_lib = require('cordova-lib');
+var file = require('gulp-file');
+var appConfig = require('./support/app.config.json');
 var del = require('del');
+var fs = require('fs');
 
 var browserSync = require('browser-sync');
 var superstatic = require('superstatic');
@@ -35,6 +40,12 @@ gulp.task('compile-ts', function() {
 	return tsResult.js
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest(config.tsOutputPath));
+});
+
+gulp.task('concat', function () {
+    return gulp.src('client/app/*.html')
+        .pipe(useref())
+        .pipe(gulp.dest('dist/app'));
 });
 
 gulp.task('compile-tests', function() {
@@ -84,8 +95,15 @@ gulp.task('test', function(done) {
 	});
 });
 
-gulp.task('build', ['clean'], function(done) {
-	runSequence(['copy', 'scss'], ['ts-lint', 'compile-ts'], function() {
+gulp.task('set-env', function(done) {
+  var ENV = 'local';
+  return file('client/app/app.config.ts', 'export const ENV_URL: string = \'' + appConfig.env[ENV].url + '\';', { src: true })
+    .pipe(gulp.dest('.'));
+});
+
+gulp.task('build', ['set-env', 'clean'], function(done) {
+	runSequence(['copy', 'scss'], ['ts-lint', 'concat', 'compile-ts'], function() {
+	// runSequence(['set-env', 'copy', 'scss'], ['ts-lint', 'concat', 'compile-ts'], function() {
 		if (browserSync.active) {
 			browserSync.reload({
 				stream: true,
@@ -94,6 +112,12 @@ gulp.task('build', ['clean'], function(done) {
 		}
 		done();
 	});
+});
+
+gulp.task('cordova-copy', function() {
+  del(['www']);
+  gulp.src(['dist/app/**/*.*'])
+    .pipe(gulp.dest('www'));
 });
 
 gulp.task('serve', function() {

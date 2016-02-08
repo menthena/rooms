@@ -1,9 +1,11 @@
 import {Injectable} from 'angular2/core';
 import {Http, Response, Headers} from 'angular2/http';
-import * as moment from 'moment';
 import {Observable} from 'rxjs';
 import {FloorElementsService} from './FloorElementsService';
 import {DATE_FORMAT} from '../constants';
+import {ENV_URL} from '../app.config';
+
+declare var moment: any;
 
 export interface IReservation {
   reservationID: string;
@@ -68,7 +70,7 @@ export class ReservationService implements IReservationService {
   }
 
   fetchReservations() {
-    let observable = this.http.get('/api/reservation');
+    let observable = this.http.get(ENV_URL + '/api/reservation');
     observable
       .subscribe((res) => {
         let reservation: any = res.json();
@@ -88,7 +90,7 @@ export class ReservationService implements IReservationService {
   }
 
   cancelReservation(reservationID: string, recurring?: boolean) {
-    let observable = this.http.delete('/api/reservation/' + reservationID + '?recurring=' + recurring);
+    let observable = this.http.delete(ENV_URL + '/api/reservation/' + reservationID + '?recurring=' + recurring);
     let subscription = observable
       .subscribe((res) => {
         let reservation: any = res.json();
@@ -113,7 +115,7 @@ export class ReservationService implements IReservationService {
     this.filter = _.extend(this.filter, reservation);
     console.log(this.filter, reservation);
 
-    let observable: any = this.http.post('/api/reservation', JSON.stringify(this.filter), {
+    let observable: any = this.http.post(ENV_URL + '/api/reservation', JSON.stringify(this.filter), {
       headers: new Headers({ 'Content-Type': 'application/json' })
     });
     let subscription = observable

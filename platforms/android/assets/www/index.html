@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title>R</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles/vendor.css">
+    <link rel="stylesheet" href="styles/app.css">
+  </head>
+  <body>
+    <script src="https://use.typekit.net/vly1fpc.js"></script>
+    <script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
+    <script src="system.js"></script>
+    <script>
+    System.config({
+      defaultJSExtensions: true,
+      transpiler: 'none',
+      map: {
+        rxjs: 'vendor/rx.js' 
+      },
+      packages: {
+        app: { format: 'register', defaultExtension: 'js' },
+        rxjs: { defaultExtension: 'js' }
+      }
+    });
+    </script>
+    <script src="cordova.js"></script>
+    <script src="vendor.js"></script>
+    <script>
+    try{Typekit.load({ async: true });}catch(e){}
+    </script>
+    <rooms></rooms>
+    <script src="bootstrap.js"></script>
+  </body>
+</html>

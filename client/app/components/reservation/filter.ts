@@ -9,10 +9,10 @@ import {SelectMenu} from '../form/select-menu';
 import {Slider} from '../form/slider';
 import {FeatureList} from '../form/feature-list';
 import {Button} from '../form/button';
-import * as moment from 'moment';
 import {Observable} from 'rxjs';
 
 declare var jQuery:any;
+declare var moment:any;
 
 @Component({
   directives: [DatePicker, SelectMenu, Slider, Button, FeatureList, TimePicker],

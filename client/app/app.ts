@@ -1,5 +1,4 @@
 /// <reference path="../../typings/tsd.d.ts" />
-import 'reflect-metadata';
 import {Component, ViewEncapsulation, View, provide} from 'angular2/core';
 import {bootstrap} from 'angular2/platform/browser';
 import {HTTP_BINDINGS} from 'angular2/http';
@@ -30,8 +29,7 @@ import {UserValidators} from './validators/UserValidators';
   <overlay></overlay>
   <header [logged]="isLogged"></header>
   <router-outlet (loggedChange)="handleLoggedChange($event)"></router-outlet>
-  `,
-  styleUrls: ['styles/base.css', 'styles/rooms.css']
+  `
 })
 
 @RouteConfig(APP_ROUTES)

@@ -11,9 +11,9 @@ import {PlaceElement} from '../../directives/place-element';
 import {ReservationModal} from '../reservation/reservation-modal';
 import {FloorElementsService} from '../../services/FloorElementsService';
 import {DesignService} from '../../services/DesignService';
-import * as moment from 'moment';
 
 declare var jQuery:any;
+declare var moment:any;
 
 @Component({
   selector: 'room',

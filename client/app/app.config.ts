@@ -1,0 +1,1 @@
+export const ENV_URL: string = 'http://localhost:9000';

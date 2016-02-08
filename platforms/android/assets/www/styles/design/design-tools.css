@@ -1,0 +1,108 @@
+@keyframes pulse {
+  0% {
+    opacity: 0.6; }
+  50% {
+    opacity: 0.3; }
+  100% {
+    opacity: 0.6; } }
+
+@keyframes pulseScale {
+  0% {
+    transform: scale(1);
+    opacity: 0.8; }
+  50% {
+    transform: scale(0.6);
+    opacity: 0.2; }
+  100% {
+    transform: scale(1);
+    opacity: 0.9; } }
+
+.wrapper {
+  min-height: 100px; }
+
+.design-tools h1 {
+  color: #3ab791;
+  font-weight: 400;
+  font-size: 20px;
+  padding-top: 10px;
+  margin-bottom: 25px; }
+
+.design-tools .fa {
+  position: absolute;
+  left: 10px;
+  margin-top: 9px; }
+
+.design-tools.fixed {
+  position: fixed;
+  max-width: 200px;
+  top: 0;
+  z-index: 99;
+  background: #f9fbfc; }
+
+.design-tools .icons {
+  display: block;
+  max-width: 205px; }
+  .design-tools .icons a {
+    margin: 0 25px 10px 5px; }
+
+.room, .placeholder, .line, .icons {
+  margin: 0 0 10px; }
+  .room a, .placeholder a, .line a, .icons a {
+    transition: box-shadow 0.15s ease-out;
+    text-align: center;
+    padding: 10px;
+    display: block;
+    border-radius: 2px;
+    cursor: -webkit-grab;
+    width: 164px;
+    z-index: 3; }
+    .room a:active, .room a:focus, .placeholder a:active, .placeholder a:focus, .line a:active, .line a:focus, .icons a:active, .icons a:focus {
+      cursor: -webkit-grabbing;
+      box-shadow: 0 1px 10px rgba(187, 214, 216, 0.8), 0 2px 2px rgba(187, 214, 216, 0.9); }
+    .room a.icon, .placeholder a.icon, .line a.icon, .icons a.icon {
+      display: inline-block;
+      width: 64px; }
+
+.ui-draggable-dragging {
+  box-shadow: 0 1px 10px rgba(187, 214, 216, 0.8), 0 2px 2px rgba(187, 214, 216, 0.9); }
+
+.room a {
+  background: #3ab791;
+  color: #FFF; }
+
+.placeholder a {
+  background-color: #fdfdfd;
+  color: #a1b5c0;
+  border: 1px #dee5e9 solid; }
+
+.line {
+  padding: 0; }
+  .line .bar {
+    margin-top: 10px;
+    height: 3px;
+    width: 100%;
+    background-color: #dbe7ed; }
+  .line .ui-draggable {
+    width: 180px; }
+  .line .ui-draggable-dragging {
+    box-shadow: none; }
+    .line .ui-draggable-dragging .bar {
+      box-shadow: 0 1px 10px rgba(187, 214, 216, 0.8), 0 2px 2px rgba(187, 214, 216, 0.9); }
+  .line a {
+    color: #a1b5c0; }
+    .line a:active, .line a:focus {
+      box-shadow: none; }
+
+@media (max-width: 768px) {
+  .design-tools li:first-child {
+    width: 100%; }
+  .design-tools h1 {
+    font-size: 14px;
+    padding-top: 5px;
+    margin-bottom: 10px; }
+  .design-tools.fixed {
+    box-shadow: 0 1px 2px rgba(187, 214, 216, 0.4), 0 1px 1px rgba(187, 214, 216, 0.9);
+    left: 0;
+    padding-left: 15px;
+    max-width: none;
+    width: 100%; } }

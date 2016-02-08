@@ -1,0 +1,16 @@
+{
+  "env": {
+    "local": {
+      "url": "http://localhost:9000"
+    },
+    "development": {
+      "url": "http://localhost:9000"
+    },
+    "staging": {
+      "url": "http://localhost:9000"
+    },
+    "production": {
+      "url": "http://localhost:9000"
+    }
+  }
+}

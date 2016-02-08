@@ -24,4 +24,8 @@ a {
   }
 }
 
+.animated {
+  -webkit-animation-duration: 0.3s;
+}
+
 @include sprite('header a.logo:before, .icon:before');

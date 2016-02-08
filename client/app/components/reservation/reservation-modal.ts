@@ -9,9 +9,9 @@ import {TimePicker} from '../form/time-picker';
 import {Button} from '../form/button';
 import {DATE_ONLY_FORMAT, INTERVAL_DATA} from '../../constants';
 import {IReservation, ReservationService} from '../../services/ReservationService';
-import * as moment from 'moment';
 
 declare var jQuery: any;
+declare var moment: any;
 
 @Component({
   selector: 'reservation-modal',

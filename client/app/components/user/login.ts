@@ -12,7 +12,7 @@ import {UserService} from '../../services/UserService';
   outputs: ['loggedChange'],
   styleUrls: ['styles/common/generic-form.css'],
   template: `
-  <div class="generic-form">
+  <div class="generic-form animated slideInLeft">
     <form [ngFormModel]="loginForm" (ngSubmit)="submitLoginForm($event)" novalidate>
       <fieldset>
         <legend>Login</legend>

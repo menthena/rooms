@@ -1,0 +1,54 @@
+[{
+  "elementID": "1",
+  "floorID": "1",
+  "elementName": "Badlands",
+  "elementType": "room",
+  "elementPositionX": 5,
+  "elementPositionY": 5,
+  "elementWidth": 10,
+  "elementHeight": 0,
+  "capacity": 5
+}, {
+  "elementID": "2",
+  "floorID": "1",
+  "elementName": "Sharlands",
+  "elementType": "room",
+  "elementPositionX": 25,
+  "elementPositionY": 25,
+  "elementHeight": 0,
+  "elementWidth": 10,
+  "hasTV": true,
+  "capacity": 12
+}, {
+  "elementID": "3",
+  "floorID": "1",
+  "elementName": "Sandals",
+  "elementType": "placeholder",
+  "elementPositionX": 85,
+  "elementPositionY": 5,
+  "elementWidth": 15,
+  "elementHeight": 0,
+  "hasTV": false,
+  "capacity": 5
+}, {
+  "elementID": "4",
+  "floorID": "2",
+  "elementName": "Badlands",
+  "elementType": "room",
+  "elementPositionX": 10,
+  "elementPositionY": 10,
+  "elementWidth": 10,
+  "elementHeight": 0,
+  "capacity": 5
+}, {
+  "elementID": "5",
+  "floorID": "2",
+  "elementName": "Sharlands",
+  "elementType": "placeholder",
+  "elementPositionX": 30,
+  "elementPositionY": 30,
+  "elementWidth": 10,
+  "elementHeight": 100,
+  "hasTV": true,
+  "capacity": 12
+}]

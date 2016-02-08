@@ -17,8 +17,9 @@ import {EditElement} from '../design/edit-element';
 import {Droppable} from '../../directives/droppable';
 import {DesignService} from '../../services/DesignService';
 import {IReservation, ReservationService} from '../../services/ReservationService';
-import * as _ from 'lodash';
-import * as io from 'socket.io-client';
+
+declare var _: any;
+declare var io: any;
 
 @Component({
   selector: 'floor',

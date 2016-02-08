@@ -1,0 +1,87 @@
+@keyframes pulse {
+  0% {
+    opacity: 0.6; }
+  50% {
+    opacity: 0.3; }
+  100% {
+    opacity: 0.6; } }
+
+@keyframes pulseScale {
+  0% {
+    transform: scale(1);
+    opacity: 0.8; }
+  50% {
+    transform: scale(0.6);
+    opacity: 0.2; }
+  100% {
+    transform: scale(1);
+    opacity: 0.9; } }
+
+.list-inline {
+  margin-bottom: 0; }
+
+.floor {
+  box-shadow: 0 1px 2px rgba(187, 214, 216, 0.4), 0 1px 1px rgba(187, 214, 216, 0.9);
+  transition: opacity 0.15s ease-out;
+  background-color: #FFF;
+  width: 100%;
+  padding: 8px; }
+  .floor.active-droppable {
+    background: #dee5e9; }
+  .floor.active-dropping {
+    background: #bfcdd5; }
+  .floor.loading {
+    animation: pulse 1s infinite; }
+
+h1, .header {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#feffff+0,efefef+100 */
+  background: #FFF;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #FFF 20%, #f4f8f8 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #FFF 20%, #f4f8f8 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #FFF 20%, #f4f8f8 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFF', endColorstr='#f4f8f8',GradientType=0 );
+  /* IE6-9 */
+  box-shadow: 0 1px 2px rgba(187, 214, 216, 0.4), 0 1px 1px rgba(187, 214, 216, 0.9);
+  border-radius: 4px 4px 0 0;
+  color: #506a78;
+  font-weight: 600;
+  display: inline-block;
+  padding: 7px 10px;
+  margin-bottom: 0;
+  font-size: 20px;
+  margin-top: 20px; }
+  h1 a.button, .header a.button {
+    font-size: 16px;
+    margin-top: 0;
+    margin-left: 10px; }
+  h1 form, .header form {
+    margin-bottom: 0; }
+    h1 form input, .header form input {
+      border-radius: 3px;
+      border: 1px #dbe7ed solid;
+      padding: 0px 5px;
+      font-size: 16px;
+      outline: none; }
+    h1 form .button, .header form .button {
+      background: none;
+      margin-left: 3px;
+      font-size: 15px; }
+    h1 form button, .header form button {
+      border: none;
+      outline: none;
+      background: none; }
+      h1 form button i, .header form button i {
+        color: ligthen(#506a78, 20); }
+
+.header {
+  padding: 5px 10px; }
+
+.inner {
+  background: url(/images/bg.png);
+  position: relative;
+  height: 387px;
+  display: block; }

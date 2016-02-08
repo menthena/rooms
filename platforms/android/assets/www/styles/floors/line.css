@@ -1,0 +1,59 @@
+@keyframes pulse {
+  0% {
+    opacity: 0.6; }
+  50% {
+    opacity: 0.3; }
+  100% {
+    opacity: 0.6; } }
+
+@keyframes pulseScale {
+  0% {
+    transform: scale(1);
+    opacity: 0.8; }
+  50% {
+    transform: scale(0.6);
+    opacity: 0.2; }
+  100% {
+    transform: scale(1);
+    opacity: 0.9; } }
+
+.wrapper {
+  position: absolute; }
+  .wrapper .line {
+    height: 3px;
+    width: 100%;
+    background: #dbe7ed; }
+    .wrapper .line:not(.vertical):before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: -5px;
+      height: 5px;
+      width: 100%; }
+    .wrapper .line.vertical:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0px;
+      width: 10px;
+      height: 100%;
+      left: -3px; }
+    .wrapper .line.vertical {
+      width: 3px !important;
+      height: 100%; }
+  .wrapper .rotate-icon {
+    position: absolute;
+    right: -12px;
+    font-size: 10px;
+    left: auto;
+    top: -8px; }
+  .wrapper .vertical .rotate-icon {
+    position: absolute;
+    right: 0;
+    left: -3px;
+    bottom: -11px;
+    top: auto; }
+  .wrapper .fa {
+    margin-top: 4px; }
+  .wrapper.ui-resizable:before {
+    display: none !important; }

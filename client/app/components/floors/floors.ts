@@ -6,7 +6,8 @@ import {ReservationService} from '../../services/ReservationService';
 import {DesignService} from '../../services/DesignService';
 import {Floor} from './floor';
 import {LoadingIndicator} from '../../directives/loading-indicator';
-import * as _ from 'lodash';
+
+declare var _: any;
 
 @Component({
   selector: 'floors',

@@ -1,7 +1,9 @@
 import {Injectable} from 'angular2/core';
 import {Observable} from 'rxjs';
 import {Http, Response, Headers} from 'angular2/http';
-import * as _ from 'lodash';
+import {ENV_URL} from '../app.config';
+
+declare var _: any;
 
 interface IFloorElementsService<T> {
   getObservable() : any;
@@ -45,7 +47,7 @@ export class FloorElementsService implements IFloorElementsService<IFloorElement
 
   editElement(elementID, element) {
     this.floorElementsObservable.subscription.next({ type: 'loading' });
-    this.http.patch('/api/floor/' + element.floorID + '/elements/' + elementID, JSON.stringify(element), {
+    this.http.patch(ENV_URL + '/api/floor/' + element.floorID + '/elements/' + elementID, JSON.stringify(element), {
       headers: new Headers({ 'Content-Type': 'application/json' })
     })
     .delay(300)
@@ -65,7 +67,7 @@ export class FloorElementsService implements IFloorElementsService<IFloorElement
   addElement(element) {
     this.floorElementsObservable.subscription.next({ type: 'loading' });
 
-    this.http.post('/api/floor/' + element.floorID + '/elements', JSON.stringify(element), {
+    this.http.post(ENV_URL + '/api/floor/' + element.floorID + '/elements', JSON.stringify(element), {
       headers: new Headers({ 'Content-Type': 'application/json' })
     })
     .delay(400)

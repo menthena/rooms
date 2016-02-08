@@ -1,0 +1,44 @@
+@keyframes pulse {
+  0% {
+    opacity: 0.6; }
+  50% {
+    opacity: 0.3; }
+  100% {
+    opacity: 0.6; } }
+
+@keyframes pulseScale {
+  0% {
+    transform: scale(1);
+    opacity: 0.8; }
+  50% {
+    transform: scale(0.6);
+    opacity: 0.2; }
+  100% {
+    transform: scale(1);
+    opacity: 0.9; } }
+
+.design-mode .ui-resizable:before {
+  font: normal normal normal 14px/1 FontAwesome;
+  content: '\f0b2';
+  display: block;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  color: #FFF;
+  font-size: 10px;
+  z-index: 1; }
+
+.design-mode placeholder .ui-resizable:before {
+  color: #a1b5c0; }
+
+.design-mode line .wrapper .rotate-icon {
+  display: block; }
+
+room .ui-draggable-handle, placeholder .ui-draggable-handle, line .ui-draggable-handle, icon .ui-draggable-handle {
+  cursor: -webkit-grab; }
+  room .ui-draggable-handle .placeholder, room .ui-draggable-handle .room, room .ui-draggable-handle .line, room .ui-draggable-handle .icon, placeholder .ui-draggable-handle .placeholder, placeholder .ui-draggable-handle .room, placeholder .ui-draggable-handle .line, placeholder .ui-draggable-handle .icon, line .ui-draggable-handle .placeholder, line .ui-draggable-handle .room, line .ui-draggable-handle .line, line .ui-draggable-handle .icon, icon .ui-draggable-handle .placeholder, icon .ui-draggable-handle .room, icon .ui-draggable-handle .line, icon .ui-draggable-handle .icon {
+    transition: box-shadow 0.15s ease-out; }
+  room .ui-draggable-handle:active, placeholder .ui-draggable-handle:active, line .ui-draggable-handle:active, icon .ui-draggable-handle:active {
+    cursor: -webkit-grabbing; }
+    room .ui-draggable-handle:active .placeholder, room .ui-draggable-handle:active .room, room .ui-draggable-handle:active .icon, placeholder .ui-draggable-handle:active .placeholder, placeholder .ui-draggable-handle:active .room, placeholder .ui-draggable-handle:active .icon, line .ui-draggable-handle:active .placeholder, line .ui-draggable-handle:active .room, line .ui-draggable-handle:active .icon, icon .ui-draggable-handle:active .placeholder, icon .ui-draggable-handle:active .room, icon .ui-draggable-handle:active .icon {
+      box-shadow: 0 1px 10px rgba(187, 214, 216, 0.8), 0 2px 2px rgba(187, 214, 216, 0.9); }

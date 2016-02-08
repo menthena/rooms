@@ -1,5 +1,6 @@
 import {Injectable} from 'angular2/core';
 import {Http, Response, Headers} from 'angular2/http';
+import {ENV_URL} from '../app.config';
 
 interface IFloorService<T> {
   fetchAll();
@@ -24,11 +25,11 @@ export class FloorService implements IFloorService<IFloor> {
   }
 
   deleteFloor(floorID: string) {
-    return this.http.delete('/api/floor/' + floorID);
+    return this.http.delete(ENV_URL + '/api/floor/' + floorID);
   }
 
   addFloor(floorName: string) {
-    return this.http.post('/api/floor', JSON.stringify({
+    return this.http.post(ENV_URL + '/api/floor', JSON.stringify({
       floorName: floorName
     }), {
       headers: new Headers({ 'Content-Type': 'application/json' })
@@ -36,13 +37,13 @@ export class FloorService implements IFloorService<IFloor> {
   }
 
   updateFloor(floorID: string, floorData: Object) {
-    return this.http.patch('/api/floor/' + floorID, JSON.stringify(floorData), {
+    return this.http.patch(ENV_URL + '/api/floor/' + floorID, JSON.stringify(floorData), {
       headers: new Headers({ 'Content-Type': 'application/json' })
     });
   }
 
   changeOrder(floorID: string, direction: string) {
-    return this.http.put('/api/floor/change-order', JSON.stringify({
+    return this.http.put(ENV_URL + '/api/floor/change-order', JSON.stringify({
       floorID: floorID,
       direction: direction
     }), {
@@ -51,6 +52,6 @@ export class FloorService implements IFloorService<IFloor> {
   }
 
   fetchAll() {
-    return this.http.get('/api/floor');
+    return this.http.get(ENV_URL + '/api/floor');
   }
 }

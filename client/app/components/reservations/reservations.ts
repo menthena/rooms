@@ -3,7 +3,8 @@ import {Router, RouterLink} from 'angular2/router';
 import {UserService} from '../../services/UserService';
 import {LoadingIndicator} from '../../directives/loading-indicator';
 import {ReservationService} from '../../services/ReservationService';
-import * as _ from 'lodash';
+
+declare var _: any;
 
 @Component({
   directives: [LoadingIndicator, RouterLink],
