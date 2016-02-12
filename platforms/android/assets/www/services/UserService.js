@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', 'rxjs'], function(exports_1) {
+System.register(['angular2/core', 'angular2/http', 'rxjs', '../app.config'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs'], function(exports_1) 
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, rxjs_1;
+    var core_1, http_1, rxjs_1, app_config_1;
     var UserService;
     return {
         setters:[
@@ -20,6 +20,9 @@ System.register(['angular2/core', 'angular2/http', 'rxjs'], function(exports_1) 
             },
             function (rxjs_1_1) {
                 rxjs_1 = rxjs_1_1;
+            },
+            function (app_config_1_1) {
+                app_config_1 = app_config_1_1;
             }],
         execute: function() {
             UserService = (function () {
@@ -32,7 +35,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs'], function(exports_1) 
                 }
                 UserService.prototype.login = function (email, password) {
                     var _this = this;
-                    var observable = this.http.post('/oauth/login', JSON.stringify({
+                    var observable = this.http.post(app_config_1.ENV_URL + '/oauth/login', JSON.stringify({
                         email: email,
                         password: password
                     }), {
@@ -47,13 +50,12 @@ System.register(['angular2/core', 'angular2/http', 'rxjs'], function(exports_1) 
                             .next();
                         return res;
                     }, function (err) {
-                        _this.isLogged = false;
                         return err;
                     });
                     return subscription;
                 };
                 UserService.prototype.recoverPassword = function (email) {
-                    var observable = this.http.post('/oauth/forgot-password', JSON.stringify({
+                    var observable = this.http.post(app_config_1.ENV_URL + '/oauth/forgot-password', JSON.stringify({
                         email: email
                     }), {
                         headers: new http_1.Headers({ 'Content-Type': 'application/json' })
@@ -71,7 +73,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs'], function(exports_1) 
                     return observable;
                 };
                 UserService.prototype.changePassword = function (oldPassword, newPassword) {
-                    var observable = this.http.patch('/oauth/change-password', JSON.stringify({
+                    var observable = this.http.patch(app_config_1.ENV_URL + '/oauth/change-password', JSON.stringify({
                         oldPassword: oldPassword,
                         password: newPassword
                     }), {
@@ -84,7 +86,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs'], function(exports_1) 
                 };
                 UserService.prototype.getUser = function () {
                     var _this = this;
-                    var observable = this.http.get('/oauth/tokeninfo');
+                    var observable = this.http.get(app_config_1.ENV_URL + '/oauth/tokeninfo');
                     var subscription = observable
                         .subscribe(function (res) {
                         _this.userData = res.json();
@@ -94,13 +96,12 @@ System.register(['angular2/core', 'angular2/http', 'rxjs'], function(exports_1) 
                             .next();
                         return res;
                     }, function (err) {
-                        _this.isLogged = false;
                         return err;
                     });
                     return subscription;
                 };
                 UserService.prototype.register = function (userObject) {
-                    var observable = this.http.post('/api/user', JSON.stringify(userObject), {
+                    var observable = this.http.post(app_config_1.ENV_URL + '/api/user', JSON.stringify(userObject), {
                         headers: new http_1.Headers({ 'Content-Type': 'application/json' })
                     });
                     return observable;

@@ -1,16 +1,27 @@
 import {Component, Input} from 'angular2/core';
-import {RouterLink} from 'angular2/router';
+import {RouterLink, Router} from 'angular2/router';
 import {UserService} from '../../services/UserService';
 import {CLIENT_ID, SCOPES} from '../../constants';
+import {IONIC_DIRECTIVES} from 'ionic-framework/ionic';
+import {AppService} from '../../services/AppService';
 
 declare var gapi: any;
 
 @Component({
   selector: 'header',
   inputs: ['logged'],
-  directives: [RouterLink],
+  directives: [RouterLink, IONIC_DIRECTIVES],
   template: `
-  <header>
+  <header *ngIf="isIonic && currentRoute !== 'index'">
+    <ion-tabs>
+      <ion-tab tabIcon="water" tabTitle="Water" [root]="tab1"></ion-tab>
+      <ion-tab tabIcon="leaf" tabTitle="Life" [root]="tab2"></ion-tab>
+      <ion-tab tabIcon="flame" tabTitle="Fire" [root]="tab3"></ion-tab>
+      <ion-tab tabIcon="magnet" tabTitle="Force" [root]="tab4"></ion-tab>
+    </ion-tabs>
+  </header>
+
+  <header *ngIf="!isIonic && currentRoute !== 'index'">
     <div class="container">
       <div class="row">
         <div class="col-sm-3 col-xs-4">
@@ -40,16 +51,37 @@ declare var gapi: any;
       </div>
     </div>
   </header>
+  <ion-menu [content]="content">
+     <ion-toolbar>
+       <ion-title>Pages</ion-title>
+     </ion-toolbar>
+     <ion-content>
+       <ion-list>
+         <button ion-item (click)="openPage(loginPage)">
+           Login
+         </button>
+         <button ion-item (click)="openPage(signupPage)">
+           Signup
+         </button>
+       </ion-list>
+     </ion-content>
+   </ion-menu>
   `,
   styleUrls: ['styles/common/header.css']
 })
 
 export class Header {
   @Input() logged: boolean;
+  isIonic: boolean;
   userData: Object;
+  currentRoute: string;
 
-  constructor(private UserService: UserService) {
+  constructor(private UserService: UserService, private AppService: AppService, private Router: Router) {
+    this.Router.subscribe((route) => {
+      this.currentRoute = route;
+    });
     this.userData = {};
+    this.isIonic = this.AppService.isIonic;
   }
 
   ngOnChanges() {

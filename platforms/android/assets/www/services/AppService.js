@@ -21,10 +21,14 @@ System.register(['angular2/core', 'rxjs'], function(exports_1) {
         execute: function() {
             AppService = (function () {
                 function AppService() {
+                    if (window.cordova) {
+                        this.isIonic = true;
+                    }
                     this.overlayObservable = rxjs_1.Observable
                         .create(function (observer) {
                         return function () { return console.log('disposed'); };
                     }).publish();
+                    console.log(this.overlayObservable);
                 }
                 AppService = __decorate([
                     core_1.Injectable(), 

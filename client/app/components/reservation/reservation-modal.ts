@@ -115,7 +115,9 @@ export class ReservationModal implements OnInit {
   constructor(private elementRef: ElementRef, private ReservationService: ReservationService, private fb: FormBuilder) {
     this.reservationFilterObserver = ReservationService.getReservationFilterObserver();
     this.reservationTime = ReservationService.reservationTime;
-    this.reservationDate = this.ReservationService.filter.reservationDate.format(DATE_ONLY_FORMAT);
+    if (this.ReservationService.filter.reservationDate) {
+      this.reservationDate = this.ReservationService.filter.reservationDate.format(DATE_ONLY_FORMAT);
+    }
     this.reservationObserver = ReservationService.getObservable();
     this.isActive = false;
     this.intervalData = INTERVAL_DATA;

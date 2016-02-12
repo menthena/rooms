@@ -9,10 +9,9 @@ import {UserService} from '../../services/UserService';
 @Component({
   selector: 'login',
   directives: [NgForm, LoadingIndicator, RouterLink],
-  outputs: ['loggedChange'],
   styleUrls: ['styles/common/generic-form.css'],
   template: `
-  <div class="generic-form animated slideInLeft">
+  <div class="generic-form animated slideInRight">
     <form [ngFormModel]="loginForm" (ngSubmit)="submitLoginForm($event)" novalidate>
       <fieldset>
         <legend>Login</legend>
@@ -54,7 +53,7 @@ import {UserService} from '../../services/UserService';
           <div class="sub-form">
             You forgot your password? It is okay, we all have been there. <a [routerLink]="['/RecoverPassword']">Recover password</a>.
             <div>
-              OR you can <a [routerLink]="['/Register']">register</a> kindly.
+              OR you can <a [routerLink]="['/Register']">register</a>.
             </div>
           </div>
         </div>
@@ -67,7 +66,6 @@ import {UserService} from '../../services/UserService';
 export class Login {
   loginForm;
   submitted: boolean;
-  @Output() loggedChange: any = new EventEmitter();
   invalidCredentials: boolean;
   submitting: boolean;
 
@@ -85,13 +83,12 @@ export class Login {
     if (this.loginForm.valid) {
       this.submitting = true;
       this.invalidCredentials = false;
-      this.loggedChange
-        .next(1);
 
       this.UserService.login(login.email, login.password)
         .add((res) => {
           setTimeout(() => {
             this.submitting = false;
+            console.log('tick', this.UserService);
             if (!this.UserService.isLogged) {
               this.invalidCredentials = true;
             } else {

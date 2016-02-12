@@ -5,3 +5,16 @@ dist
 .DS_Store
 test/**/*.js
 jspm_packages
+.idea/
+.sass-cache/
+.versions/
+coverage/
+dist/
+node_modules/
+tmp/
+temp/
+www/build/
+$RECYCLE.BIN/
+
+.DS_Store
+Thumbs.db

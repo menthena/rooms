@@ -44,7 +44,9 @@ System.register(['angular2/core', 'angular2/common', '../form/date-picker', '../
                     this.fb = fb;
                     this.reservationFilterObserver = ReservationService.getReservationFilterObserver();
                     this.reservationTime = ReservationService.reservationTime;
-                    this.reservationDate = this.ReservationService.filter.reservationDate.format(constants_1.DATE_ONLY_FORMAT);
+                    if (this.ReservationService.filter.reservationDate) {
+                        this.reservationDate = this.ReservationService.filter.reservationDate.format(constants_1.DATE_ONLY_FORMAT);
+                    }
                     this.reservationObserver = ReservationService.getObservable();
                     this.isActive = false;
                     this.intervalData = constants_1.INTERVAL_DATA;

@@ -21,6 +21,11 @@ System.register(['angular2/core', 'rxjs'], function(exports_1) {
         execute: function() {
             AppService = (function () {
                 function AppService() {
+                    if (window.cordova) {
+                        this.isIonic = true;
+                        jQuery('head').append('<link ios-href="vendor/app.ios.css" rel="stylesheet">' +
+                            '<link md-href="vendor/app.md.css" rel="stylesheet">');
+                    }
                     this.overlayObservable = rxjs_1.Observable
                         .create(function (observer) {
                         return function () { return console.log('disposed'); };

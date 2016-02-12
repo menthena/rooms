@@ -94,7 +94,6 @@ System.register(['angular2/core', 'angular2/common', '../../services/FloorElemen
                     var _this = this;
                     this.isLoading = true;
                     this.floorElementsService.fetchElementsByFloorID(floorID)
-                        .delay(200)
                         .subscribe(function (res) {
                         var arr = res.json().data;
                         _this.floorElements = arr;

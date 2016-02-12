@@ -16,23 +16,22 @@ import {CalendarService} from './services/CalendarService';
 import {FloorElementsService} from './services/FloorElementsService';
 import {ReservationService} from './services/ReservationService';
 import {UserValidators} from './validators/UserValidators';
+import {App, Platform} from 'ionic-framework/ionic';
 
-@Component({
-  selector: 'rooms'
-})
+@RouteConfig(APP_ROUTES)
 
-@View({
-  encapsulation: ViewEncapsulation.None,
+@App({
+  providers: [FloorService, DesignService, AppService, UserValidators, UserService,
+    FloorElementsService, ReservationService, HTTP_BINDINGS, ROUTER_PROVIDERS, CalendarService,
+    provide(LocationStrategy, {useClass: HashLocationStrategy})],
   directives: [RouterOutlet, Header, Overlay, AppwideOverlay],
   template: `
   <appwide-overlay></appwide-overlay>
   <overlay></overlay>
   <header [logged]="isLogged"></header>
-  <router-outlet (loggedChange)="handleLoggedChange($event)"></router-outlet>
+  <router-outlet></router-outlet>
   `
 })
-
-@RouteConfig(APP_ROUTES)
 
 class Room {
   isLogged: boolean;
@@ -51,11 +50,4 @@ class Room {
       });
   }
 
-  handleLoggedChange() {
-    console.log('tick');
-  }
 }
-
-bootstrap(Room, [FloorService, DesignService, AppService, UserValidators, UserService,
-  FloorElementsService, ReservationService, HTTP_BINDINGS, ROUTER_PROVIDERS, CalendarService,
-  provide(LocationStrategy, {useClass: HashLocationStrategy})]);

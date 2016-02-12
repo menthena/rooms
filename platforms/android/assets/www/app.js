@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/platform/browser', 'angular2/http', 'angular2/router', './routes', './components/common/header', './components/common/overlay', './components/common/appwide-overlay', './services/FloorService', './services/UserService', './services/AppService', './services/DesignService', './services/CalendarService', './services/FloorElementsService', './services/ReservationService', './validators/UserValidators'], function(exports_1) {
+System.register(['angular2/core', 'angular2/http', 'angular2/router', './routes', './components/common/header', './components/common/overlay', './components/common/appwide-overlay', './services/FloorService', './services/UserService', './services/AppService', './services/DesignService', './services/CalendarService', './services/FloorElementsService', './services/ReservationService', './validators/UserValidators', 'ionic-framework/ionic'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,15 +8,12 @@ System.register(['angular2/core', 'angular2/platform/browser', 'angular2/http', 
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, browser_1, http_1, router_1, router_2, routes_1, header_1, overlay_1, appwide_overlay_1, FloorService_1, UserService_1, AppService_1, DesignService_1, CalendarService_1, FloorElementsService_1, ReservationService_1, UserValidators_1;
+    var core_1, http_1, router_1, router_2, routes_1, header_1, overlay_1, appwide_overlay_1, FloorService_1, UserService_1, AppService_1, DesignService_1, CalendarService_1, FloorElementsService_1, ReservationService_1, UserValidators_1, ionic_1;
     var Room;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
-            },
-            function (browser_1_1) {
-                browser_1 = browser_1_1;
             },
             function (http_1_1) {
                 http_1 = http_1_1;
@@ -60,6 +57,9 @@ System.register(['angular2/core', 'angular2/platform/browser', 'angular2/http', 
             },
             function (UserValidators_1_1) {
                 UserValidators_1 = UserValidators_1_1;
+            },
+            function (ionic_1_1) {
+                ionic_1 = ionic_1_1;
             }],
         execute: function() {
             Room = (function () {
@@ -76,26 +76,19 @@ System.register(['angular2/core', 'angular2/platform/browser', 'angular2/http', 
                         _this.isLogged = _this.UserService.isLogged;
                     });
                 };
-                Room.prototype.handleLoggedChange = function () {
-                    console.log('tick');
-                };
                 Room = __decorate([
-                    core_1.Component({
-                        selector: 'rooms'
-                    }),
-                    core_1.View({
-                        encapsulation: core_1.ViewEncapsulation.None,
+                    router_2.RouteConfig(routes_1.APP_ROUTES),
+                    ionic_1.App({
+                        providers: [FloorService_1.FloorService, DesignService_1.DesignService, AppService_1.AppService, UserValidators_1.UserValidators, UserService_1.UserService,
+                            FloorElementsService_1.FloorElementsService, ReservationService_1.ReservationService, http_1.HTTP_BINDINGS, router_1.ROUTER_PROVIDERS, CalendarService_1.CalendarService,
+                            core_1.provide(router_1.LocationStrategy, { useClass: router_1.HashLocationStrategy })],
                         directives: [router_2.RouterOutlet, header_1.Header, overlay_1.Overlay, appwide_overlay_1.AppwideOverlay],
-                        template: "\n  <appwide-overlay></appwide-overlay>\n  <overlay></overlay>\n  <header [logged]=\"isLogged\"></header>\n  <router-outlet (loggedChange)=\"handleLoggedChange($event)\"></router-outlet>\n  "
-                    }),
-                    router_2.RouteConfig(routes_1.APP_ROUTES), 
+                        template: "\n  <appwide-overlay></appwide-overlay>\n  <overlay></overlay>\n  <header [logged]=\"isLogged\"></header>\n  <router-outlet></router-outlet>\n  "
+                    }), 
                     __metadata('design:paramtypes', [UserService_1.UserService])
                 ], Room);
                 return Room;
             })();
-            browser_1.bootstrap(Room, [FloorService_1.FloorService, DesignService_1.DesignService, AppService_1.AppService, UserValidators_1.UserValidators, UserService_1.UserService,
-                FloorElementsService_1.FloorElementsService, ReservationService_1.ReservationService, http_1.HTTP_BINDINGS, router_1.ROUTER_PROVIDERS, CalendarService_1.CalendarService,
-                core_1.provide(router_1.LocationStrategy, { useClass: router_1.HashLocationStrategy })]);
         }
     }
 });

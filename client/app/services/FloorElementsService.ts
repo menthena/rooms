@@ -86,7 +86,7 @@ export class FloorElementsService implements IFloorElementsService<IFloorElement
   deleteElement(floorID: string, elementID: string) {
     this.floorElementsObservable.subscription.next({ type: 'loading' });
 
-    this.http.delete('/api/floor/' + floorID + '/elements/' + elementID, {
+    this.http.delete(ENV_URL + '/api/floor/' + floorID + '/elements/' + elementID, {
       headers: new Headers({ 'Content-Type': 'application/json' })
     })
     .delay(400)
@@ -104,7 +104,7 @@ export class FloorElementsService implements IFloorElementsService<IFloorElement
   }
 
   fetchElementsByFloorID(floorID: string) {
-    let observable = this.http.get('/api/floor/' + floorID + '/elements');
+    let observable = this.http.get(ENV_URL + '/api/floor/' + floorID + '/elements');
     observable.subscribe((res) => {
       let elementsJson: any = res.json();
       this.floorElements = elementsJson.data;

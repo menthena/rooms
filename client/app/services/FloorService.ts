@@ -1,5 +1,6 @@
 import {Injectable} from 'angular2/core';
 import {Http, Response, Headers} from 'angular2/http';
+import {Observable} from 'rxjs';
 import {ENV_URL} from '../app.config';
 
 interface IFloorService<T> {

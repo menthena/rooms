@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', '../../services/UserService', '../../constants'], function(exports_1) {
+System.register(['angular2/core', 'angular2/router', '../../services/UserService', '../../constants', 'ionic-framework/ionic', '../../services/AppService'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', 'angular2/router', '../../services/UserService
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, UserService_1, constants_1;
+    var core_1, router_1, UserService_1, constants_1, ionic_1, AppService_1;
     var Header;
     return {
         setters:[
@@ -23,12 +23,25 @@ System.register(['angular2/core', 'angular2/router', '../../services/UserService
             },
             function (constants_1_1) {
                 constants_1 = constants_1_1;
+            },
+            function (ionic_1_1) {
+                ionic_1 = ionic_1_1;
+            },
+            function (AppService_1_1) {
+                AppService_1 = AppService_1_1;
             }],
         execute: function() {
             Header = (function () {
-                function Header(UserService) {
+                function Header(UserService, AppService, Router) {
+                    var _this = this;
                     this.UserService = UserService;
+                    this.AppService = AppService;
+                    this.Router = Router;
+                    this.Router.subscribe(function (route) {
+                        _this.currentRoute = route;
+                    });
                     this.userData = {};
+                    this.isIonic = this.AppService.isIonic;
                 }
                 Header.prototype.ngOnChanges = function () {
                     if (this.UserService.userData) {
@@ -112,11 +125,11 @@ System.register(['angular2/core', 'angular2/router', '../../services/UserService
                     core_1.Component({
                         selector: 'header',
                         inputs: ['logged'],
-                        directives: [router_1.RouterLink],
-                        template: "\n  <header>\n    <div class=\"container\">\n      <div class=\"row\">\n        <div class=\"col-sm-3 col-xs-4\">\n          <a [routerLink]=\"['/Reserve']\" class=\"logo\">Rooms</a>\n        </div>\n        <div class=\"col-sm-6 hidden-xs\" *ngIf=\"logged\">\n          <ul class=\"list-inline\">\n            <li><a [routerLink]=\"['/Reserve']\">Reserve</a></li>\n            <li><a [routerLink]=\"['/Design']\">Design</a></li>\n            <li><a [routerLink]=\"['/Reservations']\">Reservations</a></li>\n            <li><a [routerLink]=\"['/Accounts']\">Account</a></li>\n          </ul>\n        </div>\n        <div class=\"col-sm-3 hidden-xs text-right\" *ngIf=\"logged\">\n          <span>{{ userData.name }}</span>\n          <a href=\"/oauth/logout\">Logout</a>\n        </div>\n        <div class=\"col-sm-9 hidden-xs text-right\" *ngIf=\"!logged\">\n          <ul class=\"list-inline\">\n            <li><a [routerLink]=\"['/Login']\">Login</a></li>\n            <li><a [routerLink]=\"['/Register']\">Register</a></li>\n          </ul>\n        </div>\n        <div class=\"col-xs-8 visible-xs text-right\">\n          <a href><i class=\"fa fa-bars\"></i> Menu</a>\n        </div>\n      </div>\n    </div>\n  </header>\n  ",
+                        directives: [router_1.RouterLink, ionic_1.IONIC_DIRECTIVES],
+                        template: "\n  <header *ngIf=\"!isIonic && currentRoute !== 'index'\">\n    <div class=\"container\">\n      <div class=\"row\">\n        <div class=\"col-sm-3 col-xs-4\">\n          <a [routerLink]=\"['/Reserve']\" class=\"logo\">Rooms</a>\n        </div>\n        <div class=\"col-sm-6 hidden-xs\" *ngIf=\"logged\">\n          <ul class=\"list-inline\">\n            <li><a [routerLink]=\"['/Reserve']\">Reserve</a></li>\n            <li><a [routerLink]=\"['/Design']\">Design</a></li>\n            <li><a [routerLink]=\"['/Reservations']\">Reservations</a></li>\n            <li><a [routerLink]=\"['/Accounts']\">Account</a></li>\n          </ul>\n        </div>\n        <div class=\"col-sm-3 hidden-xs text-right\" *ngIf=\"logged\">\n          <span>{{ userData.name }}</span>\n          <a href=\"/oauth/logout\">Logout</a>\n        </div>\n        <div class=\"col-sm-9 hidden-xs text-right\" *ngIf=\"!logged\">\n          <ul class=\"list-inline\">\n            <li><a [routerLink]=\"['/Login']\">Login</a></li>\n            <li><a [routerLink]=\"['/Register']\">Register</a></li>\n          </ul>\n        </div>\n        <div class=\"col-xs-8 visible-xs text-right\">\n          <a href><i class=\"fa fa-bars\"></i> Menu</a>\n        </div>\n      </div>\n    </div>\n  </header>\n  <ion-menu [content]=\"content\">\n     <ion-toolbar>\n       <ion-title>Pages</ion-title>\n     </ion-toolbar>\n     <ion-content>\n       <ion-list>\n         <button ion-item (click)=\"openPage(loginPage)\">\n           Login\n         </button>\n         <button ion-item (click)=\"openPage(signupPage)\">\n           Signup\n         </button>\n       </ion-list>\n     </ion-content>\n   </ion-menu>\n  ",
                         styleUrls: ['styles/common/header.css']
                     }), 
-                    __metadata('design:paramtypes', [UserService_1.UserService])
+                    __metadata('design:paramtypes', [UserService_1.UserService, AppService_1.AppService, router_1.Router])
                 ], Header);
                 return Header;
             })();

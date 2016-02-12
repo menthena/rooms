@@ -1,7 +1,6 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 import {Component, provide} from 'angular2/core';
-import * as Rooms from '../../../client/app/rooms';
-import {Floors} from '../../../client/app/components/floors/floors';
+import {MarketingIndex} from '../../../client/app/components/marketing/index';
 
 import {
   iit,
@@ -20,7 +19,7 @@ import {
 describe('header component', () => {
 
 	it('should add string to header names', injectAsync([TestComponentBuilder], (tcb) => {
-    return tcb.createAsync(Floors).then((fixture) => {
+    return tcb.createAsync(MarketingIndex).then((fixture) => {
       fixture.detectChanges();
       var compiled = fixture.debugElement.nativeElement;
       console.log(compiled);

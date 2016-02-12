@@ -68,7 +68,7 @@ gulp.task('scss', function() {
 });
 
 gulp.task('clean', function() {
- 	return del(['dist']);
+ 	return del(['dist/**/*.*']);
 
 });
 
@@ -101,8 +101,8 @@ gulp.task('set-env', function(done) {
     .pipe(gulp.dest('.'));
 });
 
-gulp.task('build', ['set-env', 'clean'], function(done) {
-	runSequence(['copy', 'scss'], ['ts-lint', 'concat', 'compile-ts'], function() {
+gulp.task('build', ['clean'], function(done) {
+	runSequence(['set-env'], ['copy', 'scss'], ['ts-lint', 'concat', 'compile-ts'], ['cordova-copy'], function() {
 	// runSequence(['set-env', 'copy', 'scss'], ['ts-lint', 'concat', 'compile-ts'], function() {
 		if (browserSync.active) {
 			browserSync.reload({
@@ -118,6 +118,8 @@ gulp.task('cordova-copy', function() {
   del(['www']);
   gulp.src(['dist/app/**/*.*'])
     .pipe(gulp.dest('www'));
+	gulp.src(['jspm_packages/**/*.*'])
+	    .pipe(gulp.dest('www/jspm_packages'));
 });
 
 gulp.task('serve', function() {

@@ -26,7 +26,7 @@ export class UserService implements IUserService {
   }
 
   login(email: string, password: string) {
-    let observable = this.http.post('/oauth/login', JSON.stringify({
+    let observable = this.http.post(ENV_URL + '/oauth/login', JSON.stringify({
       email: email,
       password: password
     }), {
@@ -41,14 +41,13 @@ export class UserService implements IUserService {
           .next();
         return res;
       }, (err) => {
-        this.isLogged = false;
         return err;
       });
     return subscription;
   }
 
   recoverPassword(email: string) {
-    let observable = this.http.post('/oauth/forgot-password', JSON.stringify({
+    let observable = this.http.post(ENV_URL + '/oauth/forgot-password', JSON.stringify({
       email: email
     }), {
       headers: new Headers({ 'Content-Type': 'application/json' })
@@ -68,7 +67,7 @@ export class UserService implements IUserService {
   }
 
   changePassword(oldPassword: string, newPassword: string) {
-    let observable = this.http.patch('/oauth/change-password', JSON.stringify({
+    let observable = this.http.patch(ENV_URL + '/oauth/change-password', JSON.stringify({
       oldPassword: oldPassword,
       password: newPassword
     }), {
@@ -82,7 +81,7 @@ export class UserService implements IUserService {
   }
 
   getUser() {
-    let observable = this.http.get('/oauth/tokeninfo');
+    let observable = this.http.get(ENV_URL + '/oauth/tokeninfo');
     let subscription = observable
       .subscribe((res: any) => {
         this.userData = res.json();
@@ -92,14 +91,14 @@ export class UserService implements IUserService {
           .next();
         return res;
       }, (err) => {
-        this.isLogged = false;
+        // this.isLogged = false;
         return err;
       });
     return subscription;
   }
 
   register(userObject: Object) {
-    let observable = this.http.post('/api/user', JSON.stringify(userObject), {
+    let observable = this.http.post(ENV_URL + '/api/user', JSON.stringify(userObject), {
       headers: new Headers({ 'Content-Type': 'application/json' })
     });
     return observable;

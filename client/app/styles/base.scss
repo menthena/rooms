@@ -28,4 +28,4 @@ a {
   -webkit-animation-duration: 0.3s;
 }
 
-@include sprite('header a.logo:before, .icon:before');
+@include sprite('header a.logo:before, marketing-index .logo:before, .icon:before');

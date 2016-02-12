@@ -11,7 +11,13 @@ __karma__.loaded = function() {};
 System.config({
   packages: {
     'base': {
-      defaultExtension: 'js'
+      defaultJSExtensions: true,
+      transpiler: 'none',
+    },
+    rxjs: {
+      defaultJSExtensions: true,
+      transpiler: 'typescript',
+      map: 'base/node_modules/rxjs/'
     },
     'base/client/app': {
       defaultExtension: false,
@@ -31,7 +37,7 @@ System.config({
     }
 });
 
-System.import('angular2/src/core/dom/browser_adapter').then(function(browser_adapter) {
+System.import('angular2/src/platform/browser/browser_adapter').then(function(browser_adapter) {
   browser_adapter.BrowserDomAdapter.makeCurrent();
 }).then(function() {
   return Promise.all(

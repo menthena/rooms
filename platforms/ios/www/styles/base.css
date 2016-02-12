@@ -110,10 +110,10 @@ a {
 .animated {
   -webkit-animation-duration: 0.3s; }
 
-header a.logo:before, .icon:before {
+header a.logo:before, marketing-index .logo:before, .icon:before {
   background-image: url(/images/sprites.png);
   background-size: 256px 256px; }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-resolution: 240dpi) {
-  header a.logo:before, .icon:before {
+  header a.logo:before, marketing-index .logo:before, .icon:before {
     background-image: url(/images/sprites@2x.png); } }

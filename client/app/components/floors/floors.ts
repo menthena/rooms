@@ -11,7 +11,6 @@ declare var _: any;
 
 @Component({
   selector: 'floors',
-  providers: [FloorService],
   directives: [Floor, LoadingIndicator],
   template: `
     <a *ngIf="designMode && floors && floors.length > 0" (click)="addFloor()"
@@ -82,7 +81,6 @@ export class Floors {
   fetchAll() {
     this.isLoading = true;
     this.floorService.fetchAll()
-      .delay(500)
       .subscribe(
         (res: any) => {
           this.isLoading = false;

@@ -11,7 +11,7 @@ import {UserValidators} from '../../validators/UserValidators';
   directives: [NgForm, LoadingIndicator, RouterLink],
   styleUrls: ['styles/common/generic-form.css'],
   template: `
-  <div class="generic-form">
+  <div class="generic-form animated slideInRight">
     <form [ngFormModel]="registerForm" (ngSubmit)="submitLoginForm($event)" novalidate>
       <fieldset>
         <legend>Register</legend>

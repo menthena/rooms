@@ -39,18 +39,8 @@ System.register(['angular2/core', '../../services/FloorService', '../../services
                     this.overlayObservable = this.AppService.overlayObservable;
                 }
                 Floors.prototype.ngOnInit = function () {
-                    var _this = this;
                     this.fetchAll();
                     this.designMode = this.DesignService.designModeState;
-                    this.overlayObservable
-                        .subscription
-                        .subscribe(function (res) {
-                        if (res.type === 'response') {
-                            if (res.data === true) {
-                                _this.deleteFloor(res.id);
-                            }
-                        }
-                    });
                 };
                 Floors.prototype.addFloor = function () {
                     var _this = this;
@@ -68,7 +58,6 @@ System.register(['angular2/core', '../../services/FloorService', '../../services
                     var _this = this;
                     this.isLoading = true;
                     this.floorService.fetchAll()
-                        .delay(500)
                         .subscribe(function (res) {
                         _this.isLoading = false;
                         var floors = res.json().data;
@@ -111,7 +100,6 @@ System.register(['angular2/core', '../../services/FloorService', '../../services
                 Floors = __decorate([
                     core_1.Component({
                         selector: 'floors',
-                        providers: [FloorService_1.FloorService],
                         directives: [floor_1.Floor, loading_indicator_1.LoadingIndicator],
                         template: "\n    <a *ngIf=\"designMode && floors && floors.length > 0\" (click)=\"addFloor()\"\n      class=\"add-floor button\"><i class=\"fa fa-plus\"></i> Add floor</a>\n    <loading-indicator *ngIf=\"isLoading\"></loading-indicator>\n    <div *ngIf=\"floors\">\n      <div class=\"no-floor text-center\" *ngIf=\"!isLoading && floors.length === 0\">\n        <div>\n          No floors, why don't you add one?\n        </div>\n        <a *ngIf=\"designMode\" (click)=\"addFloor()\"><i class=\"fa fa-plus\"></i> Add floor</a>\n      </div>\n\n      <div *ngFor=\"#floor of floors\">\n        <div *ngIf=\"designMode\" class=\"pull-right\">\n          <a (click)=\"changeOrder(floor.floorID, 'up')\" *ngIf=\"floor.order > 0\" class=\"button\"><i class=\"fa fa-arrow-up\"></i></a>\n          <a (click)=\"changeOrder(floor.floorID, 'down')\" *ngIf=\"floor.order < floors.length - 1\"\n            class=\"button\"><i class=\"fa fa-arrow-down\"></i></a>\n          <a (click)=\"showDeleteFloorConfirmation(floor.floorID)\" class=\"button\"><i class=\"fa fa-trash\"></i></a>\n        </div>\n        <floor [floor]=\"floor\"></floor>\n      </div>\n    </div>\n  ",
                         styleUrls: ['styles/floors/floors.css']

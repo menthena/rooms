@@ -49,9 +49,6 @@ System.register(['angular2/core', 'angular2/router', './filter', '../floors/floo
                 }
                 Reserve.prototype.getFormObj = function (formObj) {
                     this.formObj = formObj;
-                    this.reservationFilterObserver
-                        .subscription
-                        .next(this.formObj);
                 };
                 Reserve = __decorate([
                     core_1.Component({

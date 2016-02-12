@@ -18,11 +18,8 @@
         }
     },
     "installed_plugins": {
-        "cordova-plugin-console": {
-            "PACKAGE_NAME": "org.apache.cordova.example.HelloGulp"
-        },
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "org.apache.cordova.example.HelloGulp"
+            "PACKAGE_NAME": "io.cordova.myapp52a830"
         }
     },
     "dependent_plugins": {},
@@ -30,12 +27,7 @@
         {
             "file": "plugins/cordova-plugin-whitelist/whitelist.js",
             "id": "cordova-plugin-whitelist.whitelist",
-            "pluginId": "cordova-plugin-whitelist",
             "runs": true
         }
-    ],
-    "plugin_metadata": {
-        "cordova-plugin-console": "1.0.2",
-        "cordova-plugin-whitelist": "1.2.1"
-    }
+    ]
 }

@@ -1,0 +1,56 @@
+@keyframes pulse {
+  0% {
+    opacity: 0.6; }
+  50% {
+    opacity: 0.3; }
+  100% {
+    opacity: 0.6; } }
+
+@keyframes pulseScale {
+  0% {
+    transform: scale(1);
+    opacity: 0.8; }
+  50% {
+    transform: scale(0.6);
+    opacity: 0.2; }
+  100% {
+    transform: scale(1);
+    opacity: 0.9; } }
+
+.appwide-overlay {
+  transition: opacity 0.4s ease-out;
+  background-color: #FFF;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+  opacity: 0; }
+  .appwide-overlay.active {
+    opacity: 0.8; }
+
+.box {
+  top: 30%;
+  width: 100%;
+  position: absolute;
+  font-size: 16px; }
+  .box .inner {
+    max-width: 450px;
+    margin: auto; }
+
+.buttons {
+  margin-top: 15px; }
+  .buttons a {
+    padding: 10px; }
+  .buttons .yes {
+    background: #3ab791;
+    color: #FFF;
+    padding: 3px 12px;
+    border-radius: 3px; }
+
+.hide-button {
+  background: #648597;
+  color: #FFF;
+  padding: 9px 11px;
+  margin: 10px;
+  font-size: 16px;
+  border-radius: 99px; }

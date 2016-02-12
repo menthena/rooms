@@ -37,7 +37,6 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', '../../d
                     this.router = router;
                     this.UserService = UserService;
                     this.UserValidators = UserValidators;
-                    this.loggedChange = new core_1.EventEmitter();
                     this.loginForm = this.fb.group({
                         email: ['', this.UserValidators.EmailValidator],
                         password: ['', common_1.Validators.required]
@@ -50,12 +49,11 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', '../../d
                     if (this.loginForm.valid) {
                         this.submitting = true;
                         this.invalidCredentials = false;
-                        this.loggedChange
-                            .next(1);
                         this.UserService.login(login.email, login.password)
                             .add(function (res) {
                             setTimeout(function () {
                                 _this.submitting = false;
+                                console.log('tick', _this.UserService);
                                 if (!_this.UserService.isLogged) {
                                     _this.invalidCredentials = true;
                                 }
@@ -66,17 +64,12 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', '../../d
                         });
                     }
                 };
-                __decorate([
-                    core_1.Output(), 
-                    __metadata('design:type', Object)
-                ], Login.prototype, "loggedChange", void 0);
                 Login = __decorate([
                     core_1.Component({
                         selector: 'login',
                         directives: [common_1.NgForm, loading_indicator_1.LoadingIndicator, router_1.RouterLink],
-                        outputs: ['loggedChange'],
                         styleUrls: ['styles/common/generic-form.css'],
-                        template: "\n  <div class=\"generic-form\">\n    <form [ngFormModel]=\"loginForm\" (ngSubmit)=\"submitLoginForm($event)\" novalidate>\n      <fieldset>\n        <legend>Login</legend>\n        <div class=\"white-bg\">\n          <div class=\"server-err\" [class.active]=\"invalidCredentials\">\n            <i class=\"fa fa-exclamation-circle\"></i> Invalid email or password\n          </div>\n          <div class=\"input-group\">\n            <label for=\"email\">\n              Email\n            </label>\n            <input type=\"email\" placeholder=\"Please enter your email\" name=\"email\" id=\"email\"\n              ngControl=\"email\">\n            <div [class.active]=\"(submitted || loginForm.controls.email.touched) && !loginForm.controls.email.valid\" class=\"err\">\n              <div *ngIf=\"loginForm.controls.email.errors && loginForm.controls.email.errors.required\">\n                <i class=\"fa fa-exclamation-circle\"></i> Please enter your email\n              </div>\n              <div *ngIf=\"loginForm.controls.email.errors && loginForm.controls.email.errors.invalid\">\n                <i class=\"fa fa-exclamation-circle\"></i> Please enter a valid email\n              </div>\n            </div>\n\n          </div>\n          <div class=\"input-group\">\n            <label for=\"password\">\n              Password\n            </label>\n            <input type=\"password\" placeholder=\"Please enter your password\" name=\"password\"\n              id=\"password\" ngControl=\"password\">\n            <div [class.active]=\"(submitted || loginForm.controls.password.touched) && !loginForm.controls.password.valid\" class=\"err\">\n                <i class=\"fa fa-exclamation-circle\"></i> Please enter your password\n            </div>\n          </div>\n          <div class=\"buttons\">\n            <button class=\"btn\" [class.submitting]=\"submitting\">\n              <span>Log in</span>\n            </button>\n          </div>\n          <div class=\"sub-form\">\n            You forgot your password? It is okay, we all have been there. <a [routerLink]=\"['/RecoverPassword']\">Recover password</a>.\n            <div>\n              OR you can <a [routerLink]=\"['/Register']\">register</a> kindly.\n            </div>\n          </div>\n        </div>\n      </fieldset>\n    </form>\n  </div>\n  "
+                        template: "\n  <div class=\"generic-form animated slideInRight\">\n    <form [ngFormModel]=\"loginForm\" (ngSubmit)=\"submitLoginForm($event)\" novalidate>\n      <fieldset>\n        <legend>Login</legend>\n        <div class=\"white-bg\">\n          <div class=\"server-err\" [class.active]=\"invalidCredentials\">\n            <i class=\"fa fa-exclamation-circle\"></i> Invalid email or password\n          </div>\n          <div class=\"input-group\">\n            <label for=\"email\">\n              Email\n            </label>\n            <input type=\"email\" placeholder=\"Please enter your email\" name=\"email\" id=\"email\"\n              ngControl=\"email\">\n            <div [class.active]=\"(submitted || loginForm.controls.email.touched) && !loginForm.controls.email.valid\" class=\"err\">\n              <div *ngIf=\"loginForm.controls.email.errors && loginForm.controls.email.errors.required\">\n                <i class=\"fa fa-exclamation-circle\"></i> Please enter your email\n              </div>\n              <div *ngIf=\"loginForm.controls.email.errors && loginForm.controls.email.errors.invalid\">\n                <i class=\"fa fa-exclamation-circle\"></i> Please enter a valid email\n              </div>\n            </div>\n\n          </div>\n          <div class=\"input-group\">\n            <label for=\"password\">\n              Password\n            </label>\n            <input type=\"password\" placeholder=\"Please enter your password\" name=\"password\"\n              id=\"password\" ngControl=\"password\">\n            <div [class.active]=\"(submitted || loginForm.controls.password.touched) && !loginForm.controls.password.valid\" class=\"err\">\n                <i class=\"fa fa-exclamation-circle\"></i> Please enter your password\n            </div>\n          </div>\n          <div class=\"buttons\">\n            <button class=\"btn\" [class.submitting]=\"submitting\">\n              <span>Log in</span>\n            </button>\n          </div>\n          <div class=\"sub-form\">\n            You forgot your password? It is okay, we all have been there. <a [routerLink]=\"['/RecoverPassword']\">Recover password</a>.\n            <div>\n              OR you can <a [routerLink]=\"['/Register']\">register</a>.\n            </div>\n          </div>\n        </div>\n      </fieldset>\n    </form>\n  </div>\n  "
                     }), 
                     __metadata('design:paramtypes', [common_1.FormBuilder, router_1.Router, UserService_1.UserService, UserValidators_1.UserValidators])
                 ], Login);

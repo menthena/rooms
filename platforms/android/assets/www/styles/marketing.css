@@ -1,0 +1,85 @@
+@keyframes pulse {
+  0% {
+    opacity: 0.6; }
+  50% {
+    opacity: 0.3; }
+  100% {
+    opacity: 0.6; } }
+
+@keyframes pulseScale {
+  0% {
+    transform: scale(1);
+    opacity: 0.8; }
+  50% {
+    transform: scale(0.6);
+    opacity: 0.2; }
+  100% {
+    transform: scale(1);
+    opacity: 0.9; } }
+
+.slide-1 {
+  background: #3ab791; }
+
+.green-bar {
+  background: #3ab791;
+  color: #FFF; }
+
+h2 {
+  margin-top: 40px; }
+
+.slide-2 {
+  background: #2b9486; }
+
+.slide-3 {
+  background: #506a78; }
+
+.icons {
+  position: relative;
+  display: inline-block; }
+
+ion-slide, a, p, i {
+  color: #FFF; }
+
+.fa-calendar-o, .fa-desktop {
+  font-size: 100px; }
+
+.fa-tablet {
+  font-size: 66px;
+  opacity: 0.7; }
+
+.fa-mobile {
+  font-size: 48px;
+  opacity: 0.4; }
+
+.fa-repeat {
+  font-size: 34px;
+  top: 50px;
+  opacity: 0.7;
+  position: absolute;
+  left: 30px; }
+
+p {
+  width: 80%;
+  font-size: 15px;
+  margin: auto; }
+
+.logo {
+  position: relative;
+  width: 175px;
+  margin: auto;
+  font-size: 26px;
+  font-weight: bold; }
+  .logo:before {
+    background-position: -25px 0;
+    content: '';
+    width: 22px;
+    height: 35px;
+    position: absolute;
+    left: 15px;
+    top: 3px; }
+
+.or {
+  margin-top: 20px;
+  font-size: 14px; }
+  .or a {
+    font-weight: bold; }
