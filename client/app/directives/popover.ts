@@ -7,7 +7,8 @@ declare var jQuery: any;
 @Component({
   selector: 'popover',
   inputs: ['data', 'reservations', 'activeReservation'],
-  outputs: ['editReservation'],
+  // TODO:
+  // outputs: ['editReservation'],
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['styles/common/popover.css'],
   template: `

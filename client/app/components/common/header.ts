@@ -21,7 +21,7 @@ declare var gapi: any;
     </ion-tabs>
   </header>
 
-  <header *ngIf="!isIonic && currentRoute !== 'index'">
+  <header *ngIf="!isIonic">
     <div class="container">
       <div class="row">
         <div class="col-sm-3 col-xs-4">

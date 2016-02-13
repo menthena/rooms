@@ -15,8 +15,9 @@ export class AppService implements IAppService {
   constructor() {
     if (window.cordova) {
       this.isIonic = true;
-      // jQuery('head').append('<link ios-href="vendor/app.ios.css" rel="stylesheet">' +
-      //   '<link md-href="vendor/app.md.css" rel="stylesheet">');
+      jQuery('head').append('<link ios-href="vendor/app.ios.css" rel="stylesheet">' +
+        '<link md-href="vendor/app.md.css" rel="stylesheet">');
+      jQuery('body').addClass('ionic');
     }
     this.overlayObservable = Observable
       .create(observer => {

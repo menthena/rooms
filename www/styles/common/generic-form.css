@@ -1,0 +1,138 @@
+@keyframes pulse {
+  0% {
+    opacity: 0.6; }
+  50% {
+    opacity: 0.3; }
+  100% {
+    opacity: 0.6; } }
+
+@keyframes pulseScale {
+  0% {
+    transform: scale(1);
+    opacity: 0.8; }
+  50% {
+    transform: scale(0.6);
+    opacity: 0.2; }
+  100% {
+    transform: scale(1);
+    opacity: 0.9; } }
+
+.generic-form {
+  box-shadow: 0 1px 2px rgba(187, 214, 216, 0.4), 0 1px 1px rgba(187, 214, 216, 0.9);
+  transition: background-color 0.15s ease-out;
+  background-color: #506a78;
+  width: 350px;
+  margin: 40px auto;
+  border-radius: 3px; }
+  .generic-form.valid {
+    background-color: #3ab791; }
+  .generic-form .message {
+    color: #a1b5c0;
+    margin-bottom: 16px;
+    border-bottom: 1px #ececec solid;
+    padding-bottom: 11px; }
+  .generic-form .success i {
+    background: #d3e3eb;
+    padding: 4px;
+    border-radius: 4px;
+    color: #3ab791;
+    margin-top: 4px;
+    border: 1px #dbe7ed solid;
+    margin-right: 10px; }
+  .generic-form .success .success-message {
+    margin-left: 10px; }
+  .generic-form .tip {
+    margin-top: 6px;
+    color: #a1b5c0;
+    font-style: italic; }
+  .generic-form legend {
+    font-size: 24px;
+    border-bottom: none;
+    margin-bottom: 0;
+    color: #FFF;
+    padding: 13px 20px; }
+  .generic-form .white-bg {
+    background-color: #FFF;
+    border-radius: 0 0 3px 3px;
+    padding: 20px 20px; }
+  .generic-form ::-webkit-input-placeholder {
+    color: #a1b5c0; }
+  .generic-form label {
+    color: #a1b5c0; }
+  .generic-form .additional {
+    font-weight: normal;
+    color: #3ab791;
+    padding-left: 5px; }
+  .generic-form button {
+    transition: all 0.15s ease-out;
+    background: #3ab791;
+    color: #FFF;
+    outline: none;
+    padding: 12px 28px;
+    margin-top: 8px; }
+    .generic-form button.submitting {
+      animation: pulseScale 1s infinite;
+      border-radius: 99px;
+      padding: 0;
+      width: 45px;
+      height: 45px; }
+      .generic-form button.submitting span {
+        display: none; }
+    .generic-form button:hover {
+      background: #35a885; }
+  .generic-form .buttons {
+    display: block;
+    height: 55px; }
+  .generic-form input {
+    box-shadow: 0 0px 1px rgba(187, 214, 216, 0.4), 0 1px 1px rgba(187, 214, 216, 0.9);
+    transition: all 0.15s ease-out;
+    border: 1px #dee5e9 solid;
+    border: none;
+    color: #506a78;
+    border-radius: 3px;
+    outline: none;
+    background: #f9fbfc;
+    padding: 11px 15px;
+    width: 100%;
+    display: block; }
+    .generic-form input:focus {
+      box-shadow: 0 0px 1px rgba(187, 214, 216, 0.4), 0 0px 1px rgba(187, 214, 216, 0.9);
+      background-color: white; }
+  .generic-form .err, .generic-form .server-err {
+    transition: max-height 0.15s ease-out;
+    overflow: hidden;
+    max-height: 0;
+    background-color: #e35050;
+    color: #FFF;
+    font-size: 13px;
+    padding-left: 1px;
+    display: inline-block;
+    border-radius: 0 0 2px 2px;
+    margin-top: 0;
+    padding-left: 7px; }
+    .generic-form .err i, .generic-form .server-err i {
+      margin-right: 5px; }
+    .generic-form .err.active, .generic-form .server-err.active {
+      max-height: 21px;
+      padding: 2px 7px;
+      margin-top: 1px; }
+  .generic-form .server-err {
+    background-color: inherit;
+    margin-bottom: 10px;
+    color: #e35050;
+    padding: 0;
+    margin-bottom: 0; }
+    .generic-form .server-err.active {
+      padding: 0;
+      margin: 1px 0 10px; }
+  .generic-form .input-group {
+    width: 100%;
+    margin-bottom: 18px; }
+  .generic-form .sub-form {
+    border-top: 1px #dbe7ed solid;
+    margin-top: 22px;
+    padding-top: 9px;
+    color: #a1b5c0;
+    font-size: 13px; }
+    .generic-form .sub-form div {
+      margin-top: 14px; }

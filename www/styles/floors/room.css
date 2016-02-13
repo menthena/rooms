@@ -1,0 +1,74 @@
+@keyframes pulse {
+  0% {
+    opacity: 0.6; }
+  50% {
+    opacity: 0.3; }
+  100% {
+    opacity: 0.6; } }
+
+@keyframes pulseScale {
+  0% {
+    transform: scale(1);
+    opacity: 0.8; }
+  50% {
+    transform: scale(0.6);
+    opacity: 0.2; }
+  100% {
+    transform: scale(1);
+    opacity: 0.9; } }
+
+.wrapper {
+  position: absolute;
+  display: inline-block; }
+  .wrapper.reserved .room, .wrapper.not-match .room {
+    opacity: 0.4;
+    cursor: default;
+    background-color: #506a78; }
+    .wrapper.reserved .room:hover, .wrapper.not-match .room:hover {
+      background-color: #506a78; }
+  .wrapper.not-match:not(.reserved) .room {
+    opacity: 1; }
+  .wrapper reservation-modal {
+    position: relative; }
+  .wrapper:hover .reservation-popover {
+    display: block; }
+
+.room {
+  box-shadow: 0 1px 2px rgba(187, 214, 216, 0.4), 0 1px 1px rgba(187, 214, 216, 0.9);
+  transition: background-color 0.15s ease-out;
+  padding: 8px 10px;
+  border-radius: 2px;
+  background-color: #3ab791;
+  width: 100%;
+  height: 100%;
+  min-height: 55px;
+  overflow: hidden;
+  position: absolute;
+  color: #FFF;
+  display: inline-block;
+  cursor: pointer; }
+  .room:hover {
+    background-color: #34a482; }
+  .room .second-line .text {
+    white-space: nowrap; }
+  .room .fa-pencil {
+    padding-top: 3px; }
+  .room .reserved {
+    opacity: 0.7;
+    font-size: 12px; }
+
+.book i {
+  padding: 2px 0 0 2px; }
+
+span, i {
+  color: #FFF; }
+
+@media (max-width: 768px) {
+  reservation-modal {
+    position: absolute; }
+  .room {
+    text-align: center;
+    min-height: auto;
+    height: auto; }
+    .room span {
+      display: none; } }

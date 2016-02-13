@@ -17,7 +17,8 @@ declare var moment:any;
 @Component({
   directives: [DatePicker, SelectMenu, Slider, Button, FeatureList, TimePicker],
   selector: 'element-filter',
-  outputs: ['form'],
+  // TODO:
+  // outputs: ['form'],
   template: `
   <div class="filter">
     <form [ngFormModel]="filterForm" (ngSubmit)="submitFilterForm($event)">

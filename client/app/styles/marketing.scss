@@ -23,7 +23,9 @@
   }
 }
 .hero {
-  background: $icon-bg-color;
+  // background: $icon-bg-color;
+  background-image: url(images/rooms.jpg);
+  background-size: cover;
   height: calc(94% - 20px);
 }
 

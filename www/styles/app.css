@@ -94,6 +94,8 @@ body {
   background: #f9fbfc;
   font-family: 'fira-sans',sans-serif;
   color: #506a78; }
+  body ion-menu {
+    display: none; }
 
 a {
   cursor: pointer;
