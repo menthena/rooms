@@ -4,6 +4,7 @@ import {Router, RouterLink} from 'angular2/router';
 import {EMAIL_REGEX} from '../../constants';
 import {LoadingIndicator} from '../../directives/loading-indicator';
 import {UserService} from '../../services/UserService';
+import {AppService} from '../../services/AppService';
 import {UserValidators} from '../../validators/UserValidators';
 
 @Component({
@@ -11,7 +12,7 @@ import {UserValidators} from '../../validators/UserValidators';
   directives: [NgForm, LoadingIndicator, RouterLink],
   styleUrls: ['styles/common/generic-form.css'],
   template: `
-  <div class="generic-form animated slideInRight">
+  <div class="generic-form" [ngClass]="{'animated slideInRight': isIonic}">
     <form [ngFormModel]="registerForm" (ngSubmit)="submitLoginForm($event)" novalidate>
       <fieldset>
         <legend>Register</legend>
@@ -116,11 +117,13 @@ export class Register {
   registerForm;
   submitted: boolean;
   success: boolean;
+  isIonic: boolean;
   submitting: boolean;
   error: string;
 
   constructor(private fb: FormBuilder, private router: Router, private UserService: UserService,
-    private UserValidators: UserValidators) {
+    private UserValidators: UserValidators, private AppService: AppService) {
+    this.isIonic = this.AppService.isIonic;
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
       companyName: ['', Validators.required],

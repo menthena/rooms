@@ -13,7 +13,7 @@ function requiresUser(req, res, next) {
         res.redirect(401, '/login');
       } else {
         req.user = user;
-        req.id = req.session.userId;
+        req.id = req.user._id;
         next();
       }
     });

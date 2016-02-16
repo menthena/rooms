@@ -74,7 +74,7 @@ router.patch('/:id', middleware.requiresUser, function(req, res) {
   });
 });
 
-router.post('/', middleware.requiresUser, function(req, res) {
+router.post('/', function(req, res) {
   var newUser = _.pick(req.body, ['companyName', 'companyID', 'name', 'email', 'password', 'userType']);
   User.count({ email: newUser.email }, function(err, userCount) {
     if (err) {

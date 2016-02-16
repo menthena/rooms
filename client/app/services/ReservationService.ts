@@ -6,6 +6,8 @@ import {DATE_FORMAT} from '../constants';
 import {ENV_URL} from '../app.config';
 
 declare var moment: any;
+declare var _: any;
+declare var window: any;
 
 export interface IReservation {
   reservationID: string;
@@ -62,6 +64,15 @@ export class ReservationService implements IReservationService {
         this.saveFilter(res);
       }
     );
+    // TODO: Use official Angular2 CORS support when merged (https://github.com/angular/angular/issues/4231).
+    if ((<any> this.http)._backend._browserXHR) {
+      let _build = (<any> this.http)._backend._browserXHR.build;
+      (<any> this.http)._backend._browserXHR.build = () => {
+        let _xhr =  _build();
+        _xhr.withCredentials = true;
+        return _xhr;
+      };
+    }
   }
 
   updateTime() {
@@ -70,7 +81,9 @@ export class ReservationService implements IReservationService {
   }
 
   fetchReservations() {
-    let observable = this.http.get(ENV_URL + '/api/reservation');
+    let observable = this.http.get(ENV_URL + '/api/reservation', {
+      headers: new Headers({ Authorization: 'Basic ' + window.btoa('asd@asd.com:asdasd') })
+    });
     observable
       .subscribe((res) => {
         let reservation: any = res.json();

@@ -5,13 +5,14 @@ import {EMAIL_REGEX} from '../../constants';
 import {LoadingIndicator} from '../../directives/loading-indicator';
 import {UserValidators} from '../../validators/UserValidators';
 import {UserService} from '../../services/UserService';
+import {AppService} from '../../services/AppService';
 
 @Component({
   selector: 'login',
   directives: [NgForm, LoadingIndicator, RouterLink],
   styleUrls: ['styles/common/generic-form.css'],
   template: `
-  <div class="generic-form animated slideInRight">
+  <div [ngClass]="{'animated slideInRight': isIonic, 'generic-form': true}">
     <form [ngFormModel]="loginForm" (ngSubmit)="submitLoginForm($event)" novalidate>
       <fieldset>
         <legend>Login</legend>
@@ -67,10 +68,12 @@ export class Login {
   loginForm;
   submitted: boolean;
   invalidCredentials: boolean;
+  isIonic: boolean;
   submitting: boolean;
 
   constructor(private fb: FormBuilder, private router: Router, private UserService: UserService,
-    private UserValidators: UserValidators) {
+    private UserValidators: UserValidators, private AppService: AppService) {
+    this.isIonic = this.AppService.isIonic;
     this.loginForm = this.fb.group({
       email: ['', this.UserValidators.EmailValidator],
       password: ['', Validators.required]
@@ -88,7 +91,6 @@ export class Login {
         .add((res) => {
           setTimeout(() => {
             this.submitting = false;
-            console.log('tick', this.UserService);
             if (!this.UserService.isLogged) {
               this.invalidCredentials = true;
             } else {

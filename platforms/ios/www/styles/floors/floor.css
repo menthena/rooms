@@ -81,7 +81,7 @@ h1, .header {
   padding: 5px 10px; }
 
 .inner {
-  background: url(/images/bg.png);
+  background: url(../images/bg.png);
   position: relative;
   height: 387px;
   display: block; }

@@ -3,6 +3,8 @@ import {Http, Response, Headers} from 'angular2/http';
 import {Observable} from 'rxjs';
 import {ENV_URL} from '../app.config';
 
+declare var window: any;
+
 interface IUserService {
   login(email: string, password: string) : void;
   recoverPassword(email: string) : void;
@@ -23,6 +25,14 @@ export class UserService implements IUserService {
       .create(observer => {
         return () => console.log('disposed');
       }).publish();
+
+    // TODO: Use official Angular2 CORS support when merged (https://github.com/angular/angular/issues/4231).
+    let _build = (<any> this.http)._backend._browserXHR.build;
+    (<any> this.http)._backend._browserXHR.build = () => {
+      let _xhr =  _build();
+      _xhr.withCredentials = true;
+      return _xhr;
+    };
   }
 
   login(email: string, password: string) {

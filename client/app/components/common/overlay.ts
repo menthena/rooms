@@ -2,9 +2,11 @@ import {Component} from 'angular2/core';
 import {RouterLink} from 'angular2/router';
 import {DesignService} from '../../services/DesignService';
 import {ReservationService} from '../../services/ReservationService';
+import {FloorElementsService} from '../../services/FloorElementsService';
 
 @Component({
   selector: 'overlay',
+  providers: [],
   template: `
     <div class="overlay" *ngIf="isPanelActive" [class.active]="isActive">
     <div>

@@ -1,6 +1,6 @@
 module.exports = function() {
 	var config = {
-		allTs: './client/app/components/**/*.ts',
+		allTs: './client/**/*.ts',
 		allTests: './test/**/*.ts',
 		typings: './typings/tsd.d.ts',
     tsOutputPath: './dist',

@@ -19,6 +19,15 @@ interface ICalendarService {
 export class CalendarService implements ICalendarService {
 
   constructor(private http: Http) {
+    // TODO: Use official Angular2 CORS support when merged (https://github.com/angular/angular/issues/4231).
+    if ((<any> this.http)._backend._browserXHR) {
+      let _build = (<any> this.http)._backend._browserXHR.build;
+      (<any> this.http)._backend._browserXHR.build = () => {
+        let _xhr =  _build();
+        _xhr.withCredentials = true;
+        return _xhr;
+      };
+    }
   }
 
   addEvent(event) {

@@ -6,13 +6,23 @@ import {ReservationService} from '../../services/ReservationService';
 import {DesignService} from '../../services/DesignService';
 import {Floor} from './floor';
 import {LoadingIndicator} from '../../directives/loading-indicator';
+import {IONIC_DIRECTIVES} from 'ionic-framework/ionic';
 
 declare var _: any;
 
 @Component({
   selector: 'floors',
-  directives: [Floor, LoadingIndicator],
+  directives: [Floor, LoadingIndicator, IONIC_DIRECTIVES],
   template: `
+    <div *ngIf="isIonic">
+      <ion-segment>
+       <ion-segment-button *ngFor="#floor of floors"
+        [ngClass]="{'segment-activated': floor.floorID === selectedFloor}"
+        (click)="changeSelectedFloor(floor.floorID)">
+         {{ floor.floorName }}
+       </ion-segment-button>
+      </ion-segment>
+    </div>
     <a *ngIf="designMode && floors && floors.length > 0" (click)="addFloor()"
       class="add-floor button"><i class="fa fa-plus"></i> Add floor</a>
     <loading-indicator *ngIf="isLoading"></loading-indicator>
@@ -44,10 +54,13 @@ export class Floors {
   showConfirmDeletion: boolean;
   isLoading: boolean;
   designMode: boolean;
+  isIonic: boolean;
+  selectedFloor: string;
 
   constructor(private floorService: FloorService, private DesignService: DesignService,
     private AppService: AppService) {
     this.overlayObservable = this.AppService.overlayObservable;
+    this.isIonic = this.AppService.isIonic;
   }
 
   ngOnInit() {
@@ -89,6 +102,11 @@ export class Floors {
           this.floors = floors;
         }
       );
+  }
+
+  changeSelectedFloor(floorID) {
+    this.selectedFloor = floorID;
+    console.log(floorID);
   }
 
   showDeleteFloorConfirmation(id) {

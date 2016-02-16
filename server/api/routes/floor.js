@@ -12,6 +12,7 @@ var io = require('../../socket');
 router.get('/', middleware.requiresUser, function(req, res) {
   var sendResponse = function(err, floors) {
     res.send({ data: floors });
+    res.end();
   };
 
   floor.find({}).exec(sendResponse);

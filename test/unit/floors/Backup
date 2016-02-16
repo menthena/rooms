@@ -1,0 +1,95 @@
+// /// <reference path="../../../typings/tsd.d.ts" />
+// /// <reference path="../../../node_modules/angular2/typings/browser.d.ts" />
+// import {Injectable, Component, provide, View} from 'angular2/core';
+// import {AppwideOverlay} from '../../../client/app/components/common/appwide-overlay';
+// import {AppService} from '../../../client/app/services/AppService';
+// import {Router, Location} from 'angular2/router';
+//
+// import {
+//   iit,
+//   it,
+//   ddescribe,
+//   describe,
+//   expect,
+//   inject,
+//   injectAsync,
+//   TestComponentBuilder,
+//   beforeEachProviders,
+//   fakeAsync,
+//   tick,
+//   setBaseTestProviders
+// } from 'angular2/testing';
+//
+// import {BaseRequestOptions, Response, ResponseOptions, Http} from 'angular2/http';
+// import {MockBackend, MockConnection} from 'angular2/http/testing';
+//
+// // beforeEachProviders(() => [
+// //   // provide(Router, {useClass: abc}),
+// //   // provide(Config, {useClass: abc}),
+// //   // provide(Location, {useClass: abc})
+// //   BaseRequestOptions,
+// //   MockBackend,
+// //   provide(Http, {
+// //     useFactory: (backend: MockBackend, defaultOptions: BaseRequestOptions) => {
+// //       return new Http(backend, defaultOptions);
+// //     },
+// //     deps: [MockBackend, BaseRequestOptions]
+// //   })
+// // ]);
+//
+// import {
+//   TEST_BROWSER_PLATFORM_PROVIDERS,
+//   TEST_BROWSER_APPLICATION_PROVIDERS
+// } from 'angular2/platform/testing/browser';
+//
+// setBaseTestProviders(TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS);
+//
+// // describe('header component', () => {
+// // 	it('should add string to header names', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+// //     return tcb.createAsync(TestComponent).then((fixture) => {
+// //       fixture.detectChanges();
+// //       var compiled = fixture.debugElement.nativeElement;
+// //       console.log(compiled);
+// //       //
+// //       expect(compiled).toContainText('Enter PIN');
+// //       expect(compiled.querySelector('h3')).toHaveText('Status: Enter PIN');
+// //     });
+// // 	}));
+// // });
+// //
+// //
+// //
+//
+// // class c {
+// //
+// // }
+// //
+// // @Component({selector: 'child-comp', viewProviders: [QaService], providers: [QaService], bindings: [QaService]})
+// // @View({template: `<test-aaa></test-aaa>`, directives: [Testa] })
+// // @Injectable()
+// // class MockChildComp {
+// //   constructor(QaService: QaService) {
+// //
+// //   }
+// // }
+//
+//
+// describe('Appwide Overlay', () => {
+//   let component;
+//
+//   beforeEachProviders(() => [
+//     provide(AppService, {useClass: AppService})
+//   ]);
+//
+//   it('should add string to header names', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+//     return tcb.createAsync(TestComponent).then((fixture) => {
+//       fixture.detectChanges();
+//       var compiled = fixture.debugElement.nativeElement;
+//       console.log(compiled);
+//       //
+//       expect(compiled).toContainText('Enter PIN');
+//       expect(compiled.querySelector('h3')).toHaveText('Status: Enter PIN');
+//     });
+//   }));
+//
+// });

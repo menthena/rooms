@@ -1,10 +1,11 @@
 import {Component} from 'angular2/core';
 import {IONIC_DIRECTIVES} from 'ionic-framework/ionic';
 import {AppService} from '../../services/AppService';
-import {RouterLink} from 'angular2/router';
+import {RouterLink, Router} from 'angular2/router';
 
 @Component({
   selector: 'marketing-index',
+  providers: [AppService],
   styleUrls: ['styles/marketing.css'],
   template: `
   <div *ngIf="isIonic">

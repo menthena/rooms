@@ -10,7 +10,7 @@ var io = require('../../socket');
 var middleware = require('../middleware');
 var moment = require('moment');
 
-router.get('/', middleware.requiresUser, function(req, res) {
+router.get('/', function(req, res) {
   var sendResponse = function(err, reservations) {
     var roomIDs = [];
     var updatedReservations = [];
@@ -18,6 +18,10 @@ router.get('/', middleware.requiresUser, function(req, res) {
       roomIDs.push(reservation.elementID);
       updatedReservations.push(reservation);
     });
+
+    if (err) {
+      res.send(422, 'Bad request');
+    }
 
     floorElement.find({
       _id: {

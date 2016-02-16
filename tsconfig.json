@@ -19,7 +19,9 @@
     "rewriteTsconfig": true
   },
   "files": [
+    "./client/app/app.config.ts",
     "./client/app/app.ts",
+    "./client/app/bootstrap.ts",
     "./client/app/components/accounts/accounts.ts",
     "./client/app/components/common/appwide-overlay.ts",
     "./client/app/components/common/footer.ts",
@@ -71,7 +73,7 @@
     "./client/app/validators/UserValidators.ts"
   ],
   "filesGlob": [
-   "./client/**/*ki.ts",
+    "./client/**/*ki.ts",
     "./client/**/*.ts"
   ]
 }

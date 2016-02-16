@@ -6,6 +6,7 @@ module.exports = function(app) {
   var models = require('./api/models');
   var User = models.User;
   var email = require('./email');
+  var middleware = require('./api/middleware');
 
   app.oauth = oauthserver({
     model: models.oauth,
@@ -18,15 +19,16 @@ module.exports = function(app) {
   }));
 
   app.all('/oauth/token', app.oauth.grant());
-  app.all('/oauth/tokeninfo', function(req, res, next) {
+  app.get('/oauth/tokeninfo', function(req, res, next) {
     if (!req.session.userId) {
       res.status(401);
       res.send('');
     } else {
+      console.log(req.session.userId);
       User.getUserInfo(req.session.userId, function(user) {
         if (user.userType === -1) {
           res.status(401);
-          next();
+          res.send(200)
         } else {
           res.send(200, user);
         }

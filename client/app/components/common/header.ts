@@ -1,9 +1,10 @@
 import {Component, Input} from 'angular2/core';
-import {RouterLink, Router} from 'angular2/router';
+import {RouterLink, Router, Location} from 'angular2/router';
 import {UserService} from '../../services/UserService';
 import {CLIENT_ID, SCOPES} from '../../constants';
-import {IONIC_DIRECTIVES} from 'ionic-framework/ionic';
+import {IONIC_DIRECTIVES, NavController, Modal} from 'ionic-framework/ionic';
 import {AppService} from '../../services/AppService';
+import {Filter} from '../reservation/filter';
 
 declare var gapi: any;
 
@@ -12,16 +13,19 @@ declare var gapi: any;
   inputs: ['logged'],
   directives: [RouterLink, IONIC_DIRECTIVES],
   template: `
-  <header *ngIf="isIonic && currentRoute !== 'index'">
+  <div *ngIf="isIonic && currentRoute !== 'index'">
+  <br><br>
+    <a (click)="qeqwq()">asdafa ae faf eaf<br>aeijeajf aijefij aef<br><br>aiefjiaefjiaea</a>
+
     <ion-tabs>
       <ion-tab tabIcon="water" tabTitle="Water" [root]="tab1"></ion-tab>
       <ion-tab tabIcon="leaf" tabTitle="Life" [root]="tab2"></ion-tab>
       <ion-tab tabIcon="flame" tabTitle="Fire" [root]="tab3"></ion-tab>
       <ion-tab tabIcon="magnet" tabTitle="Force" [root]="tab4"></ion-tab>
     </ion-tabs>
-  </header>
+  </div>
 
-  <header *ngIf="!isIonic">
+  <header *ngIf="!isIonic && currentRoute !== 'index' && currentRoute !== ''">
     <div class="container">
       <div class="row">
         <div class="col-sm-3 col-xs-4">
@@ -75,8 +79,11 @@ export class Header {
   isIonic: boolean;
   userData: Object;
   currentRoute: string;
+  nav: NavController;
 
-  constructor(private UserService: UserService, private AppService: AppService, private Router: Router) {
+  constructor(private UserService: UserService, private AppService: AppService, private Router: Router,
+      private Location: Location) {
+    this.currentRoute = this.Location.path().substring(1);
     this.Router.subscribe((route) => {
       this.currentRoute = route;
     });
@@ -88,6 +95,13 @@ export class Header {
     if (this.UserService.userData) {
       this.userData = this.UserService.userData;
     }
+  }
+
+  qeqwq() {
+    console.log('aaa');
+    alert('a');
+    // let myModal = Modal.create(Filter);
+    // this.nav.present(myModal);
   }
 
   handleClick() {

@@ -1,4 +1,5 @@
 /// <reference path="../../typings/tsd.d.ts" />
+/// <reference path="../../node_modules/angular2/typings/browser.d.ts"/>
 import {Component, ViewEncapsulation, View, provide} from 'angular2/core';
 import {bootstrap} from 'angular2/platform/browser';
 import {HTTP_BINDINGS} from 'angular2/http';
@@ -21,7 +22,8 @@ import {App, Platform} from 'ionic-framework/ionic';
 @RouteConfig(APP_ROUTES)
 
 @App({
-  providers: [FloorService, DesignService, AppService, UserValidators, UserService,
+  viewProviders: [AppService],
+  providers: [FloorService, DesignService, UserValidators, UserService,
     FloorElementsService, ReservationService, HTTP_BINDINGS, ROUTER_PROVIDERS, CalendarService,
     provide(LocationStrategy, {useClass: HashLocationStrategy})],
   directives: [RouterOutlet, Header, Overlay, AppwideOverlay],

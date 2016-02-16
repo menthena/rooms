@@ -35,7 +35,8 @@
       left: 0; }
 
 .hero {
-  background: #d3e3eb;
+  background-image: url(images/rooms.jpg);
+  background-size: cover;
   height: calc(94% - 20px); }
 
 h2 {

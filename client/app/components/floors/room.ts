@@ -14,6 +14,7 @@ import {DesignService} from '../../services/DesignService';
 
 declare var jQuery:any;
 declare var moment:any;
+declare var _:any;
 
 @Component({
   selector: 'room',

@@ -19,13 +19,13 @@ module.exports = {
       dest: 'www/build/fonts'
     },
     watch: {
-      sass: ['css/**/*.css'],
-      html: ['dist/**/*.html'],
-      livereload: [
-        'www/build/**/*.html',
-        'www/build/**/*.js',
-        'www/build/**/*.css'
-      ]
+      // sass: ['css/**/*.css'],
+      // html: ['dist/**/*.html'],
+      // livereload: [
+      //   'www/build/**/*.html',
+      //   'www/build/**/*.js',
+      //   'www/build/**/*.css'
+      // ]
     }
   },
 

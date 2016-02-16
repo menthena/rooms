@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Injectable, Component} from 'angular2/core';
 import {Observable} from 'rxjs';
 import {RouterLink} from 'angular2/router';
 import {AppService} from '../../services/AppService';
@@ -10,6 +10,7 @@ import {AppService} from '../../services/AppService';
       <a (click)="hide()" class="pull-right hide-button">
         <i class="fa fa-times"></i>
       </a>
+      <a class="yes">Giggity</a>
       <div class="box text-center">
         <div class="inner">
           <div>
@@ -26,6 +27,7 @@ import {AppService} from '../../services/AppService';
   styleUrls: ['styles/common/appwide-overlay.css']
 })
 
+@Injectable()
 export class AppwideOverlay {
   observable;
   isActive: boolean;

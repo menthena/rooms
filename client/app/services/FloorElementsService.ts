@@ -39,6 +39,15 @@ export class FloorElementsService implements IFloorElementsService<IFloorElement
       .create(observer => {
         return () => console.log('disposed');
       }).publish();
+    // TODO: Use official Angular2 CORS support when merged (https://github.com/angular/angular/issues/4231).
+    if ((<any> this.http)._backend._browserXHR) {
+      let _build = (<any> this.http)._backend._browserXHR.build;
+      (<any> this.http)._backend._browserXHR.build = () => {
+        let _xhr =  _build();
+        _xhr.withCredentials = true;
+        return _xhr;
+      };
+    }
   }
 
   getObservable() : Observable<Array<IFloorElement>> {
