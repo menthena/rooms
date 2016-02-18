@@ -1,21 +1,24 @@
 <html>
   <head>
     <title>Rooms</title>
-    <base href="/">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <base href="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
     <link rel="stylesheet" href="styles/vendor.css">
     <link ios-href="vendor/app.ios.css" rel="stylesheet">
     <link md-href="vendor/app.md.css" rel="stylesheet">
     <link rel="stylesheet" href="styles/app.css">
   </head>
   <body>
-    <script src="https://use.typekit.net/vly1fpc.js"></script>
-    <script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
+    <!-- <script src="https://use.typekit.net/vly1fpc.js"></script> -->
+    <!-- <script src="https://apis.google.com/js/client.js?onload=checkAuth"></script> -->
     <script src="system.js"></script>
     <script>
     System.config({
+      baseURL: '',
       defaultJSExtensions: true,
-      transpiler: "typescript",
+      transpiler: 'none',
       paths: {
         "github:*": "jspm_packages/github/*",
         "npm:*": "jspm_packages/npm/*"
@@ -76,6 +79,10 @@
           "inherits": "npm:inherits@2.0.1",
           "process": "github:jspm/nodelibs-process@0.1.2"
         }
+      },
+      packages: {
+        app: { defaultExtension: 'js' },
+        rxjs: { defaultExtension: 'js' }
       }
     });
     </script>

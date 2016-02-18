@@ -1,7 +1,7 @@
 import {Injectable} from 'angular2/core';
 import {Observable} from 'rxjs';
 import {Http, Response, Headers} from 'angular2/http';
-import {CLIENT_ID, SCOPES} from '../constants';
+import {CLIENT_ID, SCOPES} from '../config/constants';
 
 declare var gapi: any;
 

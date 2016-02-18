@@ -1,5 +1,5 @@
 import {Component, Input} from 'angular2/core';
-import {FEATURES_DATA} from '../../constants';
+import {FEATURES_DATA} from '../../config/constants';
 import {Button} from '../form/button';
 
 @Component({

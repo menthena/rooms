@@ -7,7 +7,10 @@ module.exports = function(config) {
 
     files: [
       // paths loaded by Karma
-      {pattern: 'node_modules/systemjs/dist/system.src.js', included: true, watched: true},
+      // 'node_modules/traceur/bin/traceur-runtime.js', // Required by PhantomJS2, otherwise it shouts ReferenceError: Can't find variable: require
+      'node_modules/systemjs/dist/system.src.js',
+      'node_modules/reflect-metadata/Reflect.js',
+      // {pattern: 'node_modules/systemjs/dist/system.src.js', included: true, watched: true},
       {pattern: 'node_modules/ionic-framework/bundles/ionic.system.js', included: true, watched: true},
       {pattern: 'node_modules/socket.io-client/socket.io.js', included: true, watched: true},
       // {pattern: '', included: true, watched: true},
@@ -21,7 +24,9 @@ module.exports = function(config) {
       {pattern: 'node_modules/moment/moment.js', included: true, watched: true},
       {pattern: 'karma-test-shim.js', included: true, watched: true},
       {pattern: 'dist/unit/matchers.js', included: true, watched: true},
-      // {pattern: 'node_modules/rxjs/rx.js', included: false, watched: false},
+      {pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false},
+      {pattern: 'node_modules/angular2/**/*.js', included: false, watched: false},
+      // {pattern: 'node_modules/ionic-framework/**/*.js', included: false, watched: false},
 
       // paths loaded via module imports
       {pattern: 'dist/**/*.js', included: false, watched: false},
@@ -35,11 +40,12 @@ module.exports = function(config) {
     // proxied base paths
     proxies: {
       // required for component assests fetched by Angular's compiler
+      "/base/client/app": "/base/dist/app",
       "/app/": "/base/app/",
       "/styles/": "/base/dist/app/styles/"
     },
 
-    reporters: ['progress'],
+    reporters: ['mocha'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,

@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {IFloor} from '../../services/FloorService';
 import {FloorElementsService, IFloorElement} from '../../services/FloorElementsService';
 import {Room} from './room';
-import {SOCKET_URL} from '../../constants';
+import {SOCKET_URL} from '../../config/constants';
 import {ReservationModal} from '../reservation/reservation-modal';
 import {AppService} from '../../services/AppService';
 import {FloorService} from '../../services/FloorService';
@@ -33,14 +33,14 @@ declare var io: any;
         <h1 *ngIf="!editMode">
           {{ floor.floorName }}
           <span *ngIf="designMode">
-            <a (click)="switchEditMode()" class="button"><i class="fa fa-pencil"></i></a>
+            <a (click)="switchEditMode()" class="btn"><i class="fa fa-pencil"></i></a>
           </span>
         </h1>
         <div *ngIf="editMode" class="header">
           <form [ngFormModel]="editFloorNameForm">
             <input type="text" name="floorName" id="floorName" ngControl="floorName">
-            <button (click)="submitEditFloorNameForm($event)" type="submit" class="button"><i class="fa fa-check"></i></button>
-            <button (click)="cancelEditFloorNameForm($event)" class="button"><i class="fa fa-times"></i></button>
+            <button (click)="submitEditFloorNameForm($event)" type="submit" class="btn"><i class="fa fa-check"></i></button>
+            <button (click)="cancelEditFloorNameForm($event)" class="btn"><i class="fa fa-times"></i></button>
           </form>
         </div>
       </li>

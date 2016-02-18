@@ -10,7 +10,6 @@ import {AppService} from '../../services/AppService';
       <a (click)="hide()" class="pull-right hide-button">
         <i class="fa fa-times"></i>
       </a>
-      <a class="yes">Giggity</a>
       <div class="box text-center">
         <div class="inner">
           <div>
@@ -41,20 +40,22 @@ export class AppwideOverlay {
   }
 
   ngOnInit() {
-    this.observable
-      .connect();
-    this.observable
-      .subscribe(res => {
-        if (res.type === 'show') {
-          this.isPanelActive = true;
-          this.panelType = res.panelType;
-          this.message = res.message;
-          this.id = res.id;
-          setTimeout(() => {
-            this.isActive = true;
-          }, 100);
-        }
-      });
+    if (this.observable) {
+      this.observable
+        .connect();
+      this.observable
+        .subscribe(res => {
+          if (res.type === 'show') {
+            this.isPanelActive = true;
+            this.panelType = res.panelType;
+            this.message = res.message;
+            this.id = res.id;
+            setTimeout(() => {
+              this.isActive = true;
+            }, 100);
+          }
+        });
+    }
   }
 
   confirm(confirmation: boolean) {

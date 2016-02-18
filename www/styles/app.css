@@ -95,8 +95,18 @@ body {
   font-family: 'fira-sans',sans-serif;
   color: #506a78;
   display: none; }
-  body.platform-core, body.platform-cordova {
+  body.platform-core, body.platform-cordova, body.platform-mobile {
     display: block; }
+  body.platform-core {
+    position: relative;
+    overflow: auto; }
+    body.platform-core ion-app {
+      position: relative;
+      overflow: auto; }
+
+button {
+  overflow: hidden;
+  position: relative; }
 
 a {
   cursor: pointer;

@@ -74,7 +74,7 @@ gulp.task('clean', function(cb) {
 });
 
 gulp.task('copy', function() {
-  return gulp.src(['client/**/*.html', 'client/**/*.png', 'client/**/*.ttf', 'client/**/*.eot', 'client/**/*.woff', 'client/**/*.otf', 'client/**/*.svg', 'client/**/*.jpg', 'client/**/*.json', 'client/**/*.js', 'client/**/*.css'])
+  return gulp.src(['client/**/*.html', 'client/**/*.png', 'client/**/*.ttf', 'client/**/*.eot', 'client/**/*.woff', 'client/**/*.woff2', 'client/**/*.otf', 'client/**/*.svg', 'client/**/*.jpg', 'client/**/*.json', 'client/**/*.js', 'client/**/*.css'])
     .pipe(gulp.dest('dist'));
 });
 
@@ -98,7 +98,7 @@ gulp.task('test', function(done) {
 
 gulp.task('set-env', function(done) {
   var ENV = 'local';
-  return file('client/app/app.config.ts', 'export const ENV_URL: string = \'' + appConfig.env[ENV].url + '\';', { src: true })
+  return file('client/app/config/app.config.ts', 'export const ENV_URL: string = \'' + appConfig.env[ENV].url + '\';', { src: true })
     .pipe(gulp.dest('.'));
 });
 
@@ -125,7 +125,7 @@ gulp.task('cordova-copy', function(done) {
 });
 
 gulp.task('serve', function() {
-	gulp.watch([config.html, config.scss, config.allTs, 'client/**/*.json', '!client/app/app.config.js'], ['build']);
+	gulp.watch([config.html, config.scss, config.allTs, 'client/**/*.json', '!client/app/config/app.config.js'], ['build']);
 	gulp.watch([config.allTests], ['test']);
 	runSequence('build');
 

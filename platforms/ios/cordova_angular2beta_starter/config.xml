@@ -69,6 +69,8 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <allow-navigation href="http://*/*" />
+    <allow-navigation href="file://*/*" />
     <preference name="Fullscreen" value="True" />
     <preference name="KeepRunning" value="True" />
     <preference name="ShowTitle" value="True" />

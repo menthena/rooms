@@ -1,7 +1,7 @@
 import {Injectable} from 'angular2/core';
 import {Observable} from 'rxjs';
 import {Http, Response, Headers} from 'angular2/http';
-import {ENV_URL} from '../app.config';
+import {ENV_URL} from '../config/app.config';
 
 declare var _: any;
 

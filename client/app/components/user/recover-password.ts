@@ -1,7 +1,7 @@
 import {Component} from 'angular2/core';
 import {FormBuilder, NgForm, Validators, Control} from 'angular2/common';
 import {Router, RouterLink} from 'angular2/router';
-import {EMAIL_REGEX} from '../../constants';
+import {EMAIL_REGEX} from '../../config/constants';
 import {LoadingIndicator} from '../../directives/loading-indicator';
 import {UserService} from '../../services/UserService';
 import {UserValidators} from '../../validators/UserValidators';

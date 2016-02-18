@@ -1,10 +1,5 @@
 declare var System: any;
 
-System.config({
-  defaultJSExtensions: true,
-  transpiler: 'none'
-});
-
 function initialize(): void {
   initializeCordova();
 }
@@ -21,8 +16,10 @@ function initializeCordova(): void {
 }
 
 function onDeviceReady(): void {
-  System.import('app')
-    .catch((error: Object) => console.error('Error: index loading with System:', error.toString()));
+  System.import('config/app')
+    .catch((error: Object) => {
+      console.log(error, arguments);
+    });
 }
 
 initialize();

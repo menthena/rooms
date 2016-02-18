@@ -1,4 +1,4 @@
-import {EMAIL_REGEX} from '../constants';
+import {EMAIL_REGEX} from '../config/constants';
 import {Control} from 'angular2/common';
 
 export interface IUserValidators {

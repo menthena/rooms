@@ -97,6 +97,12 @@ body {
   display: none; }
   body.platform-core, body.platform-cordova {
     display: block; }
+  body.platform-core {
+    position: relative;
+    overflow: auto; }
+    body.platform-core ion-app {
+      position: relative;
+      overflow: auto; }
 
 a {
   cursor: pointer;

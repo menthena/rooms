@@ -54,7 +54,7 @@ h1, .header {
   margin-bottom: 0;
   font-size: 20px;
   margin-top: 20px; }
-  h1 a.button, .header a.button {
+  h1 a.btn, .header a.btn {
     font-size: 16px;
     margin-top: 0;
     margin-left: 10px; }
@@ -66,7 +66,7 @@ h1, .header {
       padding: 0px 5px;
       font-size: 16px;
       outline: none; }
-    h1 form .button, .header form .button {
+    h1 form .btn, .header form .btn {
       background: none;
       margin-left: 3px;
       font-size: 15px; }
@@ -81,7 +81,7 @@ h1, .header {
   padding: 5px 10px; }
 
 .inner {
-  background: url(../images/bg.png);
+  background: url(../../images/bg.png);
   position: relative;
   height: 387px;
   display: block; }

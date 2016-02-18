@@ -2,6 +2,9 @@
   <head>
     <title>Rooms</title>
     <base href="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
     <!-- build:css({.,client/app}) styles/vendor.css -->
     <link rel="stylesheet" href="vendor/font-awesome.min.css">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
@@ -19,10 +22,12 @@
     <!-- <script src="https://use.typekit.net/vly1fpc.js"></script> -->
     <!-- <script src="https://apis.google.com/js/client.js?onload=checkAuth"></script> -->
     <!-- build:js({.,client/app}) system.js -->
+    <script src="node_modules/traceur/bin/traceur.js"></script>
     <script src="node_modules/systemjs/dist/system.src.js"></script>
     <!-- endbuild -->
     <script>
     System.config({
+      baseURL: '',
       defaultJSExtensions: true,
       transpiler: 'none',
       paths: {
@@ -87,7 +92,7 @@
         }
       },
       packages: {
-        app: { format: 'register', defaultExtension: 'js' },
+        app: { defaultExtension: 'js' },
         rxjs: { defaultExtension: 'js' }
       }
     });

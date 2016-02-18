@@ -2,8 +2,8 @@ import {Injectable} from 'angular2/core';
 import {Http, Response, Headers} from 'angular2/http';
 import {Observable} from 'rxjs';
 import {FloorElementsService} from './FloorElementsService';
-import {DATE_FORMAT} from '../constants';
-import {ENV_URL} from '../app.config';
+import {DATE_FORMAT} from '../config/constants';
+import {ENV_URL} from '../config/app.config';
 
 declare var moment: any;
 declare var _: any;

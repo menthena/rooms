@@ -7,7 +7,7 @@
   font-size: 20px;
 }
 
-a.button {
+a.btn {
   @include transition(color);
   // background: $light-text-color;
   color: $light-text-color;
@@ -21,7 +21,7 @@ a.button {
   }
 }
 
-.button.add-floor {
+.btn.add-floor {
   @include transition(background);
   background: lighten($text-color, 10);
   color: #FFF;

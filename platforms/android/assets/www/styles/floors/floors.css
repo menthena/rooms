@@ -22,7 +22,7 @@
   margin-top: 28px;
   font-size: 20px; }
 
-a.button {
+a.btn {
   transition: color 0.15s ease-out;
   color: #a1b5c0;
   padding: 4px 5px 4px 6px;
@@ -30,17 +30,17 @@ a.button {
   font-size: 16px;
   display: inline-block;
   margin-top: 20px; }
-  a.button:hover {
+  a.btn:hover {
     color: #5a7887; }
 
-.button.add-floor {
+.btn.add-floor {
   transition: background 0.15s ease-out;
   background: #648597;
   color: #FFF;
   font-size: 16px;
   padding: 5px 9px 4px; }
-  .button.add-floor i {
+  .btn.add-floor i {
     padding-right: 5px; }
-  .button.add-floor:hover {
+  .btn.add-floor:hover {
     color: #FFF;
     background: #5a7887; }

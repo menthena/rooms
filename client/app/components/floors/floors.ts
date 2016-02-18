@@ -24,7 +24,7 @@ declare var _: any;
       </ion-segment>
     </div>
     <a *ngIf="designMode && floors && floors.length > 0" (click)="addFloor()"
-      class="add-floor button"><i class="fa fa-plus"></i> Add floor</a>
+      class="add-floor btn"><i class="fa fa-plus"></i> Add floor</a>
     <loading-indicator *ngIf="isLoading"></loading-indicator>
     <div *ngIf="floors">
       <div class="no-floor text-center" *ngIf="!isLoading && floors.length === 0">
@@ -35,13 +35,15 @@ declare var _: any;
       </div>
 
       <div *ngFor="#floor of floors">
-        <div *ngIf="designMode" class="pull-right">
-          <a (click)="changeOrder(floor.floorID, 'up')" *ngIf="floor.order > 0" class="button"><i class="fa fa-arrow-up"></i></a>
-          <a (click)="changeOrder(floor.floorID, 'down')" *ngIf="floor.order < floors.length - 1"
-            class="button"><i class="fa fa-arrow-down"></i></a>
-          <a (click)="showDeleteFloorConfirmation(floor.floorID)" class="button"><i class="fa fa-trash"></i></a>
+        <div *ngIf="!isIonic || (isIonic && floor && floor.floorID == selectedFloor)">
+          <div *ngIf="designMode" class="pull-right">
+            <a (click)="changeOrder(floor.floorID, 'up')" *ngIf="floor.order > 0" class="btn"><i class="fa fa-arrow-up"></i></a>
+            <a (click)="changeOrder(floor.floorID, 'down')" *ngIf="floor.order < floors.length - 1"
+              class="btn"><i class="fa fa-arrow-down"></i></a>
+            <a (click)="showDeleteFloorConfirmation(floor.floorID)" class="btn"><i class="fa fa-trash"></i></a>
+          </div>
+          <floor [floor]="floor"></floor>
         </div>
-        <floor [floor]="floor"></floor>
       </div>
     </div>
   `,
@@ -100,6 +102,9 @@ export class Floors {
           let floors = res.json().data;
           floors = _.sortBy(floors, 'order');
           this.floors = floors;
+          if (this.isIonic && this.floors.length > 0) {
+            this.selectedFloor = this.floors[0].floorID;
+          }
         }
       );
   }

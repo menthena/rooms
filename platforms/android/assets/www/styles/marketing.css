@@ -22,7 +22,22 @@
 
 .green-bar {
   background: #3ab791;
-  color: #FFF; }
+  color: #FFF;
+  width: 400px;
+  padding: 100px 90px;
+  border-radius: 0 0px 3px 0; }
+  .green-bar h2 {
+    margin-top: 30px; }
+  .green-bar .logo {
+    width: auto;
+    padding-left: 29px; }
+    .green-bar .logo:before {
+      left: 0; }
+
+.hero {
+  background-image: url(images/rooms.jpg);
+  background-size: cover;
+  height: calc(94% - 20px); }
 
 h2 {
   margin-top: 40px; }
@@ -83,3 +98,7 @@ p {
   font-size: 14px; }
   .or a {
     font-weight: bold; }
+
+footer {
+  padding: 24px 18px;
+  color: #a1b5c0; }

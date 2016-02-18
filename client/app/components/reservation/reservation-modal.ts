@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
 import {IFloorElement} from '../../services/FloorElementsService';
 import {TimePicker} from '../form/time-picker';
 import {Button} from '../form/button';
-import {DATE_ONLY_FORMAT, INTERVAL_DATA} from '../../constants';
+import {DATE_ONLY_FORMAT, INTERVAL_DATA} from '../../config/constants';
 import {IReservation, ReservationService} from '../../services/ReservationService';
 
 declare var jQuery: any;

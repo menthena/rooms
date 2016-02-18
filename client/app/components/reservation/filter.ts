@@ -4,7 +4,7 @@ import {FormBuilder, ControlGroup} from 'angular2/common';
 import {DatePicker} from '../form/date-picker';
 import {TimePicker} from '../form/time-picker';
 import {ReservationService} from '../../services/ReservationService';
-import {DURATION_DATA, DATE_FORMAT} from '../../constants';
+import {DURATION_DATA, DATE_FORMAT} from '../../config/constants';
 import {SelectMenu} from '../form/select-menu';
 import {Slider} from '../form/slider';
 import {FeatureList} from '../form/feature-list';

@@ -1,6 +1,6 @@
 import {Component, Attribute,  Input, OnInit, ElementRef, ChangeDetectorRef} from 'angular2/core';
 import {Observable} from 'rxjs';
-import {DATE_FORMAT} from '../../constants';
+import {DATE_FORMAT} from '../../config/constants';
 import {IFloorElement} from '../../services/FloorElementsService';
 import {IReservation, ReservationService} from '../../services/ReservationService';
 import {EditElement} from '../design/edit-element';

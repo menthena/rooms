@@ -1,7 +1,7 @@
 import {Component, Input} from 'angular2/core';
 import {RouterLink, Router, Location} from 'angular2/router';
 import {UserService} from '../../services/UserService';
-import {CLIENT_ID, SCOPES} from '../../constants';
+import {CLIENT_ID, SCOPES} from '../../config/constants';
 import {IONIC_DIRECTIVES, NavController, Modal} from 'ionic-framework/ionic';
 import {AppService} from '../../services/AppService';
 import {Filter} from '../reservation/filter';
@@ -14,9 +14,6 @@ declare var gapi: any;
   directives: [RouterLink, IONIC_DIRECTIVES],
   template: `
   <div *ngIf="isIonic && currentRoute !== 'index'">
-  <br><br>
-    <a (click)="qeqwq()">asdafa ae faf eaf<br>aeijeajf aijefij aef<br><br>aiefjiaefjiaea</a>
-
     <ion-tabs>
       <ion-tab tabIcon="water" tabTitle="Water" [root]="tab1"></ion-tab>
       <ion-tab tabIcon="leaf" tabTitle="Life" [root]="tab2"></ion-tab>

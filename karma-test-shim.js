@@ -20,21 +20,20 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000;
 __karma__.loaded = function() {};
 
 System.config({
-  transpiler: 'none',
-  // paths: {
-  //   'rxjs': 'base/node_modules/rxjs/rx.js',
-  //   'rxjs/*': 'base/node_modules/rxjs/*.js',
-  //   'rxjs/add/*': 'base/node_modules/rxjs/add/*.js',
-  //   'rxjs/add/operator/*': 'base/node_modules/rxjs/add/operator/*.js',
-  //   'rxjs/add/subject/*': 'base/node_modules/rxjs/add/subject/*.js',
-  //   'rxjs/add/util/*': 'base/node_modules/rxjs/add/util/*.js',
-  // },
+  baseURL: '/base/',
+  defaultJSExtensions: true,
   paths: {
-    'styles/*.css': 'base/dist/app/styles/*.css'
+    'angular2/*': 'node_modules/angular2/*.js',
+    'rxjs/*': 'node_modules/rxjs/*.js',
+    'rxjs': 'node_modules/rxjs/bundles/Rx.min.js',
+    // 'dist/app/*': 'base/dist/app/*.js',
+    'styles/*.css': 'dist/app/styles/*.css',
+    'client': 'dist',
+    // 'ionic-framework/*': 'node_modules/ionic-framework/bundles/*.js'
   },
   map: {
     'ionic-framework': 'ionic',
-    rxjs: 'base/client/app/vendor/rx',
+    // rxjs: 'base/node_modules/rxjs',
   },
 
   packages: {
@@ -44,28 +43,10 @@ System.config({
     //
     // },
 
-    'base/dist/app/': {
-      defaultJSExtensions: true
-    },
-    'base/client/app': {
-      defaultExtension: false,
-      format: 'register',
-      map: Object.keys(window.__karma__.files).
-            filter(onlyAppFiles).
-            reduce(function createPathRecords(pathsMapping, appPath) {
-              // creates local module name mapping to global path with karma's fingerprint in path, e.g.:
-              // './hero.service': '/base/src/app/hero.service.js?f4523daf879cfb7310ef6242682ccf10b2041b3e'
-              var moduleName = appPath.replace(/^\/base\/dist\/app\//, './').replace(/\.js$/, '');
-              if (moduleName.indexOf('.css') > - 1) {
-                // moduleName = moduleName.substring(2);
-              }
-              pathsMapping[moduleName] = appPath + '?' + window.__karma__.files[appPath];
-              // console.log(moduleName, pathsMapping[moduleName]);
-              return pathsMapping;
-            }, {})
-
-      }
-    }
+    // 'dist/app/': {
+      // defaultJSExtensions: true
+    // }
+  }
 });
 
 Promise.all([
@@ -85,9 +66,7 @@ Promise.all([
     Object.keys(window.__karma__.files) // All files served by Karma.
     .filter(onlySpecFiles)
     .map(function(path) {
-      console.log(path);
       return System.import(path).then(function(module) {
-        console.log(module);
         if (module.hasOwnProperty('main')) {
           module.main();
         } else {

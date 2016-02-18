@@ -8,9 +8,22 @@ body {
   font-family: 'fira-sans',sans-serif;
   color: $text-color;
   display: none;
-  &.platform-core, &.platform-cordova {
+  &.platform-core, &.platform-cordova, &.platform-mobile {
     display: block;
   }
+  &.platform-core {
+    position: relative;
+    overflow: auto;
+    ion-app {
+      position: relative;
+      overflow: auto;
+    }
+  }
+}
+
+button {
+  overflow: hidden;
+  position: relative;
 }
 
 a {

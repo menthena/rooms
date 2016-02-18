@@ -14,7 +14,7 @@ import {RouterLink, Router} from 'angular2/router';
         <div class="logo">Rooms</div>
         <h2>A quick way to reserve rooms</h2>
         <a [routerLink]="['/Register']">
-          <button light outline>Register now</button>
+          <button light [ngClass]="{'button-outline button-outline-light': !isAndroid}">Register now</button>
         </a>
         <div class="or">
           or kindly login by clicking <a [routerLink]="['/Login']">here</a>
@@ -26,7 +26,7 @@ import {RouterLink, Router} from 'angular2/router';
           <i class="fa fa-tablet"></i> <i class="fa fa-desktop"></i> <i class="fa fa-mobile"></i>
         </div>
         <h2>Real-time reservation</h2>
-        <p>Reserve a room on any platform and will be reflected to every user's UI.</p>
+        <p>Reserve a room on any platform and will be reflected to every user's UI within a milli-second.</p>
       </ion-slide>
 
       <ion-slide class="slide-3">
@@ -61,7 +61,9 @@ import {RouterLink, Router} from 'angular2/router';
 
 export class MarketingIndex {
   isIonic: boolean;
+  isAndroid: boolean;
   constructor(private AppService: AppService) {
     this.isIonic = this.AppService.isIonic;
+    this.isAndroid = this.AppService.isAndroid;
   }
 }
