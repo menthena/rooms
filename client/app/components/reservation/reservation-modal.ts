@@ -1,9 +1,9 @@
 import {Component,   Input, OnInit,
-  ElementRef, ViewEncapsulation} from 'angular2/core';
-import {Validators, FormBuilder} from 'angular2/common';
+  ElementRef, ViewEncapsulation} from '@angular/core';
+import {Validators, FormBuilder} from '@angular/forms';
 import {DatePicker} from '../form/date-picker';
 import {SelectMenu} from '../form/select-menu';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Rx';
 import {IFloorElement} from '../../services/FloorElementsService';
 import {TimePicker} from '../form/time-picker';
 import {Button} from '../form/button';
@@ -15,12 +15,10 @@ declare var moment: any;
 
 @Component({
   selector: 'reservation-modal',
-  directives: [DatePicker, SelectMenu, Button, TimePicker],
   styleUrls: ['styles/reservation-modal.css'],
   encapsulation: ViewEncapsulation.None,
-  inputs: ['data', 'formData', 'activeReservation'],
   template: `
-    <div class="wrapper">
+    <div class="wrapper" [ngClass]="{'active': isActive}">
       <div class="booking" *ngIf="reserveID === data.elementID" [ngClass]="{'active': isActive, 'submitting': isSubmitting}">
         <form [ngFormModel]="reserveForm" (submit)="submitReservationForm($event)">
           <div *ngIf="!activeReservation">
@@ -78,7 +76,7 @@ declare var moment: any;
             <div class="col-xs-6">
               <label for="from">Interval</label>
               <select controlName="interval" [formModel]="reserveForm" name="interval" id="interval" select-menu>
-                <option *ngFor="#item of intervalData" value="{{ item.value }}">{{ item.text }}</option>
+                <option *ngFor="let item of intervalData" value="{{ item.value }}">{{ item.text }}</option>
               </select>
             </div>
 
@@ -101,6 +99,7 @@ declare var moment: any;
 
 export class ReservationModal implements OnInit {
   @Input() data: IFloorElement;
+  @Input() containment: any;
   @Input() activeReservation: IReservation;
   reserveID: string;
   isActive: boolean;

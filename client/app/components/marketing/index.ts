@@ -1,53 +1,23 @@
-import {Component} from 'angular2/core';
-import {IONIC_DIRECTIVES} from 'ionic-framework/ionic';
+import {Component, Optional} from '@angular/core';
 import {AppService} from '../../services/AppService';
-import {RouterLink, Router} from 'angular2/router';
+import {RouterLink, Router} from '@angular/router';
+import {LoginPage} from '../user/login-page';
+import {RegisterPage} from '../user/register-page';
 
 @Component({
   selector: 'marketing-index',
-  providers: [AppService],
   styleUrls: ['styles/marketing.css'],
   template: `
-  <div *ngIf="isIonic">
-    <ion-slides pager loop="true" autoplay="true">
-      <ion-slide class="slide-1">
-        <div class="logo">Rooms</div>
-        <h2>A quick way to reserve rooms</h2>
-        <a [routerLink]="['/Register']">
-          <button light [ngClass]="{'button-outline button-outline-light': !isAndroid}">Register now</button>
-        </a>
-        <div class="or">
-          or kindly login by clicking <a [routerLink]="['/Login']">here</a>
-        </div>
-      </ion-slide>
-
-      <ion-slide class="slide-2">
-        <div class="icons">
-          <i class="fa fa-tablet"></i> <i class="fa fa-desktop"></i> <i class="fa fa-mobile"></i>
-        </div>
-        <h2>Real-time reservation</h2>
-        <p>Reserve a room on any platform and will be reflected to every user's UI within a milli-second.</p>
-      </ion-slide>
-
-      <ion-slide class="slide-3">
-        <div class="icons">
-          <i class="fa fa-repeat"></i> <i class="fa fa-calendar-o"></i>
-        </div>
-        <h2>Recurring reservations</h2>
-        <p>You can reserve a room daily or weekly basis. </p>
-      </ion-slide>
-    </ion-slides>
-  </div>
   <div *ngIf="!isIonic">
     <div class="hero">
       <div class="green-bar">
         <div class="logo">Rooms</div>
         <h2>A quick way to reserve rooms</h2>
-        <a [routerLink]="['/Register']">
-          <button light outline>Register now</button>
+        <a [routerLink]="['/register']" class="btn">
+          Register now
         </a>
         <div class="or">
-          or kindly login by clicking <a [routerLink]="['/Login']">here</a>
+          or kindly login by clicking <a [routerLink]="['/login']">here</a>
         </div>
       </div>
     </div>
@@ -55,15 +25,20 @@ import {RouterLink, Router} from 'angular2/router';
       Copyright © 2016
     </footer>
   </div>
-`,
-  directives: [RouterLink, IONIC_DIRECTIVES]
+`
 })
 
 export class MarketingIndex {
   isIonic: boolean;
   isAndroid: boolean;
+  sliderOptions: any;
+
   constructor(private AppService: AppService) {
     this.isIonic = this.AppService.isIonic;
     this.isAndroid = this.AppService.isAndroid;
+    this.sliderOptions = {
+      loop: true
+    };
   }
+
 }

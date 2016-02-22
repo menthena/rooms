@@ -1,5 +1,5 @@
-import {Component} from 'angular2/core';
-import {RouterLink} from 'angular2/router';
+import {Component} from '@angular/core';
+import {RouterLink} from '@angular/router';
 import {DesignService} from '../../services/DesignService';
 import {ReservationService} from '../../services/ReservationService';
 import {FloorElementsService} from '../../services/FloorElementsService';

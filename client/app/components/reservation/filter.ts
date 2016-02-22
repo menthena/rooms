@@ -1,15 +1,16 @@
 import {Component, OnInit, ElementRef, ViewEncapsulation, Output,
-  OnChanges, EventEmitter} from 'angular2/core';
-import {FormBuilder, ControlGroup} from 'angular2/common';
+  OnChanges, EventEmitter} from '@angular/core';
+import {FormBuilder, ControlGroup} from '@angular/common';
 import {DatePicker} from '../form/date-picker';
 import {TimePicker} from '../form/time-picker';
 import {ReservationService} from '../../services/ReservationService';
+import {AppService} from '../../services/AppService';
 import {DURATION_DATA, DATE_FORMAT} from '../../config/constants';
 import {SelectMenu} from '../form/select-menu';
 import {Slider} from '../form/slider';
 import {FeatureList} from '../form/feature-list';
 import {Button} from '../form/button';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Rx';
 
 declare var jQuery:any;
 declare var moment:any;
@@ -20,9 +21,9 @@ declare var moment:any;
   // TODO:
   // outputs: ['form'],
   template: `
-  <div class="filter">
+  <div class="filter" [class.container]="isIonic">
     <form [ngFormModel]="filterForm" (ngSubmit)="submitFilterForm($event)">
-      <h1>Reserve a room</h1>
+      <h1 *ngIf="!isIonic">Reserve a room</h1>
 
       <ul class="list-unstyled row">
         <li class="col-sm-12 col-xs-6 with-icon">
@@ -45,7 +46,7 @@ declare var moment:any;
             <label for="duration">Duration</label>
             <input type="hidden" id="duration" name="duration" ngControl="duration" value="">
             <select controlName="duration" [formModel]="filterForm" name="duration" id="duration" select-menu>
-              <option *ngFor="#item of durationData" value="{{ item.value }}">{{ item.text }}</option>
+              <option *ngFor="let item of durationData" value="{{ item.value }}">{{ item.text }}</option>
             </select>
           </div>
         </li>
@@ -77,9 +78,13 @@ export class Filter implements OnInit, OnChanges {
   timeData: any;
   time: any;
   today: any;
+  isIonic: any;
   @Output() form = new EventEmitter();
 
-  constructor(private fb: FormBuilder, private ReservationService: ReservationService) {
+  constructor(private fb: FormBuilder, private ReservationService: ReservationService,
+    private AppService: AppService
+  ) {
+    this.isIonic = this.AppService.isIonic;
     this.durationData = DURATION_DATA;
     this.updateTime();
     Observable.timer(6000, 6000)

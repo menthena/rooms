@@ -71,6 +71,4 @@
     }
   ];
 
-  export const SOCKET_URL = 'http://localhost:5555';
-
-
+  export const SOCKET_URL = 'ws://room-be.herokuapp.com';

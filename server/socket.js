@@ -1,9 +1,16 @@
 'use strict';
 
-var io = require('socket.io').listen(5555);
+var WebSocketServer = require('ws').Server;
+var config = require('./config/environment');
 
-io.sockets.on('connection', function (socket) {
-  socket.emit('message', 'hello');
-});
+module.exports = function(server) {
+  if (server) {
+    var io = new WebSocketServer({server: server})
 
-module.exports = io;
+    io.on('connection', function (socket) {
+      config.socket = socket;
+    });
+
+    return io.clients;
+  }
+};

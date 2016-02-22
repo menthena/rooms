@@ -5,7 +5,7 @@ module.exports = {
   entry: [
     path.normalize('es6-shim/es6-shim.min'),
     'reflect-metadata',
-    'web-animations.min',
+    // 'web-animations.min',
     path.normalize('zone.js/dist/zone-microtask')
   ],
   output: {
@@ -17,7 +17,7 @@ module.exports = {
     noParse: [
       /es6-shim/,
       /reflect-metadata/,
-      /web-animations/,
+      // /web-animations/,
       /zone\.js(\/|\\)dist(\/|\\)zone-microtask/
     ]
   },
@@ -27,8 +27,8 @@ module.exports = {
     ],
     alias: {
       'angular2': path.resolve('node_modules/angular2'),
-      'ionic': 'ionic-framework',
-      'web-animations.min': path.normalize('ionic-framework/js/web-animations.min')
+      'ionic': 'ionic-framework'
+      // 'web-animations.min': path.normalize('ionic-framework/js/web-animations.min')
     },
     extensions: ['', '.js']
   }

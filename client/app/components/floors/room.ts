@@ -1,5 +1,5 @@
-import {Component, Attribute,  Input, OnInit, ElementRef, ChangeDetectorRef} from 'angular2/core';
-import {Observable} from 'rxjs';
+import {Component, Attribute,  Input, OnInit, ElementRef, ChangeDetectorRef} from '@angular/core';
+import {Observable} from 'rxjs/Rx';
 import {DATE_FORMAT} from '../../config/constants';
 import {IFloorElement} from '../../services/FloorElementsService';
 import {IReservation, ReservationService} from '../../services/ReservationService';
@@ -18,9 +18,6 @@ declare var _:any;
 
 @Component({
   selector: 'room',
-  directives: [ Resizable, Draggable, EditElement, PlaceElement,
-    ReservationModal, EditElement, Popover],
-  inputs: ['data', 'designMode'],
   styleUrls: ['styles/floors/room.css', 'styles/common/controls.css'],
   template: `
     <div class="wrapper control" resizable-element draggable-element
@@ -31,7 +28,7 @@ declare var _:any;
         *ngIf="!designMode"
         [activeReservation]="activeReservation"
         [data]="data"
-        place-element [place-type]="'modal'"></reservation-modal>
+        place-element [placeType]="'modal'"></reservation-modal>
       <edit-element *ngIf="designMode" place-element place-type="modal" [data]="data"></edit-element>
       <popover [data]="data" [reservations]="reservations"
         (edit-reservation)="handleEditReservation()"
@@ -45,21 +42,19 @@ declare var _:any;
           </div>
           <div *ngIf="!designMode && isActive && isMatch">
             <div class="features pull-left">
-              <span><i class="fa fa-user"></i> {{ data.capacity }}</span>
+              <span class="capacity"><i class="fa fa-user"></i> <span>{{ data.capacity }}</span></span>
               <span><i class="fa fa-television" *ngIf="data.features && data.features.indexOf('tv') > -1"></i></span>
               <span><i class="fa fa-phone" *ngIf="data.features && data.features.indexOf('phone') > -1"></i></span>
             </div>
             <div class="book pull-right hidden-xs">
               <i class="fa fa-plus-square"></i>
             </div>
-            <i class="visible-xs fa fa-plus-square"></i>
+            <i class="visible-xs fa fa-plus-square pull-right"></i>
           </div>
           <div *ngIf="!designMode && !isActive" class="reserved">
-            <i class="visible-xs fa fa-ban"></i>
             <span>Reserved</span>
           </div>
           <div *ngIf="!designMode && isActive && !isMatch" class="reserved">
-            <i class="visible-xs fa fa-filter"></i>
             <span>Not a match</span>
           </div>
         </div>
@@ -70,7 +65,8 @@ declare var _:any;
 
 export class Room implements OnInit {
   @Input() data: IFloorElement;
-  reservations: Array<IReservation>;
+  @Input() reservations: Array<IReservation>;
+  @Input() filter: any;
   activeReservation: IReservation;
   floorElementsObservable;
   designMode: boolean;
@@ -131,7 +127,7 @@ export class Room implements OnInit {
     this.isMatch = true;
     this.isActive = true;
     this.activeReservation = undefined;
-    if (!this.designMode && this.filter) {
+    if (Observable && !this.designMode && this.filter) {
       Observable.fromArray(this.reservations)
         .filter(res => {
           return res.elementID === this.data.elementID;
@@ -147,14 +143,12 @@ export class Room implements OnInit {
           this.getActiveReservation(res);
           this.isActive = false;
         });
-
-      if (this.filter.capacity < this.data.capacity) {
+      if (this.filter.capacity > this.data.capacity) {
         this.isMatch = false;
       }
       if (this.filter.features) {
         this.filter.features.map((res) => {
           if (this.data.features.indexOf(res) === -1) {
-            console.log(res);
             this.isMatch = false;
           }
         });
@@ -170,8 +164,10 @@ export class Room implements OnInit {
   }
 
   ngOnDestroy() {
-    this.filterSubscription.unsubscribe();
-    this.reservationSubscriber.unsubscribe();
+    if (this.filterSubscription && this.reservationSubscriber) {
+      this.filterSubscription.unsubscribe();
+      this.reservationSubscriber.unsubscribe();
+    }
   }
 
   ngOnInit() {
@@ -181,23 +177,29 @@ export class Room implements OnInit {
     if (!this.reservationObserver.subscription) {
       this.reservationObserver.connect();
     }
-    this.filterSubscription = this.reservationFilterObserver
-      .subscribe(res => {
-        this.filter = this.ReservationService.filter;
-        this.checkAvailability();
-      });
-    this.reservations = this.ReservationService.reservations;
-    this.filter = this.ReservationService.filter;
-    this.checkAvailability();
-    this.reservationSubscriber = this.reservationObserver
-      .subscribe(res => {
-        if (res === undefined) {
-          this.reservationModalOpened = false;
-        }
-        if (res && res.type) {
-          this.reservations = res.data;
+    if (this.reservationFilterObserver) {
+      this.filterSubscription = this.reservationFilterObserver
+        .subscribe(res => {
+          this.filter = this.ReservationService.filter;
           this.checkAvailability();
-        }
+        });
+    }
+    if (this.ReservationService.reservations) {
+      this.reservations = this.ReservationService.reservations;
+    }
+    if (!this.filter && this.ReservationService.filter) {
+      this.filter = this.ReservationService.filter;
+    }
+    this.checkAvailability();
+    if (this.reservationObserver) {
+      this.reservationSubscriber = this.reservationObserver
+        .subscribe(res => {
+          if (res === undefined) {
+            this.reservationModalOpened = false;
+          }
+          this.reservations = this.ReservationService.reservations;
+          this.checkAvailability();
       });
+    }
   }
 }

@@ -7,15 +7,15 @@ var models = require('../models');
 var floor = models.floor;
 var middleware = require('../middleware');
 var floorElement = models.floorElement;
-var io = require('../../socket');
+var config = require('../../config/environment');
+var io = config.socket;
 
 router.get('/', middleware.requiresUser, function(req, res) {
   var sendResponse = function(err, floors) {
     res.send({ data: floors });
     res.end();
   };
-
-  floor.find({}).exec(sendResponse);
+  floor.find({ companyID: req.user.companyID }).exec(sendResponse);
 });
 
 router.get('/:id/elements', middleware.requiresUser, function(req, res) {
@@ -42,7 +42,9 @@ router.post('/:id/elements', middleware.requiresUser, function(req, res) {
           res.send({ message: 'Bad request'});
         }
         else {
-          io.sockets.emit('elements', floorElement);
+          _.each(config.clients, function(socket) {
+            socket.send('elements-' + JSON.stringify(floorElement));
+          });
           res.status(201).send({ data: floorElement });
         }
       });
@@ -64,7 +66,9 @@ router.patch('/:id/elements/:elementID', middleware.requiresUser, function(req, 
           res.status(422);
           res.send({ message: 'Bad request'});
         } else {
-          io.sockets.emit('elements', element);
+          _.each(config.clients, function(socket) {
+            socket.send('elements-' + JSON.stringify(element));
+          });
           res.send({ data: element });
         }
       });
@@ -128,6 +132,7 @@ router.put('/change-order', function(req, res) {
 
 router.post('/', middleware.requiresUser, function(req, res) {
   var newFloor = req.body;
+  newFloor.companyID = req.user.companyID;
   floor.count({}, function(err) {
     if (err) {
       res.status(422);
@@ -145,7 +150,7 @@ router.post('/', middleware.requiresUser, function(req, res) {
               res.send({ message: 'Bad request'});
             }
             else {
-              floor.find({}, function(err, floors) {
+              floor.find({companyID: req.user.companyID}, function(err, floors) {
                 if (err) {
                   res.status(422);
                   res.send({ message: 'Bad request'});

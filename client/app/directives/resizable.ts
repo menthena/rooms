@@ -1,7 +1,7 @@
-import {Directive, OnInit, ElementRef, Input, Injectable} from 'angular2/core';
+import {Directive, OnInit, ElementRef, Input, Injectable} from '@angular/core';
 import {DesignService} from '../services/DesignService';
 import {IFloorElement, FloorElementsService} from '../services/FloorElementsService';
-import {Observable} from 'rxjs';
+import {Observable} from 'rxjs/Rx';
 
 declare var jQuery: any;
 

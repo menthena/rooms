@@ -8,7 +8,6 @@ body {
   background: $background-color;
   font-family: 'fira-sans',sans-serif;
   color: $text-color;
-  display: none;
   &.platform-core, &.platform-cordova, &.platform-mobile {
     display: block;
   }
@@ -25,6 +24,10 @@ body {
 button {
   overflow: hidden;
   position: relative;
+}
+
+floors .inner {
+  background: url(../images/bg.png);
 }
 
 a {

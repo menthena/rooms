@@ -1,26 +1,32 @@
-import {Component} from 'angular2/core';
-import {FormBuilder, NgForm, Validators, Control} from 'angular2/common';
-import {Router, RouterLink} from 'angular2/router';
+import {Component} from '@angular/core';
+import {FormBuilder, NgForm, Validators} from '@angular/forms';
+import {Router, RouterLink} from '@angular/router';
 import {EMAIL_REGEX} from '../../config/constants';
 import {LoadingIndicator} from '../../directives/loading-indicator';
 import {UserService} from '../../services/UserService';
 import {AppService} from '../../services/AppService';
 import {UserValidators} from '../../validators/UserValidators';
-import {IONIC_DIRECTIVES} from 'ionic-framework/ionic';
 
 @Component({
   selector: 'register',
-  directives: [NgForm, LoadingIndicator, RouterLink, IONIC_DIRECTIVES],
   styleUrls: ['styles/common/generic-form.css'],
   template: `
-  <ion-content>
-    <div class="generic-form" [ngClass]="{'animated slideInRight': isIonic}">
-      <form [ngFormModel]="registerForm" (ngSubmit)="submitLoginForm($event)" novalidate>
+    <div class="generic-form">
+      <form #registerForm="ngForm" (ngSubmit)="submitLoginForm($event)" novalidate>
         <fieldset>
-          <legend>Register</legend>
+          <legend *ngIf="!isIonic">Register</legend>
           <div class="white-bg">
             <div class="server-err" [class.active]="error">
               <i class="fa fa-exclamation-circle"></i> {{ error }}
+            </div>
+
+            <div class="input-group" *ngIf="companyName">
+              <label for="companyName">
+                Company name
+              </label>
+              <div>
+                {{ companyName }}
+              </div>
             </div>
 
             <div class="input-group">
@@ -36,7 +42,7 @@ import {IONIC_DIRECTIVES} from 'ionic-framework/ionic';
               </div>
             </div>
 
-            <div class="input-group">
+            <div class="input-group" *ngIf="!companyID">
               <label for="companyName">
                 Company name
               </label>
@@ -105,7 +111,8 @@ import {IONIC_DIRECTIVES} from 'ionic-framework/ionic';
               </div>
             </div>
             <div class="buttons">
-              <button class="btn" [class.submitting]="submitting">
+              <button class="btn" [class.submitting]="submitting && !isIonic"
+                [class.submitting-ionic]="submitting && isIonic">
                 <span>Register</span>
               </button>
             </div>
@@ -113,24 +120,30 @@ import {IONIC_DIRECTIVES} from 'ionic-framework/ionic';
         </fieldset>
       </form>
     </div>
-  </ion-content>
   `
 })
 
 export class Register {
-  registerForm;
+  registerForm: NgForm;
   submitted: boolean;
   success: boolean;
   isIonic: boolean;
   submitting: boolean;
   error: string;
+  companyID: string;
+  companyName: string;
 
   constructor(private fb: FormBuilder, private router: Router, private UserService: UserService,
     private UserValidators: UserValidators, private AppService: AppService) {
+    let isCompanyRequired = Validators.required;
+    // this.companyID = this.routeParams.params.id;
+    if (this.companyID) {
+      isCompanyRequired = undefined;
+    }
     this.isIonic = this.AppService.isIonic;
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
-      companyName: ['', Validators.required],
+      companyName: ['', isCompanyRequired],
       email: ['', this.UserValidators.EmailValidator],
       reemail: ['', (control: any) : Object => {
         if (!control.value) {
@@ -147,6 +160,16 @@ export class Register {
     });
   }
 
+  ngOnInit() {
+    if (this.companyID) {
+      this.UserService.getCompany(this.companyID)
+        .subscribe((res) => {
+          let company = res.json().data;
+          this.companyName = company.companyName;
+        });
+    }
+  }
+
   submitLoginForm() {
     let register = this.registerForm.value;
     this.submitted = true;
@@ -156,7 +179,8 @@ export class Register {
         companyName: register.companyName,
         name: register.name,
         email: register.email,
-        password: register.password
+        password: register.password,
+        companyID: this.companyID
       }).subscribe((res) => {
           setTimeout(() => {
             this.submitting = false;

@@ -1,12 +1,11 @@
-import {Component, OnInit, ViewEncapsulation} from 'angular2/core';
-import {Router} from 'angular2/router';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Router} from '@angular/router';
 import {DesignTools} from './design-tools';
 import {Floors} from '../floors/floors';
 import {DesignService} from '../../services/DesignService';
 import {UserService} from '../../services/UserService';
 
 @Component({
-  directives: [DesignTools, Floors],
   encapsulation: ViewEncapsulation.None,
   selector: 'design',
   template: `

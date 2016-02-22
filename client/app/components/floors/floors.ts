@@ -1,52 +1,39 @@
-import {Component, OnInit} from 'angular2/core';
-import {Observable} from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {Observable} from 'rxjs/Rx';
 import {FloorService, IFloor} from '../../services/FloorService';
 import {AppService} from '../../services/AppService';
 import {ReservationService} from '../../services/ReservationService';
 import {DesignService} from '../../services/DesignService';
 import {Floor} from './floor';
 import {LoadingIndicator} from '../../directives/loading-indicator';
-import {IONIC_DIRECTIVES} from 'ionic-framework/ionic';
 
 declare var _: any;
 
 @Component({
   selector: 'floors',
-  directives: [Floor, LoadingIndicator, IONIC_DIRECTIVES],
   template: `
-    <div *ngIf="isIonic">
-      <ion-segment>
-       <ion-segment-button *ngFor="#floor of floors"
-        [ngClass]="{'segment-activated': floor.floorID === selectedFloor}"
-        (click)="changeSelectedFloor(floor.floorID)">
-         {{ floor.floorName }}
-       </ion-segment-button>
-      </ion-segment>
-    </div>
-    <a *ngIf="designMode && floors && floors.length > 0" (click)="addFloor()"
-      class="add-floor btn"><i class="fa fa-plus"></i> Add floor</a>
-    <loading-indicator *ngIf="isLoading"></loading-indicator>
-    <div *ngIf="floors">
-      <div class="no-floor text-center" *ngIf="!isLoading && floors.length === 0">
-        <div>
-          No floors, why don't you add one?
-        </div>
-        <a *ngIf="designMode" (click)="addFloor()"><i class="fa fa-plus"></i> Add floor</a>
-      </div>
-      <ion-scroll scrollX="true">
-        <div *ngFor="#floor of floors">
-          <div *ngIf="!isIonic || (isIonic && floor && floor.floorID == selectedFloor)">
-            <div *ngIf="designMode" class="pull-right">
-              <a (click)="changeOrder(floor.floorID, 'up')" *ngIf="floor.order > 0" class="btn"><i class="fa fa-arrow-up"></i></a>
-              <a (click)="changeOrder(floor.floorID, 'down')" *ngIf="floor.order < floors.length - 1"
-                class="btn"><i class="fa fa-arrow-down"></i></a>
-              <a (click)="showDeleteFloorConfirmation(floor.floorID)" class="btn"><i class="fa fa-trash"></i></a>
+        <a *ngIf="designMode && floors && floors.length > 0" (click)="addFloor()"
+          class="add-floor btn"><i class="fa fa-plus"></i> Add floor</a>
+        <loading-indicator *ngIf="isLoading"></loading-indicator>
+        <div *ngIf="floors">
+          <div class="no-floor text-center" *ngIf="!isLoading && floors.length === 0">
+            <div>
+              No floors, why don't you add one?
             </div>
-            <floor [floor]="floor"></floor>
+            <a *ngIf="designMode" (click)="addFloor()"><i class="fa fa-plus"></i> Add floor</a>
           </div>
+            <div *ngFor="let floor of floors">
+              <div *ngIf="!isIonic || (isIonic && floor && floor.floorID == selectedFloor)">
+                <div *ngIf="designMode" class="pull-right">
+                  <a (click)="changeOrder(floor.floorID, 'up')" *ngIf="floor.order > 0" class="btn"><i class="fa fa-arrow-up"></i></a>
+                  <a (click)="changeOrder(floor.floorID, 'down')" *ngIf="floor.order < floors.length - 1"
+                    class="btn"><i class="fa fa-arrow-down"></i></a>
+                  <a (click)="showDeleteFloorConfirmation(floor.floorID)" class="btn"><i class="fa fa-trash"></i></a>
+                </div>
+                <floor [floor]="floor"></floor>
+              </div>
+            </div>
         </div>
-      </ion-scroll>
-    </div>
   `,
   styleUrls: ['styles/floors/floors.css']
 })
@@ -106,6 +93,9 @@ export class Floors {
           if (this.isIonic && this.floors.length > 0) {
             this.selectedFloor = this.floors[0].floorID;
           }
+        },
+        () => {
+          console.log('a');
         }
       );
   }

@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, ElementRef,
-  ViewEncapsulation} from 'angular2/core';
-import {Observable} from 'rxjs';
-import {Validators, FormBuilder} from 'angular2/common';
+  ViewEncapsulation} from '@angular/core';
+import {Observable} from 'rxjs/Rx';
+import {Validators, FormBuilder} from '@angular/forms';
 import {IFloorElement} from '../../services/FloorElementsService';
 import {DesignService} from '../../services/DesignService';
 import {FloorElementsService} from '../../services/FloorElementsService';
@@ -12,7 +12,6 @@ declare var jQuery: any;
 
 @Component({
   selector: 'edit-element',
-  directives: [Slider, FeatureList],
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['styles/edit-element.css'],
   inputs: ['data'],
@@ -20,7 +19,7 @@ declare var jQuery: any;
     <div class="wrapper">
       <div class="edit-element" *ngIf="editID === data.elementID"
       [ngClass]="{'active': isActive, 'submitting': isSubmitting, 'element-placeholder': data.elementType === 'placeholder'}">
-        <form [ngFormModel]="editForm" (ngSubmit)="submitEditForm($event)">
+        <form #editForm="ngForm" (ngSubmit)="submitEditForm($event)">
           <div class="heading">
             Edit
           </div>

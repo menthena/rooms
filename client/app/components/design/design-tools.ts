@@ -1,10 +1,9 @@
-import {Component, OnInit, ElementRef, ViewEncapsulation} from 'angular2/core';
+import {Component, OnInit, ElementRef, ViewEncapsulation} from '@angular/core';
 import {Draggable} from '../../directives/draggable';
 import {Scrollable} from '../../directives/scrollable';
 
 
 @Component({
-  directives: [Draggable, Scrollable],
   selector: 'design-tools',
   template: `
   <div class="wrapper">

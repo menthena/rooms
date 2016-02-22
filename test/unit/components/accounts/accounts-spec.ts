@@ -1,7 +1,7 @@
 /// <reference path="../../../../typings/tsd.d.ts" />
 /// <reference path="../../../../node_modules/angular2/typings/browser.d.ts" />
 import {MOCK_PROVIDERS} from '../../mockApp';
-import {Component, provide, Directive} from 'angular2/core';
+import {Component, provide, Directive} from '@angular/core';
 import {Accounts} from 'components/accounts/accounts';
 
 import {
@@ -30,6 +30,7 @@ export function main() {
       return tcb.createAsync(Accounts).then((fixture) => {
         let redirected = false;
         fixture.componentInstance.isLogged = false;
+        // Inline Provider instance Mocking
         fixture.componentInstance.router = {
           navigate() {
             redirected = true;
@@ -43,7 +44,6 @@ export function main() {
     it('should bind data to the view after the data is loaded',
       injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
       return tcb.createAsync(Accounts).then((fixture) => {
-        let redirected = false;
         fixture.componentInstance.isLogged = true;
         fixture.componentInstance.isLoading = false;
         fixture.componentInstance.isIonic = false;

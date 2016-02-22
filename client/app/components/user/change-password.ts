@@ -1,17 +1,16 @@
-import {Component} from 'angular2/core';
-import {FormBuilder, NgForm, Validators, Control} from 'angular2/common';
-import {Router, RouterLink, RouteParams} from 'angular2/router';
+import {Component} from '@angular/core';
+import {FormBuilder, NgForm, Validators} from '@angular/forms';
+import {Router, RouterLink} from '@angular/router';
 import {LoadingIndicator} from '../../directives/loading-indicator';
 import {UserValidators} from '../../validators/UserValidators';
 import {UserService} from '../../services/UserService';
 
 @Component({
   selector: 'change-password',
-  directives: [NgForm, LoadingIndicator, RouterLink],
   styleUrls: ['styles/common/generic-form.css'],
   template: `
   <div class="generic-form">
-    <form [ngFormModel]="changePasswordForm" (ngSubmit)="submitForm($event)" novalidate>
+    <form #changePasswordForm="ngForm" (ngSubmit)="submitForm($event)" novalidate>
       <fieldset>
         <legend>Change password</legend>
         <div class="white-bg">
@@ -99,7 +98,7 @@ export class ChangePassword {
   success: boolean;
 
   constructor(private fb: FormBuilder, private router: Router, private UserService: UserService,
-    private UserValidators: UserValidators, private RouteParams: RouteParams) {
+    private UserValidators: UserValidators) {
     this.changePasswordForm = this.fb.group({
       oldPassword: ['', this.UserValidators.PasswordValidator],
       password: ['', this.UserValidators.PasswordValidator],

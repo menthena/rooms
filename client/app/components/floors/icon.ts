@@ -1,5 +1,5 @@
-import {Component, Input, OnInit, ElementRef} from 'angular2/core';
-import {Observable} from 'rxjs';
+import {Component, Input, OnInit, ElementRef} from '@angular/core';
+import {Observable} from 'rxjs/Rx';
 import {Resizable} from '../../directives/resizable';
 import {DesignService} from '../../services/DesignService';
 import {FloorElementsService} from '../../services/FloorElementsService';
@@ -10,8 +10,6 @@ declare var jQuery:any;
 
 @Component({
   selector: 'icon',
-  directives: [Draggable],
-  inputs: ['data'],
   styleUrls: ['styles/floors/icon.css', 'styles/common/controls.css'],
   template: `
     <div class="wrapper control" draggable-element

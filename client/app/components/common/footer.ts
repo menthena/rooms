@@ -1,11 +1,10 @@
-import {Component} from 'angular2/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'footer',
-  styleUrls: [],
-  templateUrl: 'views/footer.html'
+  template: ``
 })
 
-export class MarketingIndex {
+export class FooterComponent {
 
 }

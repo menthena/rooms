@@ -6,7 +6,8 @@ var router = express.Router();
 var models = require('../models');
 var reservation = models.reservation;
 var floorElement = models.floorElement;
-var io = require('../../socket');
+var config = require('../../config/environment');
+var io = config.socket;
 var middleware = require('../middleware');
 var moment = require('moment');
 
@@ -62,7 +63,9 @@ router.patch('/:id', middleware.requiresUser, function(req, res) {
           res.send({ message: 'Bad request'});
         }
         else {
-          io.sockets.emit('reservations', 1);
+          _.each(config.clients, function(socket) {
+            socket.send('reservations');
+          });
           res.send({ data: reservation });
         }
       });
@@ -138,7 +141,9 @@ router.post('/', middleware.requiresUser, function(req, res) {
               res.send({ message: 'Bad request'});
             }
             else {
-              io.sockets.emit('reservations', 1);
+              _.each(config.clients, function(socket) {
+                socket.send('reservations');
+              });
               res.status(201).send({ data: _reservation });
             }
           } else {
@@ -176,7 +181,9 @@ router.delete('/:id', middleware.requiresUser, function(req, res) {
             _.remove(reservations, function(item) {
               return item._id === req.params.id;
             });
-            io.sockets.emit('reservations', 1);
+            _.each(config.clients, function(socket) {
+              socket.send('reservations');
+            });
             res.status(201);
             res.send({ data: reservations} );
           }

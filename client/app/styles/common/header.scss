@@ -7,6 +7,7 @@ header {
   line-height: 40px;
   padding-top: 5px;
   padding-bottom: 9px;
+  z-index: 200;
 
   a.logo {
     color: $primary-color;
@@ -44,4 +45,12 @@ header {
     font-weight: bold;
     padding-right: 10px;
   }
+}
+
+ion-tabs {
+  height: auto;
+  position: absolute;
+  bottom: 0;
+  display: block;
+  top: auto;
 }

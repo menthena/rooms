@@ -1,23 +1,22 @@
-import {Component, Output, EventEmitter} from 'angular2/core';
-import {FormBuilder, NgForm, Validators, Control} from 'angular2/common';
-import {Router, RouterLink} from 'angular2/router';
+import {Component, Output, EventEmitter, Optional} from '@angular/core';
+import {FormBuilder, NgForm, Validators} from '@angular/forms';
+import {Router, RouterLink} from '@angular/router';
 import {EMAIL_REGEX} from '../../config/constants';
 import {LoadingIndicator} from '../../directives/loading-indicator';
 import {UserValidators} from '../../validators/UserValidators';
 import {UserService} from '../../services/UserService';
 import {AppService} from '../../services/AppService';
-import {IONIC_DIRECTIVES} from 'ionic-framework/ionic';
+import {RegisterPage} from './register-page';
+import {RecoverPasswordPage} from './recover-password-page';
 
 @Component({
   selector: 'login',
-  directives: [NgForm, LoadingIndicator, RouterLink, IONIC_DIRECTIVES],
   styleUrls: ['styles/common/generic-form.css'],
   template: `
-  <ion-content>
-    <div [ngClass]="{'animated slideInRight': isIonic, 'generic-form': true}">
-      <form [ngFormModel]="loginForm" (ngSubmit)="submitLoginForm($event)" novalidate>
+    <div class="generic-form">
+      <form #loginForm="ngForm" (ngSubmit)="submitLoginForm($event)" novalidate>
         <fieldset>
-          <legend>Login</legend>
+          <legend *ngIf="!isIonic">Login</legend>
           <div class="white-bg">
             <div class="server-err" [class.active]="invalidCredentials">
               <i class="fa fa-exclamation-circle"></i> Invalid email or password
@@ -27,12 +26,13 @@ import {IONIC_DIRECTIVES} from 'ionic-framework/ionic';
                 Email
               </label>
               <input type="email" placeholder="Please enter your email" name="email" id="email"
-                ngControl="email">
-              <div [class.active]="(submitted || loginForm.controls.email.touched) && !loginForm.controls.email.valid" class="err">
-                <div *ngIf="loginForm.controls.email.errors && loginForm.controls.email.errors.required">
+                [(ngModel)]="login.email"
+                #email="ngModel">
+              <div [class.active]="(submitted || email.touched) && !email.valid" class="err">
+                <div *ngIf="email.errors && email.errors.required">
                   <i class="fa fa-exclamation-circle"></i> Please enter your email
                 </div>
-                <div *ngIf="loginForm.controls.email.errors && loginForm.controls.email.errors.invalid">
+                <div *ngIf="email.errors && email.errors.invalid">
                   <i class="fa fa-exclamation-circle"></i> Please enter a valid email
                 </div>
               </div>
@@ -43,32 +43,34 @@ import {IONIC_DIRECTIVES} from 'ionic-framework/ionic';
                 Password
               </label>
               <input type="password" placeholder="Please enter your password" name="password"
-                id="password" ngControl="password">
-              <div [class.active]="(submitted || loginForm.controls.password.touched) && !loginForm.controls.password.valid" class="err">
+                id="password" [(ngModel)]="login.password"
+                #password="ngModel">
+              <div [class.active]="(submitted || password.touched) && !password.valid" class="err">
                   <i class="fa fa-exclamation-circle"></i> Please enter your password
               </div>
             </div>
             <div class="buttons">
-              <button class="btn" [class.submitting]="submitting">
+              <button class="btn" [class.submitting]="submitting && !isIonic"
+                [class.submitting-ionic]="submitting && isIonic">
                 <span>Log in</span>
               </button>
             </div>
             <div class="sub-form">
-              You forgot your password? It is okay, we all have been there. <a [routerLink]="['/RecoverPassword']">Recover password</a>.
+              You forgot your password? It is okay, we all have been there. <a (click)="goToRecoverPassword()">Recover password</a>.
               <div>
-                OR you can <a [routerLink]="['/Register']">register</a>.
+                OR you can <a (click)="goToLogin()">register</a>.
               </div>
             </div>
           </div>
         </fieldset>
       </form>
     </div>
-  </ion-content>
   `
 })
 
 export class Login {
   loginForm;
+  login: any = {};
   submitted: boolean;
   invalidCredentials: boolean;
   isIonic: boolean;
@@ -83,25 +85,31 @@ export class Login {
     });
   }
 
-  submitLoginForm() {
-    let login = this.loginForm.value;
-    this.submitted = true;
-    if (this.loginForm.valid) {
-      this.submitting = true;
-      this.invalidCredentials = false;
+  goToLogin() {
+    this.router.navigate(['Register']);
+  }
 
-      this.UserService.login(login.email, login.password)
-        .add((res) => {
-          setTimeout(() => {
-            this.submitting = false;
-            if (!this.UserService.isLogged) {
-              this.invalidCredentials = true;
-            } else {
-              this.router.navigate(['Reserve']);
-            }
-          }, 250);
-        });
-    }
+  goToRecoverPassword() {
+    this.router.navigate(['RecoverPassword']);
+  }
+
+  submitLoginForm() {
+    let login = this.login;
+    this.submitted = true;
+    this.submitting = true;
+    this.invalidCredentials = false;
+
+    this.UserService.login(login.email, login.password)
+      .add((res) => {
+        setTimeout(() => {
+          this.submitting = false;
+          if (!this.UserService.isLogged) {
+            this.invalidCredentials = true;
+          } else {
+            this.router.navigate(['reserve']);
+          }
+        }, 250);
+      });
   }
 
 }

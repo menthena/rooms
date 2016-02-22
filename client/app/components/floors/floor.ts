@@ -1,6 +1,6 @@
-import {Component, Input, NgZone, ChangeDetectionStrategy, ChangeDetectorRef, EventEmitter} from 'angular2/core';
-import {FormBuilder, Validators} from 'angular2/common';
-import {Observable} from 'rxjs';
+import {Component, Input, NgZone, ChangeDetectionStrategy, ChangeDetectorRef, EventEmitter} from '@angular/core';
+import {FormBuilder, NgForm, Validators} from '@angular/forms';
+import {Observable} from 'rxjs/Rx';
 import {IFloor} from '../../services/FloorService';
 import {FloorElementsService, IFloorElement} from '../../services/FloorElementsService';
 import {Room} from './room';
@@ -23,8 +23,6 @@ declare var io: any;
 
 @Component({
   selector: 'floor',
-  providers: [FloorElementsService],
-  directives: [Room, Icon, PlaceElement, Placeholder, Line, Droppable, LoadingIndicator],
   styleUrls: ['styles/floors/floor.css', 'styles/floors/floors.css'],
   template: `
   <div [ngClass]="{'design-mode': designMode}">
@@ -37,7 +35,7 @@ declare var io: any;
           </span>
         </h1>
         <div *ngIf="editMode" class="header">
-          <form [ngFormModel]="editFloorNameForm">
+          <form #editFloorNameForm="ngForm">
             <input type="text" name="floorName" id="floorName" ngControl="floorName">
             <button (click)="submitEditFloorNameForm($event)" type="submit" class="btn"><i class="fa fa-check"></i></button>
             <button (click)="cancelEditFloorNameForm($event)" class="btn"><i class="fa fa-times"></i></button>
@@ -51,10 +49,10 @@ declare var io: any;
     <div [attr.id]="'floor' + floor.floorID" class="floor" droppable-element
       [attr.data-id]="floor.floorID" [ngClass]="{loading: isLoading}">
       <div class="inner">
-        <div *ngFor="#element of floorElements" [ngSwitch]="element.elementType">
-          <room *ngSwitchWhen="'room'" [data]="element" place-element></room>
-          <line *ngSwitchWhen="'line'" [data]="element" place-element></line>
-          <placeholder *ngSwitchWhen="'placeholder'" [data]="element" place-element></placeholder>
+        <div *ngFor="let element of floorElements" [ngSwitch]="element.elementType">
+          <room *ngSwitchCase="'room'" [data]="element" place-element></room>
+          <line *ngSwitchCase="'line'" [data]="element" place-element></line>
+          <placeholder *ngSwitchCase="'placeholder'" [data]="element" place-element></placeholder>
           <icon *ngSwitchDefault [data]="element" place-element></icon>
         </div>
       </div>
@@ -65,6 +63,7 @@ declare var io: any;
 
 export class Floor {
   @Input() floor: IFloor;
+  @Input() designMode: boolean;
   @Input() isLoading: boolean;
   // @Output() deleteFloor = new EventEmitter();
   // @Output() updateFloor = new EventEmitter();
@@ -73,7 +72,6 @@ export class Floor {
   floorElementsObservable;
   editMode: boolean;
   isIonic: boolean;
-  designMode: boolean;
   editFloorNameForm;
 
   constructor(private floorElementsService: FloorElementsService,
@@ -84,7 +82,6 @@ export class Floor {
     this.floorElements = [];
     this.floorElementsObservable = this.floorElementsService.getObservable();
     this.floorElementsObservable.connect();
-    this.designMode = DesignService.designModeState;
     this.isLoading = false;
     this.isIonic = this.AppService.isIonic;
   }
@@ -162,35 +159,44 @@ export class Floor {
           this.floorElements = arr;
           this.isLoading = false;
           this.changeRef.markForCheck();
+        },
+        () => {
+          this.isLoading = false;
         }
       );
   }
 
   ngOnInit() {
-    let socket = io.connect(SOCKET_URL);
+    let socket = new WebSocket(SOCKET_URL);
+    if (!this.designMode) {
+      this.designMode = this.DesignService.designModeState;
+    }
 
-    socket.on('elements', (res) => {
-      if (!this.DesignService.designModeState) {
-        let index = _.findIndex(this.floorElements, { elementID: res.elementID });
-        if (res.floorID === this.floor.floorID) {
-          if (index === -1) {
-            this.floorElements.push(res);
-          } else {
-            this.floorElements[index] = res;
+
+    socket.onmessage = (res) => {
+      if (res.data.indexOf('elements') > -1) {
+        let data = JSON.parse(res.data.substring(9));
+        if (!this.DesignService.designModeState) {
+          let index = _.findIndex(this.floorElements, { elementID: data.elementID });
+          if (data.floorID === this.floor.floorID) {
+            if (index === -1) {
+              this.floorElements.push(data);
+            } else {
+              this.floorElements[index] = data;
+            }
           }
         }
       }
-    });
-
-    socket.on('reservations', (res) => {
-      if (!this.DesignService.designModeState) {
-        this.ReservationService.fetchReservations()
-          .subscribe(() => {
-            this.reservations = this.ReservationService.reservations;
-            this.changeRef.markForCheck();
-          });
+      if (res.data === 'reservations') {
+        if (!this.DesignService.designModeState) {
+          this.ReservationService.fetchReservations()
+            .subscribe(() => {
+              this.reservations = this.ReservationService.reservations;
+              this.changeRef.markForCheck();
+            });
+        }
       }
-    });
+    };
 
     this.floorElementsObservable
       .subscribe((res: any) => {

@@ -17,6 +17,64 @@ ion-list {
 }
 
 ion-app ion-nav.has-views {
-  background: none;
   position: relative;
+}
+
+
+login ion-content, register ion-content {
+  background: none;
+}
+
+ion-scroll {
+  height: 100%;
+}
+
+header {
+  z-index: 99;
+}
+
+ion-page {
+  background: $background-color;
+}
+
+.platform-core {
+  ion-content {
+    background: none;
+  }
+  ion-scroll.scroll-x scroll-content, scroll-content {
+    overflow: visible;
+    overflow-y: visible;
+    overflow-x: visible;
+  }
+}
+
+.platform-android {
+  ion-tabbar-section {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+  }
+}
+
+ion-tabs {
+  ion-tabbar-section {
+    z-index: 99;
+  }
+}
+
+.platform-mobile {
+  .generic-form {
+    @include noShadow();
+    width: 315px!important;
+    margin: 0 auto!important;
+  }
+  ion-page.reservation-page {
+    ion-scroll {
+      height: 410px;
+      overflow-y: hidden;
+    }
+    scroll-content {
+      height: 480px;
+    }
+  }
 }

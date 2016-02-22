@@ -1,8 +1,7 @@
-import {Component, Input} from 'angular2/core';
-import {RouterLink, Router, Location} from 'angular2/router';
+import {Component, Input} from '@angular/core';
+import {RouterLink, Router} from '@angular/router';
 import {UserService} from '../../services/UserService';
 import {CLIENT_ID, SCOPES} from '../../config/constants';
-import {IONIC_DIRECTIVES, NavController, Modal} from 'ionic-framework/ionic';
 import {AppService} from '../../services/AppService';
 import {Filter} from '../reservation/filter';
 
@@ -10,30 +9,19 @@ declare var gapi: any;
 
 @Component({
   selector: 'header',
-  inputs: ['logged'],
-  directives: [RouterLink, IONIC_DIRECTIVES],
   template: `
-  <div *ngIf="isIonic && currentRoute !== 'index'">
-    <ion-tabs>
-      <ion-tab tabIcon="water" tabTitle="Water" [root]="tab1"></ion-tab>
-      <ion-tab tabIcon="leaf" tabTitle="Life" [root]="tab2"></ion-tab>
-      <ion-tab tabIcon="flame" tabTitle="Fire" [root]="tab3"></ion-tab>
-      <ion-tab tabIcon="magnet" tabTitle="Force" [root]="tab4"></ion-tab>
-    </ion-tabs>
-  </div>
-
-  <header *ngIf="!isIonic && currentRoute !== 'index' && currentRoute !== ''">
+  <div *ngIf="!isIonic && currentRoute !== 'index' && currentRoute !== ''">
     <div class="container">
       <div class="row">
         <div class="col-sm-3 col-xs-4">
-          <a [routerLink]="['/Reserve']" class="logo">Rooms</a>
+          <a click="goTo('Reserve')" class="logo">Rooms</a>
         </div>
         <div class="col-sm-6 hidden-xs" *ngIf="logged">
-          <ul class="list-inline">
-            <li><a [routerLink]="['/Reserve']">Reserve</a></li>
-            <li><a [routerLink]="['/Design']">Design</a></li>
-            <li><a [routerLink]="['/Reservations']">Reservations</a></li>
-            <li><a [routerLink]="['/Accounts']">Account</a></li>
+          <ul class="navigation-links list-inline">
+            <li><a (click)="goTo('reserve')">Reserve</a></li>
+            <li><a (click)="goTo('design')">Design</a></li>
+            <li><a (click)="goTo('reservations')">Reservations</a></li>
+            <li><a (click)="goTo('accounts')">Account</a></li>
           </ul>
         </div>
         <div class="col-sm-3 hidden-xs text-right" *ngIf="logged">
@@ -42,8 +30,8 @@ declare var gapi: any;
         </div>
         <div class="col-sm-9 hidden-xs text-right" *ngIf="!logged">
           <ul class="list-inline">
-            <li><a [routerLink]="['/Login']">Login</a></li>
-            <li><a [routerLink]="['/Register']">Register</a></li>
+            <li><a (click)="goTo('login')">Login</a></li>
+            <li><a (click)="goTo('register')">Register</a></li>
           </ul>
         </div>
         <div class="col-xs-8 visible-xs text-right">
@@ -51,7 +39,7 @@ declare var gapi: any;
         </div>
       </div>
     </div>
-  </header>
+  </div>
   `,
   styleUrls: ['styles/common/header.css']
 })
@@ -61,22 +49,29 @@ export class Header {
   isIonic: boolean;
   userData: Object;
   currentRoute: string;
-  nav: NavController;
 
-  constructor(private UserService: UserService, private AppService: AppService, private Router: Router,
-      private Location: Location) {
-    this.currentRoute = this.Location.path().substring(1);
-    this.Router.subscribe((route) => {
-      this.currentRoute = route;
-    });
+  constructor(private UserService: UserService, private AppService: AppService,
+      private Router: Router) {
     this.userData = {};
-    this.isIonic = this.AppService.isIonic;
+  }
+
+  ngOnInit() {
+    // this.currentRoute = this.Location.path().substring(1);
+    // if (this.Router) {
+    //   this.Router.subscribe((route) => {
+    //     this.currentRoute = route;
+    //   });
+    // }
   }
 
   ngOnChanges() {
     if (this.UserService.userData) {
       this.userData = this.UserService.userData;
     }
+  }
+
+  goTo(location: any) {
+    this.Router.navigate([location]);
   }
 
   handleClick() {

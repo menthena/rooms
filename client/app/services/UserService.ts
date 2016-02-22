@@ -1,6 +1,6 @@
-import {Injectable} from 'angular2/core';
-import {Http, Response, Headers} from 'angular2/http';
-import {Observable} from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Http, Response, Headers} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
 import {ENV_URL} from '../config/app.config';
 
 declare var window: any;
@@ -50,14 +50,21 @@ export class UserService implements IUserService {
       .subscribe((res: any) => {
         this.isLogged = true;
         this.userData = res.json();
-        this.userObservable
-          .subscription
-          .next();
+        if (this.userObservable.subscription) {
+          this.userObservable
+            .subscription
+            .next();
+        }
         return res;
       }, (err) => {
         return err;
       });
     return subscription;
+  }
+
+  getCompany(id) {
+    let observable = this.http.get(ENV_URL + '/api/company/' + id);
+    return observable;
   }
 
   recoverPassword(email: string) {
@@ -100,9 +107,11 @@ export class UserService implements IUserService {
       .subscribe((res: any) => {
         this.userData = res.json();
         this.isLogged = true;
-        this.userObservable
-          .subscription
-          .next();
+        if (this.userObservable.subscription) {
+          this.userObservable
+            .subscription
+            .next();
+        }
         return res;
       }, (err) => {
         // this.isLogged = false;

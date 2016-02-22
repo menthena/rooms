@@ -32,18 +32,18 @@ module.exports = function(app) {
   if (env === 'production') {
     app.use(enforce.HTTPS(true));
     app.use(favicon(path.join(config.root, 'public', 'favicon.ico')));
-    app.use(express.static(path.join(config.root, 'public')));
-    app.set('appPath', config.root + '/public');
+    app.use(express.static(path.join(config.root, 'www')));
+    app.set('appPath', 'www');
     app.use(morgan('dev'));
   }
 
   if (env === 'development' || env === 'local') {
     app.use(require('connect-livereload')());
     app.use(express.static(path.join(config.root, '.tmp')));
-    app.use(express.static(path.join(config.root, 'dist/app')));
+    app.use(express.static(path.join(config.root, 'client/app')));
     app.use('/node_modules', express.static(__dirname + '/../../node_modules/'));
     app.use('/jspm_packages', express.static(__dirname + '/../../jspm_packages/'));
-    app.set('appPath', 'dist/app');
+    app.set('appPath', 'client/app');
     app.use(morgan('dev'));
     app.use(errorHandler()); // Error handler - has to be last
   }

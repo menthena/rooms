@@ -1,4 +1,4 @@
-import {Component, OnInit, ElementRef, ViewEncapsulation, Input} from 'angular2/core';
+import {Component, OnInit, ElementRef, ViewEncapsulation, Input} from '@angular/core';
 
 declare var jQuery:any;
 

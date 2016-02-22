@@ -1,4 +1,4 @@
-import {Component, OnInit, ElementRef, Input, Output, Injectable, ViewEncapsulation, EventEmitter} from 'angular2/core';
+import {Component, OnInit, ElementRef, Input, Output, Injectable, ViewEncapsulation, EventEmitter} from '@angular/core';
 import {IFloorElement} from '../services/FloorElementsService';
 import {IReservation, ReservationService} from '../services/ReservationService';
 
@@ -19,9 +19,9 @@ declare var jQuery: any;
         <div class="controllers">
           <div><a (click)="handleEditReservation()"><i class="fa fa-pencil"></i> Edit</a></div>
           <div><a (click)="handleCancelReservation()"><i class="fa fa-trash"></i> Cancel</a></div>
-          <div *ngIf="activeReservation && activeReservation.recurring">
+          <!--div *ngIf="activeReservation && activeReservation.recurring">
             <a (click)="handleCancelReservation(true)"><i class="fa fa-bars"></i> Cancel all recurring</a>
-          </div>
+          </div-->
         </div>
       </div>
       <!--div class="next-available">

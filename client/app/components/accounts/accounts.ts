@@ -1,51 +1,15 @@
-import {Component} from 'angular2/core';
-import {Router, RouterLink} from 'angular2/router';
+import {Component} from '@angular/core';
+import {Router, RouterLink} from '@angular/router';
 import {LoadingIndicator} from '../../directives/loading-indicator';
 import {UserService} from '../../services/UserService';
 import {AppService} from '../../services/AppService';
 import {CalendarService} from '../../services/CalendarService';
-import {IONIC_DIRECTIVES} from 'ionic-framework/ionic';
 
 @Component({
   selector: 'accounts',
-  providers: [],
-  directives: [LoadingIndicator, RouterLink, IONIC_DIRECTIVES],
   styleUrls: ['styles/accounts.css'],
   template: `
     <loading-indicator *ngIf="isLoading"></loading-indicator>
-    <div *ngIf="!isLoading" class="container">
-      <div *ngIf="isIonic">
-        <ion-list>
-          <ion-item>
-            <ion-row>
-              <ion-col>Name</ion-col>
-              <ion-col text-right><b>{{ userData.name }}</b></ion-col>
-            </ion-row>
-          </ion-item>
-          <ion-item>
-            <ion-row>
-              <ion-col>Company</ion-col>
-              <ion-col text-right><b>{{ userData.companyName }}</b></ion-col>
-            </ion-row>
-          </ion-item>
-          <ion-item>
-            <ion-row>
-              <ion-col>Password</ion-col>
-              <ion-col text-right><b>******</b></ion-col>
-            </ion-row>
-          </ion-item>
-          <ion-item>
-            <ion-row>
-              <ion-col>Email</ion-col>
-              <ion-col text-right><b>{{ userData.email }}</b></ion-col>
-            </ion-row>
-          </ion-item>
-          <ion-item>
-            <ion-label>Google Calendar Integrate</ion-label>
-            <ion-toggle checked="false"></ion-toggle>
-          </ion-item>
-        </ion-list>
-      </div>
       <div *ngIf="!isIonic">
         <h1>
           Accounts
@@ -88,22 +52,8 @@ import {IONIC_DIRECTIVES} from 'ionic-framework/ionic';
             </div>
           </div>
         </div>
-        <h1>
-          Calendar
-        </h1>
-        <div class="account-info">
-          <div>
-            <div *ngIf="userData.googleToken">
-              Integrated with Google
-            </div>
-            <div *ngIf="!userData.googleToken">
-              <a (click)="integrateWithGoogle()">Integrate with google</a>
-            </div>
-          </div>
-        </div>
       </div>
 
-    </div>
   `
 })
 
@@ -132,6 +82,7 @@ export class Accounts {
 
   goToChangePassword() {
     // [routerLink]="['/ChangePassword']"
+    this.router.navigate(['ChangePassword']);
   }
 
   ngOnInit() {

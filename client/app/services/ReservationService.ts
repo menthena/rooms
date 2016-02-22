@@ -1,6 +1,6 @@
-import {Injectable} from 'angular2/core';
-import {Http, Response, Headers} from 'angular2/http';
-import {Observable} from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Http, Response, Headers} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
 import {FloorElementsService} from './FloorElementsService';
 import {DATE_FORMAT} from '../config/constants';
 import {ENV_URL} from '../config/app.config';
@@ -40,7 +40,7 @@ export class ReservationService implements IReservationService {
   constructor(private http: Http, FloorElementsService: FloorElementsService) {
     this.filter = {
       duration: 30,
-      capacity: 12,
+      capacity: 5,
       features: [],
       date: moment()
     };
@@ -81,9 +81,7 @@ export class ReservationService implements IReservationService {
   }
 
   fetchReservations() {
-    let observable = this.http.get(ENV_URL + '/api/reservation', {
-      headers: new Headers({ Authorization: 'Basic ' + window.btoa('asd@asd.com:asdasd') })
-    });
+    let observable = this.http.get(ENV_URL + '/api/reservation');
     observable
       .subscribe((res) => {
         let reservation: any = res.json();

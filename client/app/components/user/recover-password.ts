@@ -1,20 +1,20 @@
-import {Component} from 'angular2/core';
-import {FormBuilder, NgForm, Validators, Control} from 'angular2/common';
-import {Router, RouterLink} from 'angular2/router';
+import {Component} from '@angular/core';
+import {FormBuilder, NgForm, Validators} from '@angular/forms';
+import {Router, RouterLink} from '@angular/router';
 import {EMAIL_REGEX} from '../../config/constants';
 import {LoadingIndicator} from '../../directives/loading-indicator';
 import {UserService} from '../../services/UserService';
+import {AppService} from '../../services/AppService';
 import {UserValidators} from '../../validators/UserValidators';
 
 @Component({
-  selector: 'login',
-  directives: [NgForm, LoadingIndicator, RouterLink],
+  selector: 'recover-password',
   styleUrls: ['styles/common/generic-form.css'],
   template: `
   <div class="generic-form">
-    <form [ngFormModel]="recoverPasswordForm" (ngSubmit)="submitRecoverPassword($event)" novalidate>
+    <form #recoverPasswordForm="ngForm" (ngSubmit)="submitRecoverPassword($event)" novalidate>
       <fieldset>
-        <legend>Recover password</legend>
+        <legend *ngIf="!isIonic">Recover password</legend>
         <div class="white-bg">
           <div *ngIf="success" class="success row">
             <div class="col-xs-1">
@@ -65,12 +65,14 @@ import {UserValidators} from '../../validators/UserValidators';
 export class RecoverPassword {
   recoverPasswordForm;
   submitted: boolean;
+  isIonic: boolean;
   invalidCredentials: boolean;
   submitting: boolean;
   success: boolean;
 
   constructor(private fb: FormBuilder, private router: Router, private UserService: UserService,
-    private UserValidators: UserValidators) {
+    private UserValidators: UserValidators, private AppService: AppService) {
+    this.isIonic = this.AppService.isIonic;
     this.recoverPasswordForm = this.fb.group({
       email: ['', this.UserValidators.EmailValidator]
     });

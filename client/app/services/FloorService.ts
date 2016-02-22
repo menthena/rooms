@@ -1,6 +1,6 @@
-import {Injectable} from 'angular2/core';
-import {Http, Response, Headers} from 'angular2/http';
-import {Observable} from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Http, Response, Headers} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
 import {ENV_URL} from '../config/app.config';
 
 declare var window: any;
@@ -64,10 +64,6 @@ export class FloorService implements IFloorService<IFloor> {
   }
 
   fetchAll() {
-    return this.http.get(ENV_URL + '/api/floor', {
-      headers: new Headers({
-        'Authorization': 'Basic ' + window.btoa('asd@asd.com:asdasd')
-      })
-    });
+    return this.http.get(ENV_URL + '/api/floor');
   }
 }

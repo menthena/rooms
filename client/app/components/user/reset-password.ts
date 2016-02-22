@@ -1,17 +1,16 @@
-import {Component} from 'angular2/core';
-import {FormBuilder, NgForm, Validators, Control} from 'angular2/common';
-import {Router, RouterLink, RouteParams} from 'angular2/router';
+import {Component} from '@angular/core';
+import {FormBuilder, NgForm, Validators} from '@angular/forms';
+import {Router, RouterLink} from '@angular/router';
 import {LoadingIndicator} from '../../directives/loading-indicator';
 import {UserValidators} from '../../validators/UserValidators';
 import {UserService} from '../../services/UserService';
 
 @Component({
   selector: 'reset-password',
-  directives: [NgForm, LoadingIndicator, RouterLink],
   styleUrls: ['styles/common/generic-form.css'],
   template: `
   <div class="generic-form">
-    <form [ngFormModel]="resetPasswordForm" (ngSubmit)="submitLoginForm($event)" novalidate>
+    <form resetPasswordForm="ngForm" (ngSubmit)="submitLoginForm($event)" novalidate>
       <fieldset>
         <legend>Reset password</legend>
         <div class="white-bg">
@@ -83,7 +82,7 @@ export class ResetPassword {
   success: boolean;
 
   constructor(private fb: FormBuilder, private router: Router, private UserService: UserService,
-    private UserValidators: UserValidators, private RouteParams: RouteParams) {
+    private UserValidators: UserValidators) {
     this.resetPasswordForm = this.fb.group({
       email: ['', this.UserValidators.EmailValidator],
       password: ['', this.UserValidators.PasswordValidator]
@@ -96,7 +95,7 @@ export class ResetPassword {
     if (this.resetPasswordForm.valid) {
       this.submitting = true;
       this.invalidCredentials = false;
-      this.UserService.resetPassword(resetPassword.email, resetPassword.password, this.RouteParams.params['id'])
+      this.UserService.resetPassword(resetPassword.email, resetPassword.password, this.router.params['id'])
         .subscribe((res) => {
           setTimeout(() => {
             this.submitting = false;

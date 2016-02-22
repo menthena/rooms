@@ -1,0 +1,128 @@
+@keyframes pulse {
+  0% {
+    opacity: 0.6; }
+  50% {
+    opacity: 0.3; }
+  100% {
+    opacity: 0.6; } }
+
+@keyframes pulseScale {
+  0% {
+    transform: scale(1);
+    opacity: 0.8; }
+  50% {
+    transform: scale(0.6);
+    opacity: 0.2; }
+  100% {
+    transform: scale(1);
+    opacity: 0.9; } }
+
+.wrapper {
+  position: absolute; }
+
+.edit-element {
+  box-shadow: 0 1px 8px rgba(128, 95, 70, 0.2), 0 2px 2px rgba(12, 95, 70, 0.3);
+  transition: all 0.1s ease-out;
+  transform: scale(0.3);
+  margin: -40px 0 0 -40px;
+  pointer-events: all;
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  width: 236px;
+  height: 255px;
+  background: #3ab791;
+  color: #FFF;
+  z-index: 99;
+  padding: 8px 10px;
+  border-radius: 2px;
+  overflow: hidden; }
+  .edit-element.element-placeholder {
+    background-color: #fdfdfd;
+    border: 1px #dee5e9 solid;
+    color: #a1b5c0; }
+    .edit-element.element-placeholder .buttons a {
+      background: #a1b5c0;
+      color: #FFF; }
+    .edit-element.element-placeholder .buttons .submit {
+      background: #3ab791; }
+    .edit-element.element-placeholder input[type=text] {
+      background: #a1b5c0;
+      color: #FFF; }
+  .edit-element > * {
+    transition: opacity 0.15s ease-out;
+    opacity: 0; }
+  .edit-element .icons li {
+    margin-bottom: 10px; }
+  .edit-element .icons a {
+    padding: 1px 7px;
+    color: #a1b5c0;
+    border-radius: 3px;
+    border: 1px #a1b5c0 solid; }
+    .edit-element .icons a.selected {
+      background: #a1b5c0;
+      color: #FFF; }
+  .edit-element.active {
+    transform: scale(1);
+    opacity: 1; }
+    .edit-element.active > * {
+      opacity: 1; }
+  .edit-element.submitting .buttons {
+    animation: pulse 1s infinite !important; }
+  .edit-element .time {
+    margin-top: 5px;
+    background: #319c7c;
+    color: #FFF;
+    padding: 5px 8px;
+    border-radius: 2px; }
+  .edit-element .form {
+    margin-top: 10px; }
+  .edit-element .input-group {
+    margin-bottom: 10px; }
+  .edit-element input[type=text] {
+    border-radius: 2px;
+    border: none;
+    display: block;
+    padding: 4px;
+    outline: none;
+    width: 100%;
+    resize: none;
+    background: #FFF;
+    color: #506a78; }
+  .edit-element .buttons {
+    margin-top: 10px;
+    text-align: right; }
+    .edit-element .buttons a {
+      margin-left: 4px;
+      text-align: center;
+      padding-top: 3px;
+      background: #FFF;
+      border-radius: 99px;
+      display: inline-block;
+      width: 20px;
+      height: 20px; }
+  .edit-element slider {
+    width: 150px;
+    box-shadow: none !important;
+    background-color: #FFF; }
+  .edit-element .ui-slider-handle.ui-state-default {
+    box-shadow: none !important;
+    background: #FFF;
+    border-color: #a1b5c0; }
+  .edit-element input[type="checkbox"] + label i {
+    box-shadow: none !important;
+    background-color: #FFF; }
+  .edit-element input[type="checkbox"] + label span {
+    font-weight: normal; }
+
+@media (max-width: 768px) {
+  edit-element .wrapper {
+    z-index: 99;
+    position: fixed;
+    width: 100% !important;
+    left: calc(50% - 118px) !important;
+    right: 0 !important;
+    top: calc(50% - 98px); }
+    edit-element .wrapper .edit-element {
+      margin: 0 0 0 0; } }

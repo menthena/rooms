@@ -1,4 +1,4 @@
-import {Component, Input} from 'angular2/core';
+import {Component, Input} from '@angular/core';
 import {FEATURES_DATA} from '../../config/constants';
 import {Button} from '../form/button';
 
@@ -9,7 +9,7 @@ import {Button} from '../form/button';
   properties: ['controlName'],
   template: `
   <ul class="list-unstyled features list-inline">
-    <li *ngFor="#feature of features">
+    <li *ngFor="let feature of features">
       <input [controlName]="controlName" [formModel]="formModel"
         type="checkbox" [attr.id]="feature.value" button [attr.value]="feature.value"
         >

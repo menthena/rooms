@@ -1,6 +1,6 @@
-import {Injectable, Component, Input} from 'angular2/core';
-import {Observable} from 'rxjs';
-import {RouterLink} from 'angular2/router';
+import {Injectable, Component, Input} from '@angular/core';
+import {Observable} from 'rxjs/Rx';
+import {RouterLink} from '@angular/router';
 import {AppService} from '../../services/AppService';
 
 @Component({

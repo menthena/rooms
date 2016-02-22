@@ -1,6 +1,5 @@
-import {Injectable, EventEmitter} from 'angular2/core';
-import {Observable} from 'rxjs';
-import {Platform} from 'ionic-framework/ionic';
+import {Injectable, EventEmitter} from '@angular/core';
+import {Observable} from 'rxjs/Rx';
 
 declare var jQuery: any;
 declare var window: any;
@@ -14,14 +13,7 @@ export class AppService implements IAppService {
   public isAndroid: boolean;
   public overlayObservable: Observable<Object>;
 
-  constructor(private Platform: Platform) {
-    if (this.Platform && (this.Platform.is('android') || this.Platform.is('ios'))) {
-      if (this.Platform.is('android')) {
-        this.isAndroid = true;
-      }
-      this.isIonic = true;
-      jQuery('body').addClass('ionic');
-    }
+  constructor() {
     if (Observable) {
       this.overlayObservable = Observable
         .create(observer => {

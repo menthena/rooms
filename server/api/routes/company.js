@@ -29,7 +29,7 @@ router.get('/:id/users', middleware.requiresUser, function(req, res) {
   User.find({ companyID: req.params.id }, sendResponse);
 });
 
-router.get('/:id', middleware.requiresUser, function(req, res) {
+router.get('/:id', function(req, res) {
   var sendResponse = function(err, company) {
     if (err) {
       res.status(404);

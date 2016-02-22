@@ -1,6 +1,6 @@
-import {Component} from 'angular2/core';
-import {FormBuilder, NgForm, Validators, Control} from 'angular2/common';
-import {Router, RouterLink} from 'angular2/router';
+import {Component} from '@angular/core';
+import {FormBuilder, NgForm, Validators, Control} from '@angular/common';
+import {Router, RouterLink} from '@angular/router';
 import {EMAIL_REGEX} from '../../config/constants';
 import {LoadingIndicator} from '../../directives/loading-indicator';
 import {UserValidators} from '../../validators/UserValidators';
@@ -17,8 +17,8 @@ import {UserService} from '../../services/UserService';
 
     <div class="white-bg">
       <p>Thank you, {{ user.name }}</p>
-      <p>We have bla bla</p>
-      <p><a href>abc</a></p>
+      <p>Your company is fully registered, your colleagues can now register from the link below</p>
+      <p><a href="/#/register/{{ user.companyID }}">Register link</a></p>
     </div>
   </div>
   `

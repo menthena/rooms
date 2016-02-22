@@ -1,5 +1,5 @@
-import {Injectable, EventEmitter} from 'angular2/core';
-import {Observable} from 'rxjs';
+import {Injectable, EventEmitter} from '@angular/core';
+import {Observable} from 'rxjs/Rx';
 
 declare var jQuery: any;
 

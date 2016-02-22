@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, ElementRef, ViewEncapsulation} from 'angular2/core';
+import {Component, OnInit, Input, ElementRef, ViewEncapsulation} from '@angular/core';
 
 declare var jQuery:any;
 
@@ -32,31 +32,33 @@ export class Button implements OnInit {
 
   ngOnInit() {
     let buttonElement = jQuery(this.elementRef.nativeElement);
-    buttonElement.button({
-      text: false
-    });
+    if (typeof buttonElement === 'function') {
+      buttonElement.button({
+        text: false
+      });
 
-    let values = this.getValues();
-    let value = buttonElement.prop('id');
-    let index = values.indexOf(value);
-    if (index > -1) {
-      this.updateModel(values, value);
-    }
-
-    buttonElement.change((e) => {
       let values = this.getValues();
-
-      let isChecked = jQuery(e.target).prop('checked');
-      let value = jQuery(e.target).prop('id');
+      let value = buttonElement.prop('id');
       let index = values.indexOf(value);
-      if (isChecked) {
-        if (index === -1) {
-          values.push(value);
-        }
-      } else if (index > -1) {
-        values.splice(index, 1);
+      if (index > -1) {
+        this.updateModel(values, value);
       }
-      this.updateModel(values, value);
-    });
+
+      buttonElement.change((e) => {
+        let values = this.getValues();
+
+        let isChecked = jQuery(e.target).prop('checked');
+        let value = jQuery(e.target).prop('id');
+        let index = values.indexOf(value);
+        if (isChecked) {
+          if (index === -1) {
+            values.push(value);
+          }
+        } else if (index > -1) {
+          values.splice(index, 1);
+        }
+        this.updateModel(values, value);
+      });
+    }
   }
 };

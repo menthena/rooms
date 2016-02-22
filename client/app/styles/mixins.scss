@@ -43,7 +43,7 @@
 }
 
 @mixin noShadow() {
-  box-shadow: none;
+  box-shadow: none!important;
 }
 
 @mixin fontAwesome() {
@@ -76,7 +76,7 @@
 }
 
 @mixin pulse() {
-  animation: pulse 1s infinite;
+  animation: pulse 1s infinite!important;
 }
 
 @mixin pulseScale() {

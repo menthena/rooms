@@ -1,8 +1,7 @@
-import {Component, Input} from 'angular2/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'loading-indicator',
-  inputs: ['mini', 'white'],
   template: `
   <div class="spinner" [class.mini]="mini" [class.white]="white">
     <div class="bounce1"></div>

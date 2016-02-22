@@ -3,10 +3,12 @@ System.config({
   transpiler: "none",
   paths: {
     "github:*": "jspm_packages/github/*",
-    "npm:*": "jspm_packages/npm/*"
+    "npm:*": "jspm_packages/npm/*",
+    'angular2/*': 'node_modules/angular2/*.js'
   },
 
   map: {
+    'ionic-framework': 'node_modules/ionic-framework',
     "lodash": "npm:lodash@3.10.1",
     "moment": "npm:moment@2.10.6",
     "reflect-metadata": "npm:reflect-metadata@0.1.2",

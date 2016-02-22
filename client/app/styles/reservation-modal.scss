@@ -4,11 +4,6 @@
 reservation-modal .wrapper {
   position: absolute;
   margin: -60px 0 0 -60px;
-  display: none;
-}
-
-reservation-modal.active .wrapper {
-  display: block;
 }
 
 .reservation-modal .ui-timepicker-list {
@@ -141,5 +136,9 @@ reservation-modal .booking {
     right: 0!important;
     margin: 0 0 0 0;
     top: calc(50% - 98px);
+    margin-top: -9999px;
+    &.active {
+      margin-top: -60px;
+    }
   }
 }

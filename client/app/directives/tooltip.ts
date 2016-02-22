@@ -1,4 +1,4 @@
-import {Directive, OnInit, ElementRef, Input, Injectable, ViewEncapsulation} from 'angular2/core';
+import {Directive, OnInit, ElementRef, Input, Injectable, ViewEncapsulation} from '@angular/core';
 import {IFloorElement} from '../services/FloorElementsService';
 import {IReservation} from '../services/ReservationService';
 

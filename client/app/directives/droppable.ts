@@ -1,4 +1,4 @@
-import {Directive, OnInit, ElementRef, Input, Injectable} from 'angular2/core';
+import {Directive, OnInit, ElementRef, Input, Injectable} from '@angular/core';
 import {DesignService} from '../services/DesignService';
 import {IFloorElement, FloorElementsService} from '../services/FloorElementsService';
 
@@ -29,34 +29,35 @@ export class Droppable implements OnInit {
   ngOnInit() {
     let nativeElement = this.elementRef.nativeElement;
     this.designObservable.connect();
-
-    jQuery(nativeElement).droppable({
-      activeClass: 'active-droppable',
-      hoverClass: 'active-dropping',
-      drop: (e, dropped) => {
-        let elementID = dropped.draggable.attr('element-id');
-        let position = this.DesignService.getPosition(e, dropped);
-        let floorID = jQuery(e.target).data('id');
-        if (elementID) {
-          this.edit(elementID, {
-            floorID: floorID,
-            elementPositionX: position.x,
-            elementPositionY: position.y
-          });
-        } else {
-          let type = dropped.helper.data('type');
-          this.addNew({
-            floorID: floorID,
-            elementName: 'Untitled',
-            elementType: type,
-            elementPositionX: position.x,
-            elementPositionY: position.y,
-            elementHeight: 0,
-            elementWidth: 19,
-            capacity: 5
-          });
+    if (typeof jQuery(nativeElement).droppable === 'function') {
+      jQuery(nativeElement).droppable({
+        activeClass: 'active-droppable',
+        hoverClass: 'active-dropping',
+        drop: (e, dropped) => {
+          let elementID = dropped.draggable.attr('element-id');
+          let position = this.DesignService.getPosition(e, dropped);
+          let floorID = jQuery(e.target).data('id');
+          if (elementID) {
+            this.edit(elementID, {
+              floorID: floorID,
+              elementPositionX: position.x,
+              elementPositionY: position.y
+            });
+          } else {
+            let type = dropped.helper.data('type');
+            this.addNew({
+              floorID: floorID,
+              elementName: 'Untitled',
+              elementType: type,
+              elementPositionX: position.x,
+              elementPositionY: position.y,
+              elementHeight: 0,
+              elementWidth: 19,
+              capacity: 5
+            });
+          }
         }
-      }
-    });
+      });
+    }
   }
 };

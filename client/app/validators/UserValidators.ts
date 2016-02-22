@@ -1,5 +1,5 @@
 import {EMAIL_REGEX} from '../config/constants';
-import {Control} from 'angular2/common';
+import {Control} from '@angular/common';
 
 export interface IUserValidators {
   EmailValidator(control: Control) : Object;

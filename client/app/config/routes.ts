@@ -1,4 +1,5 @@
-import {Route, Router} from 'angular2/router';
+import { ModuleWithProviders } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 import {Reserve} from '../components/reservation/reservation';
 import {Design} from '../components/design/design';
 import {Reservations} from '../components/reservations/reservations';
@@ -11,17 +12,24 @@ import {Register} from '../components/user/register';
 import {RegisterSuccess} from '../components/user/register-success';
 import {Accounts} from '../components/accounts/accounts';
 
-export const APP_ROUTES = [
-  { path: '/', redirectTo: ['/MarketingIndex'] },
-  { path: '/index', component: MarketingIndex, as: 'MarketingIndex' },
-  { path: '/reserve', component: Reserve, as: 'Reserve' },
-  { path: '/design', component: Design, as: 'Design' },
-  { path: '/register', component: Register, as: 'Register' },
-  { path: '/recover-password', component: RecoverPassword, as: 'RecoverPassword' },
-  { path: '/reset-password/:id', component: ResetPassword, as: 'ResetPassword' },
-  { path: '/change-password', component: ChangePassword, as: 'ChangePassword' },
-  { path: '/login', component: Login, as: 'Login' },
-  { path: '/reservations', component: Reservations, as: 'Reservations' },
-  { path: '/register-success', component: RegisterSuccess, as: 'RegisterSuccess' },
-  { path: '/accounts', component: Accounts, as: 'Accounts' }
+export const APP_ROUTES : Routes = [
+  { path: 'index', component: MarketingIndex },
+  { path: 'reserve', component: Reserve },
+  { path: 'design', component: Design },
+  { path: 'register', component: Register },
+  { path: 'register/:id', component: Register },
+  { path: 'recover-password', component: RecoverPassword },
+  { path: 'reset-password/:id', component: ResetPassword },
+  { path: 'change-password', component: ChangePassword },
+  { path: 'login', component: Login },
+  { path: 'reservations', component: Reservations },
+  { path: 'register-success', component: RegisterSuccess },
+  { path: 'accounts', component: Accounts },
+  { path: '**', redirectTo: '/index' }
 ];
+
+export const appRoutingProviders: any[] = [
+
+];
+
+export const routing: ModuleWithProviders = RouterModule.forRoot(APP_ROUTES);
