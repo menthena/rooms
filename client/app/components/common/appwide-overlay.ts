@@ -1,10 +1,11 @@
-import {Injectable, Component} from 'angular2/core';
+import {Injectable, Component, Input} from 'angular2/core';
 import {Observable} from 'rxjs';
 import {RouterLink} from 'angular2/router';
 import {AppService} from '../../services/AppService';
 
 @Component({
   selector: 'appwide-overlay',
+  inputs: ['is-panel-active'],
   template: `
     <div class="appwide-overlay" *ngIf="isPanelActive" [class.active]="isActive">
       <a (click)="hide()" class="pull-right hide-button">
@@ -30,7 +31,7 @@ import {AppService} from '../../services/AppService';
 export class AppwideOverlay {
   observable;
   isActive: boolean;
-  isPanelActive: boolean;
+  @Input() isPanelActive: boolean = false;
   panelType: string;
   message: string;
   id: string;

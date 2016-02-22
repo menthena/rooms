@@ -52,21 +52,6 @@ declare var gapi: any;
       </div>
     </div>
   </header>
-  <ion-menu [content]="content">
-     <ion-toolbar>
-       <ion-title>Pages</ion-title>
-     </ion-toolbar>
-     <ion-content>
-       <ion-list>
-         <button ion-item (click)="openPage(loginPage)">
-           Login
-         </button>
-         <button ion-item (click)="openPage(signupPage)">
-           Signup
-         </button>
-       </ion-list>
-     </ion-content>
-   </ion-menu>
   `,
   styleUrls: ['styles/common/header.css']
 })
@@ -92,13 +77,6 @@ export class Header {
     if (this.UserService.userData) {
       this.userData = this.UserService.userData;
     }
-  }
-
-  qeqwq() {
-    console.log('aaa');
-    alert('a');
-    // let myModal = Modal.create(Filter);
-    // this.nav.present(myModal);
   }
 
   handleClick() {

@@ -62,13 +62,3 @@
 
 span, i {
   color: #FFF; }
-
-@media (max-width: 768px) {
-  reservation-modal {
-    position: absolute; }
-  .room {
-    text-align: center;
-    min-height: auto;
-    height: auto; }
-    .room span {
-      display: none; } }

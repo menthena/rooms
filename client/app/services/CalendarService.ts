@@ -20,7 +20,7 @@ export class CalendarService implements ICalendarService {
 
   constructor(private http: Http) {
     // TODO: Use official Angular2 CORS support when merged (https://github.com/angular/angular/issues/4231).
-    if ((<any> this.http)._backend._browserXHR) {
+    if ((<any> this.http)._backend && (<any> this.http)._backend._browserXHR) {
       let _build = (<any> this.http)._backend._browserXHR.build;
       (<any> this.http)._backend._browserXHR.build = () => {
         let _xhr =  _build();
@@ -39,59 +39,61 @@ export class CalendarService implements ICalendarService {
   }
 
   fetchCalendars() {
-    var request = gapi.client.calendar.events.list({
-      'calendarId': 'primary',
-      'timeMin': (new Date()).toISOString(),
-      'showDeleted': false,
-      'singleEvents': true,
-      'maxResults': 10,
-      'orderBy': 'startTime'
-    });
-
-    request.execute((resp) => {
-      var events = resp.items;
-      if (events.length > 0) {
-        for (let i = 0; i < events.length; i++) {
-          var event = events[i];
-          var when = event.start.dateTime;
-          if (!when) {
-            when = event.start.date;
-          }
-          console.log(event.summary + ' (' + when + ')');
-        }
-      } else {
-        console.log('No upcoming events found.');
-      }
-    });
+    return;
+    // var request = gapi.client.calendar.events.list({
+    //   'calendarId': 'primary',
+    //   'timeMin': (new Date()).toISOString(),
+    //   'showDeleted': false,
+    //   'singleEvents': true,
+    //   'maxResults': 10,
+    //   'orderBy': 'startTime'
+    // });
+    //
+    // request.execute((resp) => {
+    //   var events = resp.items;
+    //   if (events.length > 0) {
+    //     for (let i = 0; i < events.length; i++) {
+    //       var event = events[i];
+    //       var when = event.start.dateTime;
+    //       if (!when) {
+    //         when = event.start.date;
+    //       }
+    //       console.log(event.summary + ' (' + when + ')');
+    //     }
+    //   } else {
+    //     console.log('No upcoming events found.');
+    //   }
+    // });
   }
 
   fetchEvents() {
-    this.authorize(() => {
-      var request = gapi.client.calendar.events.list({
-        'calendarId': 'primary',
-        'timeMin': (new Date()).toISOString(),
-        'showDeleted': false,
-        'singleEvents': true,
-        'maxResults': 10,
-        'orderBy': 'startTime'
-      });
-
-      request.execute((resp) => {
-        var events = resp.items;
-        if (events.length > 0) {
-          for (let i = 0; i < events.length; i++) {
-            var event = events[i];
-            var when = event.start.dateTime;
-            if (!when) {
-              when = event.start.date;
-            }
-            console.log(event.summary + ' (' + when + ')');
-          }
-        } else {
-          console.log('No upcoming events found.');
-        }
-      });
-    });
+    return ;
+    // this.authorize(() => {
+    //   var request = gapi.client.calendar.events.list({
+    //     'calendarId': 'primary',
+    //     'timeMin': (new Date()).toISOString(),
+    //     'showDeleted': false,
+    //     'singleEvents': true,
+    //     'maxResults': 10,
+    //     'orderBy': 'startTime'
+    //   });
+    //
+    //   request.execute((resp) => {
+    //     var events = resp.items;
+    //     if (events.length > 0) {
+    //       for (let i = 0; i < events.length; i++) {
+    //         var event = events[i];
+    //         var when = event.start.dateTime;
+    //         if (!when) {
+    //           when = event.start.date;
+    //         }
+    //         console.log(event.summary + ' (' + when + ')');
+    //       }
+    //     } else {
+    //       console.log('No upcoming events found.');
+    //     }
+    //   });
+    // });
   }
 
 
@@ -108,23 +110,25 @@ export class CalendarService implements ICalendarService {
   }
 
   authorize(callback: Function) {
-    if (gapi) {
-      gapi.auth.authorize({
-        client_id: CLIENT_ID,
-        scope: SCOPES,
-        immediate: false
-      }, (res) => {
-        this.saveGoogleToken(res.access_token);
-        this.loadCalendar();
-        callback(res);
-      });
-    }
+    return;
+    // if (gapi) {
+    //   gapi.auth.authorize({
+    //     client_id: CLIENT_ID,
+    //     scope: SCOPES,
+    //     immediate: false
+    //   }, (res) => {
+    //     this.saveGoogleToken(res.access_token);
+    //     this.loadCalendar();
+    //     callback(res);
+    //   });
+    // }
   }
 
   loadCalendar() {
-    gapi.client.load('calendar', 'v3', () => {
-      console.log('tick');
-    });
+    return ;
+    // gapi.client.load('calendar', 'v3', () => {
+    //   console.log('tick');
+    // });
   }
 
 }

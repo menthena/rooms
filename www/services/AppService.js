@@ -13,7 +13,7 @@ var ionic_1 = require('ionic-framework/ionic');
 var AppService = (function () {
     function AppService(Platform) {
         this.Platform = Platform;
-        if (this.Platform.is('android') || this.Platform.is('ios')) {
+        if (this.Platform && (this.Platform.is('android') || this.Platform.is('ios'))) {
             if (this.Platform.is('android')) {
                 this.isAndroid = true;
             }

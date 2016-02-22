@@ -13,6 +13,7 @@ var FloorService_1 = require('../../services/FloorService');
 var FloorElementsService_1 = require('../../services/FloorElementsService');
 var room_1 = require('./room');
 var constants_1 = require('../../config/constants');
+var AppService_1 = require('../../services/AppService');
 var FloorService_2 = require('../../services/FloorService');
 var placeholder_1 = require('./placeholder');
 var line_1 = require('./line');
@@ -23,18 +24,20 @@ var droppable_1 = require('../../directives/droppable');
 var DesignService_1 = require('../../services/DesignService');
 var ReservationService_1 = require('../../services/ReservationService');
 var Floor = (function () {
-    function Floor(floorElementsService, changeRef, DesignService, ReservationService, fb, floorService) {
+    function Floor(floorElementsService, changeRef, DesignService, ReservationService, fb, floorService, AppService) {
         this.floorElementsService = floorElementsService;
         this.changeRef = changeRef;
         this.DesignService = DesignService;
         this.ReservationService = ReservationService;
         this.fb = fb;
         this.floorService = floorService;
+        this.AppService = AppService;
         this.floorElements = [];
         this.floorElementsObservable = this.floorElementsService.getObservable();
         this.floorElementsObservable.connect();
         this.designMode = DesignService.designModeState;
         this.isLoading = false;
+        this.isIonic = this.AppService.isIonic;
     }
     Floor.prototype.switchEditMode = function () {
         this.editMode = true;
@@ -160,12 +163,12 @@ var Floor = (function () {
             providers: [FloorElementsService_1.FloorElementsService],
             directives: [room_1.Room, icon_1.Icon, place_element_1.PlaceElement, placeholder_1.Placeholder, line_1.Line, droppable_1.Droppable, loading_indicator_1.LoadingIndicator],
             styleUrls: ['styles/floors/floor.css', 'styles/floors/floors.css'],
-            template: "\n  <div [ngClass]=\"{'design-mode': designMode}\">\n    <ul class=\"list-inline\">\n      <li>\n        <h1 *ngIf=\"!editMode\">\n          {{ floor.floorName }}\n          <span *ngIf=\"designMode\">\n            <a (click)=\"switchEditMode()\" class=\"btn\"><i class=\"fa fa-pencil\"></i></a>\n          </span>\n        </h1>\n        <div *ngIf=\"editMode\" class=\"header\">\n          <form [ngFormModel]=\"editFloorNameForm\">\n            <input type=\"text\" name=\"floorName\" id=\"floorName\" ngControl=\"floorName\">\n            <button (click)=\"submitEditFloorNameForm($event)\" type=\"submit\" class=\"btn\"><i class=\"fa fa-check\"></i></button>\n            <button (click)=\"cancelEditFloorNameForm($event)\" class=\"btn\"><i class=\"fa fa-times\"></i></button>\n          </form>\n        </div>\n      </li>\n      <li>\n        <loading-indicator *ngIf=\"isLoading\" mini=\"true\"></loading-indicator>\n      </li>\n    </ul>\n    <div [attr.id]=\"'floor' + floor.floorID\" class=\"floor\" droppable-element\n      [attr.data-id]=\"floor.floorID\" [ngClass]=\"{loading: isLoading}\">\n      <div class=\"inner\">\n        <div *ngFor=\"#element of floorElements\" [ngSwitch]=\"element.elementType\">\n          <room *ngSwitchWhen=\"'room'\" [data]=\"element\" place-element></room>\n          <line *ngSwitchWhen=\"'line'\" [data]=\"element\" place-element></line>\n          <placeholder *ngSwitchWhen=\"'placeholder'\" [data]=\"element\" place-element></placeholder>\n          <icon *ngSwitchDefault [data]=\"element\" place-element></icon>\n        </div>\n      </div>\n    </div>\n  </div>\n  "
+            template: "\n  <div [ngClass]=\"{'design-mode': designMode}\">\n    <ul class=\"list-inline\">\n      <li *ngIf=\"!isIonic\">\n        <h1 *ngIf=\"!editMode\">\n          {{ floor.floorName }}\n          <span *ngIf=\"designMode\">\n            <a (click)=\"switchEditMode()\" class=\"btn\"><i class=\"fa fa-pencil\"></i></a>\n          </span>\n        </h1>\n        <div *ngIf=\"editMode\" class=\"header\">\n          <form [ngFormModel]=\"editFloorNameForm\">\n            <input type=\"text\" name=\"floorName\" id=\"floorName\" ngControl=\"floorName\">\n            <button (click)=\"submitEditFloorNameForm($event)\" type=\"submit\" class=\"btn\"><i class=\"fa fa-check\"></i></button>\n            <button (click)=\"cancelEditFloorNameForm($event)\" class=\"btn\"><i class=\"fa fa-times\"></i></button>\n          </form>\n        </div>\n      </li>\n      <li *ngIf=\"!isIonic\">\n        <loading-indicator *ngIf=\"isLoading\" mini=\"true\"></loading-indicator>\n      </li>\n    </ul>\n    <div [attr.id]=\"'floor' + floor.floorID\" class=\"floor\" droppable-element\n      [attr.data-id]=\"floor.floorID\" [ngClass]=\"{loading: isLoading}\">\n      <div class=\"inner\">\n        <div *ngFor=\"#element of floorElements\" [ngSwitch]=\"element.elementType\">\n          <room *ngSwitchWhen=\"'room'\" [data]=\"element\" place-element></room>\n          <line *ngSwitchWhen=\"'line'\" [data]=\"element\" place-element></line>\n          <placeholder *ngSwitchWhen=\"'placeholder'\" [data]=\"element\" place-element></placeholder>\n          <icon *ngSwitchDefault [data]=\"element\" place-element></icon>\n        </div>\n      </div>\n    </div>\n  </div>\n  "
         }), 
-        __metadata('design:paramtypes', [(typeof (_b = typeof FloorElementsService_1.FloorElementsService !== 'undefined' && FloorElementsService_1.FloorElementsService) === 'function' && _b) || Object, (typeof (_c = typeof core_1.ChangeDetectorRef !== 'undefined' && core_1.ChangeDetectorRef) === 'function' && _c) || Object, (typeof (_d = typeof DesignService_1.DesignService !== 'undefined' && DesignService_1.DesignService) === 'function' && _d) || Object, (typeof (_e = typeof ReservationService_1.ReservationService !== 'undefined' && ReservationService_1.ReservationService) === 'function' && _e) || Object, (typeof (_f = typeof common_1.FormBuilder !== 'undefined' && common_1.FormBuilder) === 'function' && _f) || Object, (typeof (_g = typeof FloorService_2.FloorService !== 'undefined' && FloorService_2.FloorService) === 'function' && _g) || Object])
+        __metadata('design:paramtypes', [(typeof (_b = typeof FloorElementsService_1.FloorElementsService !== 'undefined' && FloorElementsService_1.FloorElementsService) === 'function' && _b) || Object, (typeof (_c = typeof core_1.ChangeDetectorRef !== 'undefined' && core_1.ChangeDetectorRef) === 'function' && _c) || Object, (typeof (_d = typeof DesignService_1.DesignService !== 'undefined' && DesignService_1.DesignService) === 'function' && _d) || Object, (typeof (_e = typeof ReservationService_1.ReservationService !== 'undefined' && ReservationService_1.ReservationService) === 'function' && _e) || Object, (typeof (_f = typeof common_1.FormBuilder !== 'undefined' && common_1.FormBuilder) === 'function' && _f) || Object, (typeof (_g = typeof FloorService_2.FloorService !== 'undefined' && FloorService_2.FloorService) === 'function' && _g) || Object, (typeof (_h = typeof AppService_1.AppService !== 'undefined' && AppService_1.AppService) === 'function' && _h) || Object])
     ], Floor);
     return Floor;
-    var _a, _b, _c, _d, _e, _f, _g;
+    var _a, _b, _c, _d, _e, _f, _g, _h;
 })();
 exports.Floor = Floor;
 //# sourceMappingURL=floor.js.map

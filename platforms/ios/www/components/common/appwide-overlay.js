@@ -12,6 +12,7 @@ var AppService_1 = require('../../services/AppService');
 var AppwideOverlay = (function () {
     function AppwideOverlay(AppService) {
         this.AppService = AppService;
+        this.isPanelActive = false;
         this.observable = this.AppService.overlayObservable;
     }
     AppwideOverlay.prototype.ngOnInit = function () {
@@ -52,9 +53,14 @@ var AppwideOverlay = (function () {
             _this.isPanelActive = false;
         }, 100);
     };
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Boolean)
+    ], AppwideOverlay.prototype, "isPanelActive", void 0);
     AppwideOverlay = __decorate([
         core_1.Component({
             selector: 'appwide-overlay',
+            inputs: ['is-panel-active'],
             template: "\n    <div class=\"appwide-overlay\" *ngIf=\"isPanelActive\" [class.active]=\"isActive\">\n      <a (click)=\"hide()\" class=\"pull-right hide-button\">\n        <i class=\"fa fa-times\"></i>\n      </a>\n      <div class=\"box text-center\">\n        <div class=\"inner\">\n          <div>\n            {{ message }}\n          </div>\n          <div *ngIf=\"panelType === 'confirmation'\" class=\"buttons\">\n            <a (click)=\"confirm(true)\" class=\"yes\">Yes</a>\n            <a (click)=\"confirm(false)\">No</a>\n          </div>\n        </div>\n      </div>\n    <div>\n  ",
             styleUrls: ['styles/common/appwide-overlay.css']
         }),

@@ -1,9 +1,9 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 /// <reference path="../../../node_modules/angular2/typings/browser.d.ts" />
-import {Injectable, Component, provide, View, Injector} from 'angular2/core';
-import {AppwideOverlay} from '../../../client/app/components/common/appwide-overlay';
-import {AppService} from '../../../client/app/services/AppService';
-import {Router, Location} from 'angular2/router';
+import {Component, provide} from 'angular2/core';
+import {AppwideOverlay} from 'components/common/appwide-overlay';
+import {AppService} from 'services/AppService';
+import {Platform} from 'ionic-framework/ionic';
 
 import {
   it,
@@ -23,11 +23,21 @@ export function main() {
       component = new AppwideOverlay(appService);
     });
 
-    it('should add string to header names', injectAsync([TestComponentBuilder, Injector], (tcb: TestComponentBuilder) => {
+    it('overlay div should not exist by default', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
       return tcb.createAsync(TestComponent).then((fixture) => {
         fixture.detectChanges();
         var compiled = fixture.debugElement.nativeElement;
-        expect(compiled).toContainText('aa');
+        expect(compiled.querySelector('div.appwide-overlay')).toBe(null);
+      });
+    }));
+
+    it('overlay div should show up once the observable comes back with data',
+      injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+      return tcb.createAsync(TestComponent).then((fixture) => {
+        fixture.componentInstance.isPanelActive = true;
+        fixture.detectChanges();
+        var compiled = fixture.debugElement.nativeElement;
+        expect(compiled.querySelector('div.appwide-overlay')).not.toBe(null);
       });
     }));
 
@@ -43,10 +53,20 @@ export function main() {
   });
 }
 
+let device = 'web';
+
+class MockPlatform {
+  is(deviceType) {
+    return (device === deviceType);
+  }
+}
+
 @Component({
-  providers: [AppService],
+  providers: [AppService, provide(Platform, {useClass: MockPlatform})],
   selector: 'test-cmp',
-  template: '<appwide-overlay></appwide-overlay>',
+  template: '<appwide-overlay [isPanelActive]="isPanelActive"></appwide-overlay>',
   directives: [AppwideOverlay]
 })
-class TestComponent {}
+class TestComponent {
+  private isPanelActive: boolean;
+}

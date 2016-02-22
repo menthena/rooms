@@ -17,31 +17,33 @@ import {CalendarService} from '../services/CalendarService';
 import {FloorElementsService} from '../services/FloorElementsService';
 import {ReservationService} from '../services/ReservationService';
 import {UserValidators} from '../validators/UserValidators';
-import {App, Platform} from 'ionic-framework/ionic';
+import {App, Platform, NavController} from 'ionic-framework/ionic';
 
 @RouteConfig(APP_ROUTES)
 
 @App({
-  viewProviders: [AppService],
   providers: [FloorService, DesignService, UserValidators, UserService,
     FloorElementsService, ReservationService, HTTP_BINDINGS, ROUTER_PROVIDERS, CalendarService,
-    provide(LocationStrategy, {useClass: HashLocationStrategy})],
+    provide(LocationStrategy, {useClass: HashLocationStrategy}), AppService],
   directives: [RouterOutlet, Header, Overlay, AppwideOverlay],
   template: `
   <appwide-overlay></appwide-overlay>
   <overlay></overlay>
   <header [logged]="isLogged"></header>
-  <router-outlet></router-outlet>
+  <router-outlet *ngIf="!isIonic"></router-outlet>
+  <ion-nav *ngIf="isIonic"></ion-nav>
   `
 })
 
 class Room {
   isLogged: boolean;
   userObservable;
+  isIonic: boolean = false;
 
-  constructor(private UserService: UserService) {
+  constructor(private UserService: UserService, private AppService: AppService) {
     this.userObservable = this.UserService.getUserObservable();
     this.userObservable.connect();
+    this.isIonic = this.AppService.isIonic;
   }
 
   ngOnInit() {

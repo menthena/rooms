@@ -85,3 +85,7 @@ h1, .header {
   position: relative;
   height: 387px;
   display: block; }
+
+@media (max-width: 768px) {
+  .floor {
+    min-width: 860px; } }

@@ -15,7 +15,7 @@ export class AppService implements IAppService {
   public overlayObservable: Observable<Object>;
 
   constructor(private Platform: Platform) {
-    if (this.Platform.is('android') || this.Platform.is('ios')) {
+    if (this.Platform && (this.Platform.is('android') || this.Platform.is('ios'))) {
       if (this.Platform.is('android')) {
         this.isAndroid = true;
       }

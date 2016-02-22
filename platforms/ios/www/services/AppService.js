@@ -9,9 +9,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('angular2/core');
 var rxjs_1 = require('rxjs');
+var ionic_1 = require('ionic-framework/ionic');
 var AppService = (function () {
-    function AppService() {
-        if (window.cordova) {
+    function AppService(Platform) {
+        this.Platform = Platform;
+        if (this.Platform && (this.Platform.is('android') || this.Platform.is('ios'))) {
+            if (this.Platform.is('android')) {
+                this.isAndroid = true;
+            }
             this.isIonic = true;
             jQuery('body').addClass('ionic');
         }
@@ -24,9 +29,10 @@ var AppService = (function () {
     }
     AppService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [(typeof (_a = typeof ionic_1.Platform !== 'undefined' && ionic_1.Platform) === 'function' && _a) || Object])
     ], AppService);
     return AppService;
+    var _a;
 })();
 exports.AppService = AppService;
 //# sourceMappingURL=AppService.js.map

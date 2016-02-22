@@ -9,12 +9,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('angular2/core');
 var http_1 = require('angular2/http');
-var constants_1 = require('../config/constants');
 var CalendarService = (function () {
     function CalendarService(http) {
         this.http = http;
         // TODO: Use official Angular2 CORS support when merged (https://github.com/angular/angular/issues/4231).
-        if (this.http._backend._browserXHR) {
+        if (this.http._backend && this.http._backend._browserXHR) {
             var _build = this.http._backend._browserXHR.build;
             this.http._backend._browserXHR.build = function () {
                 var _xhr = _build();
@@ -30,58 +29,60 @@ var CalendarService = (function () {
         console.log('tick');
     };
     CalendarService.prototype.fetchCalendars = function () {
-        var request = gapi.client.calendar.events.list({
-            'calendarId': 'primary',
-            'timeMin': (new Date()).toISOString(),
-            'showDeleted': false,
-            'singleEvents': true,
-            'maxResults': 10,
-            'orderBy': 'startTime'
-        });
-        request.execute(function (resp) {
-            var events = resp.items;
-            if (events.length > 0) {
-                for (var i = 0; i < events.length; i++) {
-                    var event = events[i];
-                    var when = event.start.dateTime;
-                    if (!when) {
-                        when = event.start.date;
-                    }
-                    console.log(event.summary + ' (' + when + ')');
-                }
-            }
-            else {
-                console.log('No upcoming events found.');
-            }
-        });
+        return;
+        // var request = gapi.client.calendar.events.list({
+        //   'calendarId': 'primary',
+        //   'timeMin': (new Date()).toISOString(),
+        //   'showDeleted': false,
+        //   'singleEvents': true,
+        //   'maxResults': 10,
+        //   'orderBy': 'startTime'
+        // });
+        //
+        // request.execute((resp) => {
+        //   var events = resp.items;
+        //   if (events.length > 0) {
+        //     for (let i = 0; i < events.length; i++) {
+        //       var event = events[i];
+        //       var when = event.start.dateTime;
+        //       if (!when) {
+        //         when = event.start.date;
+        //       }
+        //       console.log(event.summary + ' (' + when + ')');
+        //     }
+        //   } else {
+        //     console.log('No upcoming events found.');
+        //   }
+        // });
     };
     CalendarService.prototype.fetchEvents = function () {
-        this.authorize(function () {
-            var request = gapi.client.calendar.events.list({
-                'calendarId': 'primary',
-                'timeMin': (new Date()).toISOString(),
-                'showDeleted': false,
-                'singleEvents': true,
-                'maxResults': 10,
-                'orderBy': 'startTime'
-            });
-            request.execute(function (resp) {
-                var events = resp.items;
-                if (events.length > 0) {
-                    for (var i = 0; i < events.length; i++) {
-                        var event = events[i];
-                        var when = event.start.dateTime;
-                        if (!when) {
-                            when = event.start.date;
-                        }
-                        console.log(event.summary + ' (' + when + ')');
-                    }
-                }
-                else {
-                    console.log('No upcoming events found.');
-                }
-            });
-        });
+        return;
+        // this.authorize(() => {
+        //   var request = gapi.client.calendar.events.list({
+        //     'calendarId': 'primary',
+        //     'timeMin': (new Date()).toISOString(),
+        //     'showDeleted': false,
+        //     'singleEvents': true,
+        //     'maxResults': 10,
+        //     'orderBy': 'startTime'
+        //   });
+        //
+        //   request.execute((resp) => {
+        //     var events = resp.items;
+        //     if (events.length > 0) {
+        //       for (let i = 0; i < events.length; i++) {
+        //         var event = events[i];
+        //         var when = event.start.dateTime;
+        //         if (!when) {
+        //           when = event.start.date;
+        //         }
+        //         console.log(event.summary + ' (' + when + ')');
+        //       }
+        //     } else {
+        //       console.log('No upcoming events found.');
+        //     }
+        //   });
+        // });
     };
     CalendarService.prototype.saveGoogleToken = function (token) {
         this.http.patch('/api/company', JSON.stringify({
@@ -95,23 +96,24 @@ var CalendarService = (function () {
         });
     };
     CalendarService.prototype.authorize = function (callback) {
-        var _this = this;
-        if (gapi) {
-            gapi.auth.authorize({
-                client_id: constants_1.CLIENT_ID,
-                scope: constants_1.SCOPES,
-                immediate: false
-            }, function (res) {
-                _this.saveGoogleToken(res.access_token);
-                _this.loadCalendar();
-                callback(res);
-            });
-        }
+        return;
+        // if (gapi) {
+        //   gapi.auth.authorize({
+        //     client_id: CLIENT_ID,
+        //     scope: SCOPES,
+        //     immediate: false
+        //   }, (res) => {
+        //     this.saveGoogleToken(res.access_token);
+        //     this.loadCalendar();
+        //     callback(res);
+        //   });
+        // }
     };
     CalendarService.prototype.loadCalendar = function () {
-        gapi.client.load('calendar', 'v3', function () {
-            console.log('tick');
-        });
+        return;
+        // gapi.client.load('calendar', 'v3', () => {
+        //   console.log('tick');
+        // });
     };
     CalendarService = __decorate([
         core_1.Injectable(), 

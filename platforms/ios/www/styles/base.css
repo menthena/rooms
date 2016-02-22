@@ -90,12 +90,34 @@
 .icon-stairs:before {
   background-position: -11px -120px; }
 
+@keyframes pulse {
+  0% {
+    opacity: 0.6; }
+  50% {
+    opacity: 0.3; }
+  100% {
+    opacity: 0.6; } }
+
+@keyframes pulseScale {
+  0% {
+    transform: scale(1);
+    opacity: 0.8; }
+  50% {
+    transform: scale(0.6);
+    opacity: 0.2; }
+  100% {
+    transform: scale(1);
+    opacity: 0.9; } }
+
+ion-list ion-row, ion-list ion-col {
+  padding: 0; }
+
 body {
   background: #f9fbfc;
   font-family: 'fira-sans',sans-serif;
   color: #506a78;
   display: none; }
-  body.platform-core, body.platform-cordova {
+  body.platform-core, body.platform-cordova, body.platform-mobile {
     display: block; }
   body.platform-core {
     position: relative;
@@ -103,6 +125,10 @@ body {
     body.platform-core ion-app {
       position: relative;
       overflow: auto; }
+
+button {
+  overflow: hidden;
+  position: relative; }
 
 a {
   cursor: pointer;

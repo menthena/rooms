@@ -1,0 +1,22 @@
+@import 'mixins.scss';
+@import '_variables.scss';
+
+// ion-item {
+//   &.item {
+//     background: none;
+//     .item-inner {
+//       border-bottom: none;
+//     }
+//   }
+// }
+
+ion-list {
+  ion-row, ion-col {
+    padding: 0;
+  }
+}
+
+ion-app ion-nav.has-views {
+  background: none;
+  position: relative;
+}

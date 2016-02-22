@@ -32,7 +32,9 @@ System.config({
     // 'ionic-framework/*': 'node_modules/ionic-framework/bundles/*.js'
   },
   map: {
-    'ionic-framework': 'ionic',
+    'ionic-framework': 'node_modules/ionic-framework',
+    'components': 'dist/app/components',
+    'services': 'dist/app/services',
     // rxjs: 'base/node_modules/rxjs',
   },
 

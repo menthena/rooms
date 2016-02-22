@@ -13,8 +13,10 @@ function initializeCordova() {
     }
 }
 function onDeviceReady() {
-    System.import('config/app');
-    // .catch((error: Object) => console.error('Error: index loading with System:', error.toString()));
+    System.import('config/app')
+        .catch(function (error) {
+        console.log(error, arguments);
+    });
 }
 initialize();
 //# sourceMappingURL=bootstrap.js.map

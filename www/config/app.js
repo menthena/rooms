@@ -27,10 +27,13 @@ var ReservationService_1 = require('../services/ReservationService');
 var UserValidators_1 = require('../validators/UserValidators');
 var ionic_1 = require('ionic-framework/ionic');
 var Room = (function () {
-    function Room(UserService) {
+    function Room(UserService, AppService) {
         this.UserService = UserService;
+        this.AppService = AppService;
+        this.isIonic = false;
         this.userObservable = this.UserService.getUserObservable();
         this.userObservable.connect();
+        this.isIonic = this.AppService.isIonic;
     }
     Room.prototype.ngOnInit = function () {
         var _this = this;
@@ -43,16 +46,15 @@ var Room = (function () {
     Room = __decorate([
         router_2.RouteConfig(routes_1.APP_ROUTES),
         ionic_1.App({
-            viewProviders: [AppService_1.AppService],
             providers: [FloorService_1.FloorService, DesignService_1.DesignService, UserValidators_1.UserValidators, UserService_1.UserService,
                 FloorElementsService_1.FloorElementsService, ReservationService_1.ReservationService, http_1.HTTP_BINDINGS, router_1.ROUTER_PROVIDERS, CalendarService_1.CalendarService,
-                core_1.provide(router_1.LocationStrategy, { useClass: router_1.HashLocationStrategy })],
+                core_1.provide(router_1.LocationStrategy, { useClass: router_1.HashLocationStrategy }), AppService_1.AppService],
             directives: [router_2.RouterOutlet, header_1.Header, overlay_1.Overlay, appwide_overlay_1.AppwideOverlay],
-            template: "\n  <appwide-overlay></appwide-overlay>\n  <overlay></overlay>\n  <header [logged]=\"isLogged\"></header>\n  <router-outlet></router-outlet>\n  "
+            template: "\n  <appwide-overlay></appwide-overlay>\n  <overlay></overlay>\n  <header [logged]=\"isLogged\"></header>\n  <router-outlet *ngIf=\"!isIonic\"></router-outlet>\n  <ion-nav *ngIf=\"isIonic\"></ion-nav>\n  "
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof UserService_1.UserService !== 'undefined' && UserService_1.UserService) === 'function' && _a) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof UserService_1.UserService !== 'undefined' && UserService_1.UserService) === 'function' && _a) || Object, (typeof (_b = typeof AppService_1.AppService !== 'undefined' && AppService_1.AppService) === 'function' && _b) || Object])
     ], Room);
     return Room;
-    var _a;
+    var _a, _b;
 })();
 //# sourceMappingURL=app.js.map

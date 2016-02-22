@@ -35,3 +35,11 @@ a.btn {
     background: lighten($text-color, 5);
   }
 }
+
+ion-scroll {
+  min-height: 460px;
+}
+
+ion-segment {
+  padding: 10px;
+}

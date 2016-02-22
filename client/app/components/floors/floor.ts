@@ -29,7 +29,7 @@ declare var io: any;
   template: `
   <div [ngClass]="{'design-mode': designMode}">
     <ul class="list-inline">
-      <li>
+      <li *ngIf="!isIonic">
         <h1 *ngIf="!editMode">
           {{ floor.floorName }}
           <span *ngIf="designMode">
@@ -44,7 +44,7 @@ declare var io: any;
           </form>
         </div>
       </li>
-      <li>
+      <li *ngIf="!isIonic">
         <loading-indicator *ngIf="isLoading" mini="true"></loading-indicator>
       </li>
     </ul>
@@ -72,19 +72,21 @@ export class Floor {
   reservations: Array<IReservation>;
   floorElementsObservable;
   editMode: boolean;
+  isIonic: boolean;
   designMode: boolean;
   editFloorNameForm;
 
   constructor(private floorElementsService: FloorElementsService,
     private changeRef: ChangeDetectorRef, private DesignService: DesignService,
     private ReservationService: ReservationService, private fb: FormBuilder,
-    private floorService: FloorService
+    private floorService: FloorService, private AppService: AppService
   ) {
     this.floorElements = [];
     this.floorElementsObservable = this.floorElementsService.getObservable();
     this.floorElementsObservable.connect();
     this.designMode = DesignService.designModeState;
     this.isLoading = false;
+    this.isIonic = this.AppService.isIonic;
   }
 
   switchEditMode() {

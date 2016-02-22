@@ -44,3 +44,9 @@ a.btn {
   .btn.add-floor:hover {
     color: #FFF;
     background: #5a7887; }
+
+ion-scroll {
+  min-height: 460px; }
+
+ion-segment {
+  padding: 10px; }

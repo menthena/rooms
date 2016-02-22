@@ -14,17 +14,21 @@ var app_config_1 = require('../config/app.config');
 var UserService = (function () {
     function UserService(http) {
         this.http = http;
-        this.userObservable = rxjs_1.Observable
-            .create(function (observer) {
-            return function () { return console.log('disposed'); };
-        }).publish();
+        if (rxjs_1.Observable) {
+            this.userObservable = rxjs_1.Observable
+                .create(function (observer) {
+                return function () { return console.log('disposed'); };
+            }).publish();
+        }
         // TODO: Use official Angular2 CORS support when merged (https://github.com/angular/angular/issues/4231).
-        var _build = this.http._backend._browserXHR.build;
-        this.http._backend._browserXHR.build = function () {
-            var _xhr = _build();
-            _xhr.withCredentials = true;
-            return _xhr;
-        };
+        if (this.http._backend && this.http._backend._browserXHR) {
+            var _build = this.http._backend._browserXHR.build;
+            this.http._backend._browserXHR.build = function () {
+                var _xhr = _build();
+                _xhr.withCredentials = true;
+                return _xhr;
+            };
+        }
     }
     UserService.prototype.login = function (email, password) {
         var _this = this;

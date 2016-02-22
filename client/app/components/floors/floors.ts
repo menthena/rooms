@@ -33,18 +33,19 @@ declare var _: any;
         </div>
         <a *ngIf="designMode" (click)="addFloor()"><i class="fa fa-plus"></i> Add floor</a>
       </div>
-
-      <div *ngFor="#floor of floors">
-        <div *ngIf="!isIonic || (isIonic && floor && floor.floorID == selectedFloor)">
-          <div *ngIf="designMode" class="pull-right">
-            <a (click)="changeOrder(floor.floorID, 'up')" *ngIf="floor.order > 0" class="btn"><i class="fa fa-arrow-up"></i></a>
-            <a (click)="changeOrder(floor.floorID, 'down')" *ngIf="floor.order < floors.length - 1"
-              class="btn"><i class="fa fa-arrow-down"></i></a>
-            <a (click)="showDeleteFloorConfirmation(floor.floorID)" class="btn"><i class="fa fa-trash"></i></a>
+      <ion-scroll scrollX="true">
+        <div *ngFor="#floor of floors">
+          <div *ngIf="!isIonic || (isIonic && floor && floor.floorID == selectedFloor)">
+            <div *ngIf="designMode" class="pull-right">
+              <a (click)="changeOrder(floor.floorID, 'up')" *ngIf="floor.order > 0" class="btn"><i class="fa fa-arrow-up"></i></a>
+              <a (click)="changeOrder(floor.floorID, 'down')" *ngIf="floor.order < floors.length - 1"
+                class="btn"><i class="fa fa-arrow-down"></i></a>
+              <a (click)="showDeleteFloorConfirmation(floor.floorID)" class="btn"><i class="fa fa-trash"></i></a>
+            </div>
+            <floor [floor]="floor"></floor>
           </div>
-          <floor [floor]="floor"></floor>
         </div>
-      </div>
+      </ion-scroll>
     </div>
   `,
   styleUrls: ['styles/floors/floors.css']
